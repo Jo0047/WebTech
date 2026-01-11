@@ -1,7 +1,7 @@
 
 import express, { Application } from 'express';
 import cors from 'cors';
-import itemRoutes from './routes/items.routes';
+import usersRoutes from './routes/users.routes';
 
 const app: Application = express();
 
@@ -12,7 +12,7 @@ app.get('/', (_req, res) => {
     res.send('API running');
 });
 
-app.use('/api/items', itemRoutes);
+app.use('/api/users', usersRoutes);
 
 const PORT = process.env["PORT"] || 3000;
 app.listen(PORT, () => {
