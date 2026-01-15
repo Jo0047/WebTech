@@ -1,0 +1,115 @@
+
+.main-container {
+  max-width: 800px;
+  text-align: center;
+}
+
+.logo-section {
+  margin-bottom: 32px;
+}
+
+.logo-uber {
+  font-size: 96px;
+  font-weight: 900;
+  color: #000000;
+  margin: 0;
+  line-height: 1;
+  letter-spacing: -2px;
+}
+
+.logo-drinks {
+  font-size: 96px;
+  font-weight: 900;
+  color: #7cb518;
+  margin: 0;
+  line-height: 1;
+  letter-spacing: -2px;
+}
+
+.button-container {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 80px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 16px 48px;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 180px;
+}
+
+.btn-login {
+  background-color: #7cb518;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(124, 181, 24, 0.3);
+}
+
+.btn-login:hover {
+  background-color: #6da015;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(124, 181, 24, 0.4);
+}
+
+.btn-login:active {
+  background-color: #5d8b12;
+  transform: translateY(0);
+}
+
+.btn-register {
+  background-color: #ffffff;
+  color: #000000;
+  border: 2px solid #000000;
+}
+
+.btn-register:hover {
+  background-color: #000000;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-register:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .logo-uber,
+  .logo-drinks {
+    font-size: 64px;
+  }
+
+  .button-container {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0 20px;
+  }
+
+  .btn {
+    width: 100%;
+    min-width: unset;
+  }
+
+}
+
+@media (max-width: 480px) {
+  .main-container {
+    padding: 0 10px;
+  }
+
+  .logo-uber,
+  .logo-drinks {
+    font-size: 48px;
+  }
+
+  .btn {
+    padding: 14px 32px;
+    font-size: 16px;
+  }
+}

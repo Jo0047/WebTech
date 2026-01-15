@@ -1,1 +1,93 @@
-<p>register works!</p>
+<div class="register-container">
+
+  <div class="logo-section">
+    <div>
+      <h1 class="logo-uber">Uber</h1>
+      <h1 class="logo-drinks">Drinks</h1>
+    </div>
+  </div>
+
+  <div class="register-section">
+    <div>
+      <h2 class="register-title">Sign Up</h2>
+
+      <form [formGroup]="registerForm" (submit)="onSubmit()">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            placeholder="Enter your name"
+            class="form-control"
+            required
+          />
+          @if (hasError('name', 'required')) {
+            <span class="error-message">Name is required</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            placeholder="Enter your email"
+            class="form-control"
+            required
+          />
+          @if (hasError('email', 'required')) {
+            <span class="error-message">Email is required</span>
+          }
+          @if (hasError('email', 'email') && !hasError('email', 'required')) {
+            <span class="error-message">Please enter a valid email address</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            placeholder="Create a password"
+            class="form-control"
+            required
+          />
+          @if (hasError('password', 'required')) {
+            <span class="error-message">Password is required</span>
+          }
+          @if (hasError('password', 'min_length')){
+            <span class="error-message">Password must be atleast 6 charachters</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            formControlName="confirmPassword"
+            placeholder="Confirm your password"
+            class="form-control"
+            required
+          />
+          @if (hasError('confirmPassword', 'required')) {
+            <span class="error-message">Please confirm your password</span>
+          }
+          @if (passwordMismatchError && !hasError('confirmPassword', 'required')) {
+            <span class="error-message">Passwords do not match</span>
+          }
+        </div>
+
+        <button type="submit" class="btn-register">Sign Up</button>
+
+        <p class="login-text">
+          Already have an account? <a href="#" (click)="navigateToLogin($event)" class="login-link">Login</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+</div>
