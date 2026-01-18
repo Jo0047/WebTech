@@ -5,6 +5,7 @@ import {Register} from './authentication/register/register';
 import {Main} from './main/main';
 import {RegisterProcess} from './authentication/register/register-process/register-process';
 import {PasswordReset} from './authentication/password-reset/password-reset';
+import {CustomerMain} from './customer/customer-main/customer-main';
 
 export const routes: Routes = [
   { path: '', component: Main },
@@ -14,7 +15,9 @@ export const routes: Routes = [
   { path: 'passwordReset', component: PasswordReset },
   { path: 'register/:userRole', component: RegisterProcess },
 
-  //{
+  { path: 'customer', component: CustomerMain },
+
+  //{ComponentMain
    // path: 'dashboard',
     //component: DashboardComponent,
     //canActivate: [AuthGuard]  // Protected route
