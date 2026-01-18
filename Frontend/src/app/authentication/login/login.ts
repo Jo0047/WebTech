@@ -55,4 +55,9 @@ export class Login {
     event.preventDefault();
     this.router.navigate(['/register']);
   }
+
+  protected navigateToPasswordReset(event: Event): void {
+    event.preventDefault();
+    this.router.navigate(['/passwordReset']);
+  }
 }
