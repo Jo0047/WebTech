@@ -1,0 +1,235 @@
+<div class="register-container">
+
+  <div class="logo-section">
+    <div>
+      <h1 class="logo-uber">Uber</h1>
+      <h1 class="logo-drinks">Drinks</h1>
+    </div>
+  </div>
+
+  <div class="register-section">
+    <div class="stepper-container">
+      <h2 class="register-title">Register as {{ userRole.valueOf() }}</h2>
+
+      <mat-stepper [linear]="isLinear" #stepper class="custom-stepper">
+
+        <mat-step [stepControl]="basicInfoForm" class="custom-step">
+          <form [formGroup]="basicInfoForm">
+            <ng-template matStepLabel>Personal Information</ng-template>
+
+            <div class="form-group">
+              <label>Name</label>
+              <input matInput
+                     type="text"
+                     id="name"
+                     placeholder="Name"
+                     formControlName="name"
+                     class="form-control"
+                     required>
+              @if (hasError(basicInfoForm,'name', 'required')) {
+                <span class="error-message">Name is required</span>
+              }
+            </div>
+
+            <div class="form-group">
+              <label>Email</label>
+              <input matInput
+                     type="email"
+                     id="email"
+                     placeholder="Enter your email"
+                     formControlName="email"
+                     class="form-control"
+                     required>
+              @if (hasError(basicInfoForm,'email', 'required')) {
+                <span class="error-message">Email is required</span>
+              }
+            </div>
+
+            <div class="form-group">
+              <label>Password</label>
+              <input matInput
+                     type="password"
+                     id="password"
+                     minlength="4"
+                     placeholder="Password"
+                     class="form-control"
+                     formControlName="password"
+                     required>
+              @if (hasError(basicInfoForm,'password', 'required')) {
+                <span class="error-message">Password is required</span>
+              }
+              @if (hasError(basicInfoForm,'password', 'min_length')){
+                <span class="error-message">Password must be atleast 4 charachters</span>
+              }
+
+            </div>
+
+            <div class="form-group">
+              <label>Confirm Password</label>
+              <input matInput
+                     type="password"
+                     id="confirmPassword"
+                     placeholder="Confirm Password"
+                     class="form-control"
+                     formControlName="confirmPassword"
+                     required>
+              @if (hasError(basicInfoForm,'confirmPassword', 'required')) {
+                <span class="error-message">Please confirm your password</span>
+              }
+              @if (passwordMismatchError && !hasError(basicInfoForm,'confirmPassword', 'required')) {
+                <span class="error-message">Passwords do not match</span>
+              }
+
+            </div>
+
+            <div class="button-container">
+              <button matStepperNext class="btn-next">Next</button>
+            </div>
+          </form>
+        </mat-step>
+
+        <mat-step [stepControl]="addressForm">
+          <form [formGroup]="addressForm">
+            <ng-template matStepLabel>Address Information</ng-template>
+
+            <div class="form-group">
+              <label>Street</label>
+              <input matInput
+                     type="text"
+                     id="street"
+                     placeholder="Street"
+                     formControlName="street"
+                     class="form-control"
+                     required>
+              @if (hasError(addressForm,'street', 'required')) {
+                <span class="error-message">Street is required</span>
+              }
+            </div>
+
+            <div class="form-group">
+              <label>Street-Number</label>
+              <input matInput
+                     type="number"
+                     id="street number"
+                     placeholder="Street number"
+                     formControlName="streetNumber"
+                     class="form-control"
+                     required>
+              @if (hasError(addressForm,'streetNumber', 'required')) {
+                <span class="error-message">Street Number is required</span>
+              }
+            </div>
+
+            <div class="form-group">
+              <label>City</label>
+              <input matInput
+                     type="text"
+                     id="city"
+                     placeholder="City"
+                     formControlName="city"
+                     class="form-control"
+                     required>
+              @if (hasError(addressForm,'city', 'required')) {
+                <span class="error-message">City is required</span>
+              }
+            </div>
+
+            <div class="form-group">
+              <label>Zip Code</label>
+              <input matInput
+                     type="number"
+                     id="zip code"
+                     placeholder="Zip Code"
+                     formControlName="zipCode"
+                     class="form-control"
+                     required>
+              @if (hasError(addressForm,'zipCode', 'required')) {
+                <span class="error-message">Zip Code is required</span>
+              }
+            </div>
+
+            <div class="button-container">
+              <button matStepperPrevious class="btn-back">Back</button>
+              @if (userRole == UserRole.restaurant) {
+                <button matStepperNext class="btn-next">Next</button>
+              }
+              @else{
+                <button matStepperNext class="btn-next" (click)="onSubmit()">Submit</button>
+              }
+            </div>
+          </form>
+        </mat-step>
+
+        @if (userRole == UserRole.restaurant) {
+          <mat-step [stepControl]="restaurantForm">
+            <form [formGroup]="restaurantForm">
+              <ng-template matStepLabel>Restaurant Information</ng-template>
+
+              <div class="form-group">
+                <label>Restaurant Name</label>
+                <input matInput
+                       type="text"
+                       id="restaurant name"
+                       placeholder="Restaurant Name"
+                       formControlName="restaurantName"
+                       class="form-control"
+                       required>
+                @if (hasError(restaurantForm,'restaurantName', 'required')) {
+                  <span class="error-message">Restaurant Name is required</span>
+                }
+              </div>
+
+              <div class="form-group">
+                <label>Restaurant Email</label>
+                <input matInput
+                       type="email"
+                       id="restaurant name"
+                       placeholder="Restaurant Email"
+                       formControlName="restaurantEmail"
+                       class="form-control"
+                       required>
+                @if (hasError(restaurantForm,'restaurantEmail', 'required')) {
+                  <span class="error-message">Restaurant Email is required</span>
+                }
+              </div>
+
+              <div class="form-group">
+                <label>Restaurant Phone Number</label>
+                <input matInput
+                       type="text"
+                       id="phone number"
+                       placeholder="Phone Number"
+                       formControlName="phoneNumber"
+                       class="form-control"
+                       required>
+                @if (hasError(restaurantForm,'phoneNumber', 'required')) {
+                  <span class="error-message">Restaurant phone number is required</span>
+                }
+              </div>
+
+              <div class="button-container">
+                <button matStepperPrevious class="btn-back">Back</button>
+                <button matStepperNext class="btn-next" (click)="onSubmit()">Submit</button>
+              </div>
+            </form>
+          </mat-step>
+        }
+
+        <!--
+        todo Vielleicht finalen Check-Data Screen
+        <mat-step class="custom-step">
+          <ng-template matStepLabel>Check Data</ng-template>
+          <div class="completion-content">
+            <p class="completion-message">You are now done.</p>
+            <div class="button-container">
+              <button mat-stroked-button matStepperPrevious class="btn-back">Back</button>
+              <button mat-raised-button (click)="stepper.reset()" class="btn-reset">Reset</button>
+            </div>
+          </div>
+        </mat-step>
+        -->
+      </mat-stepper>
+
+    </div>
+  </div>
+</div>
