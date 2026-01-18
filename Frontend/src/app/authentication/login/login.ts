@@ -34,9 +34,10 @@ export class Login {
         password: formValue.password,
       });
 
-      // TODO: Implement actual authentication logic here
-
       this.authService.handleLogin(formValue.email?.toString(), formValue.password?.toString());
+
+      //todo redirect zu dashboard wenn erfolgreich, sonst error
+
     } else {
       console.log('Login failed - form is invalid');
     }
@@ -53,5 +54,10 @@ export class Login {
   navigateToRegister(event: Event): void {
     event.preventDefault();
     this.router.navigate(['/register']);
+  }
+
+  protected navigateToPasswordReset(event: Event): void {
+    event.preventDefault();
+    this.router.navigate(['/passwordReset']);
   }
 }

@@ -103,8 +103,7 @@ label {
   border-color: #7cb518;
 }
 
-.btn-login {
-  width: 100%;
+.btn-next {
   padding: 14px;
   background-color: #7cb518;
   color: #ffffff;
@@ -117,13 +116,37 @@ label {
   margin-bottom: 16px;
 }
 
-.btn-login:hover {
+.btn-next:hover {
   background-color: #6da015;
 }
 
-.btn-login:active {
+.btn-next:active {
   background-color: #5d8b12;
 }
+
+.btn-back {
+  padding: 14px;
+  background-color: #ffffff;
+  color: #000000;
+  font-size: 16px;
+  font-weight: 600;
+  border: 2px solid #000000;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 16px;
+  margin-right: 16px;}
+
+.btn-back:hover {
+  background-color: #000000;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-back:active {
+  background-color: #5d8b12;
+}
+
 
 .signup-text {
   text-align: center;
