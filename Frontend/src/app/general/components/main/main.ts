@@ -24,4 +24,8 @@ export class Main {
   navigateToRegister(): void {
     this.router.navigate(['/register']);
   }
+
+  protected navigateToCustomer() {
+    this.router.navigate(['/customer']);
+  }
 }

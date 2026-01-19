@@ -1,5 +1,14 @@
 
 Forms in Angular: https://www.youtube.com/watch?v=kWbk-dOJaNQ
 
+Material Stepper (Register Process): https://material.angular.dev/components/stepper/overview
+
+Left-Side-Bar-Menu: https://www.youtube.com/watch?v=ZRtVGFtIUjs
+
 
 npm install @angular/material @angular/cdk
+
+npm install @fortawesome/fontawesome-free
+
+
+
