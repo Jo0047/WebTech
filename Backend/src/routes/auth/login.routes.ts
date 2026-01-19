@@ -12,3 +12,4 @@ router.post("/login", async (req, res) => {
         is_owner: response.is_owner,
     });
 });
+export default router;
