@@ -1,85 +1,3 @@
-CREATE TABLE IF NOT EXISTS address (
-    id SERIAL PRIMARY KEY,
-
-    street TEXT NOT NULL,
-    street_number TEXT NOT NULL,
-    zip_code TEXT NOT NULL,
-    city TEXT NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS cuisine (
-    cuisine_name TEXT PRIMARY KEY,
-);
-
-
-CREATE TABLE IF NOT EXISTS categories (
-    cat_name TEXT PRIMARY KEY,
-);
-
-
-CREATE TABLE IF NOT EXISTS drink (
-    drink_name TEXT PRIMARY KEY,
-
-    category TEXT NOT NULL,
-    ingredients TEXT,
-    alcoholic BOOLEAN DEFAULT FALSE,
-    price DECIMAL(10, 2) NOT NULL,
-
-    restaurant_id INT NOT NULL,
-    FOREIGN KEY restaurant_id REFERENCES restaurant(id)
-    -- TODO photo
-    );
-
-CREATE TABLE IF NOT EXISTS "user" (
-    email TEXT PRIMARY KEY,
-
-    password TEXT NOT NULL,
-    first_name TEXT NOT NULL,
-    last_name TEXT NOT NULL,
-    is_owner BOOLEAN DEFAULT FALSE,
-
-    FOREIGN KEY (address_id) REFERENCES address(id),
-    address_id INT NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS review (
-    id SERIAL PRIMARY KEY,
-
-    content TEXT NOT NULL,
-    rating INT NOT NULL,
-
-    FOREIGN KEY restaurant_id REFERENCES restaurant(id),
-    restaurant_id NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS voucher (
-    id SERIAL PRIMARY KEY,
-
-    text TEXT NOT NULL,
-    discount NUMBER NOT NULL,
-
-    FOREIGN KEY restaurant_id REFERENCES restaurant(id),
-    restaurant_id NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS restaurant (
-    id SERIAL PRIMARY KEY,
-
-    restaurant_name TEXT NOT NULL,
-    restaurant_email TEXT,
-    phone_number TEXT,
-
-    FOREIGN KEY (address_id) REFERENCES address(id),
-    address_id INT NOT NULL,
-    FOREIGN KEY (owner_email) REFERENCES "user"(email),
-    owner_email TEXT NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS "order" (
-    id SERIAL PRIMARY KEY,
-    status order_status NOT NULL DEFAULT 'pending'
-);
-
 -------------------ENUMS--------------------------------
 CREATE TYPE order_status AS ENUM (
     'pending',
@@ -90,9 +8,100 @@ CREATE TYPE order_status AS ENUM (
     'arrived'
 );
 
+-------------------TABLES--------------------------------
+
+CREATE TABLE IF NOT EXISTS address (
+                                       id SERIAL PRIMARY KEY,
+
+                                       street TEXT NOT NULL,
+                                       street_number TEXT NOT NULL,
+                                       zip_code TEXT NOT NULL,
+                                       city TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "user" (
+                                      email TEXT PRIMARY KEY,
+
+                                      password TEXT NOT NULL,
+                                      first_name TEXT NOT NULL,
+                                      last_name TEXT NOT NULL,
+                                      is_owner BOOLEAN DEFAULT FALSE,
+
+                                      FOREIGN KEY (address_id) REFERENCES address(id),
+    address_id INT NOT NULL
+    );
+
+CREATE TABLE IF NOT EXISTS restaurant (
+                                          id SERIAL PRIMARY KEY,
+
+                                          restaurant_name TEXT NOT NULL,
+                                          restaurant_email TEXT,
+                                          phone_number TEXT,
+
+                                          FOREIGN KEY (address_id) REFERENCES address(id),
+    address_id INT NOT NULL,
+    FOREIGN KEY (owner_email) REFERENCES "user"(email),
+    owner_email TEXT NOT NULL
+    );
+
+CREATE TABLE IF NOT EXISTS "order" (
+                                       id SERIAL PRIMARY KEY,
+                                       status order_status NOT NULL DEFAULT 'pending'
+);
+
+
+CREATE TABLE IF NOT EXISTS cuisine (
+                                       cuisine_name TEXT PRIMARY KEY
+);
+
+
+CREATE TABLE IF NOT EXISTS categories (
+                                          cat_name TEXT PRIMARY KEY
+);
+
+
+CREATE TABLE IF NOT EXISTS drink (
+                                     id SERIAL PRIMARY KEY,
+                                     drink_name TEXT NOT NULL,
+
+                                     category TEXT NOT NULL,
+                                     ingredients TEXT,
+                                     alcoholic BOOLEAN DEFAULT FALSE,
+                                     price DECIMAL(10, 2) NOT NULL,
+
+    restaurant_id INT NOT NULL,
+    FOREIGN KEY (restaurant_id) REFERENCES restaurant(id)
+    );
+
+
+
+CREATE TABLE IF NOT EXISTS review (
+                                      id SERIAL PRIMARY KEY,
+
+                                      content TEXT NOT NULL,
+                                      rating INT NOT NULL,
+
+                                      restaurant_id INT NOT NULL,
+                                      FOREIGN KEY (restaurant_id) REFERENCES restaurant(id)
+    );
+
+CREATE TABLE IF NOT EXISTS voucher (
+                                       id SERIAL PRIMARY KEY,
+
+                                       text TEXT NOT NULL,
+                                       discount INT NOT NULL,
+
+                                       restaurant_id INT NOT NULL,
+                                       FOREIGN KEY (restaurant_id) REFERENCES restaurant(id)
+
+    );
+
+
+
+
 --------------------------------------JUNCTION TABLES-----------------------------------------
 CREATE TABLE IF NOT EXISTS cuisine_restaurant (
-    PRIMARY KEY (cuisine, restaurant_id)
+                                                  PRIMARY KEY (cuisine, restaurant_id),
 
     cuisine TEXT NOT NULL,
     restaurant_id INT NOT NULL,
@@ -102,17 +111,17 @@ CREATE TABLE IF NOT EXISTS cuisine_restaurant (
     );
 
 CREATE TABLE IF NOT EXISTS user_order (
-    PRIMARY KEY (user_email, order_id)
+                                          PRIMARY KEY (user_email, order_id),
 
     user_email TEXT NOT NULL,
     order_id INT NOT NULL,
 
-    FOREIGN KEY (user_email) REFERENCES "user"(user_email),
+    FOREIGN KEY (user_email) REFERENCES "user"(email),
     FOREIGN KEY (order_id) REFERENCES "order"(id)
-);
+    );
 
 CREATE TABLE IF NOT EXISTS order_drinks (
-    PRIMARY KEY (order_id, drink_id),
+                                            PRIMARY KEY (order_id, drink_id),
 
     quantity INT DEFAULT 1,
     order_id INT NOT NULL,
@@ -120,4 +129,4 @@ CREATE TABLE IF NOT EXISTS order_drinks (
 
     FOREIGN KEY (order_id) REFERENCES "order"(id),
     FOREIGN KEY (drink_id) REFERENCES drink(id)
-);
+    );
