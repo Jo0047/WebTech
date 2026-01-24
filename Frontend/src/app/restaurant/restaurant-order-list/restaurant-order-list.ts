@@ -1,4 +1,26 @@
-import { Component } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+enum OrderStatus {
+  pending,
+  rejected,
+  preparing,
+  ready,
+  dispatched,
+  arrived
+}
+
+interface DrinkItem {
+  drink_name: string;
+  quantity: number;
+  unit_price: number; // e.g., 4.50
+}
+
+interface Order {
+  order_id: number;
+  order_status: OrderStatus;
+  drinks: DrinkItem[];
+}
 
 @Component({
   selector: 'app-restaurant-order-list',
@@ -6,40 +28,32 @@ import { Component } from '@angular/core';
   templateUrl: './restaurant-order-list.html',
   styleUrl: './restaurant-order-list.css',
 })
-export class RestaurantOrderList {
-  orders = [
-      {
-        id: 101,
-        status: "pending",
-        drinks: [
-          { drink_name: "Mojito", quantity: 2, price: 8.5 },
-          { drink_name: "Lemonade", quantity: 1, price: 3.0 }
-        ]
-      },
-      {
-        id: 102,
-        status: "preparing",
-        drinks: [
-          { drink_name: "Old Fashioned", quantity: 1, price: 10.0 },
-          { drink_name: "Whiskey Sour", quantity: 2, price: 9.0 }
-        ]
-      },
-      {
-        id: 103,
-        status: "ready",
-        drinks: [
-          { drink_name: "Beer", quantity: 3, price: 5.0 },
-          { drink_name: "Gin & Tonic", quantity: 1, price: 7.5 }
-        ]
-      },
-      {
-        id: 104,
-        status: "dispatched",
-        drinks: [
-          { drink_name: "Tequila Shot", quantity: 4, price: 4.0 }
-        ]
-      }
-    ];
+export class RestaurantOrderList implements OnInit{
 
+  private http = inject(HttpClient);
+  apiUrl = 'http://localhost:3000/data/order';
+
+  orders: Order[] = [];
+
+
+  ngOnInit() {
+    this.loadOrders();
+  }
+
+  loadOrders() {
+    const restaurantId = 1; //TODO Get ID
+
+    this.http.get<Order[]>(this.apiUrl, {
+      params: { restaurant_id: restaurantId }
+    }).subscribe({
+      next: (data) => {
+        this.orders = data;
+        console.log('orders loaded:', this.orders);
+      },
+      error: (err) => {
+        console.error('Error fetching drinks:', err);
+      }
+    });
+  }
 
 }

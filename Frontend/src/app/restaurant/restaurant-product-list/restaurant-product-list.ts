@@ -16,7 +16,6 @@ interface Drink {
 })
 export class RestaurantProductList implements OnInit {
   private http = inject(HttpClient);
-
   apiUrl = 'http://localhost:3000/data/drinks';
 
   products: Drink[] = [];
