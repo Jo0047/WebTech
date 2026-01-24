@@ -7,6 +7,6 @@ async function getDrinksByRestaurant(restaurant_id: number) {
         'SELECT drink_name, category, ingredients, alcoholic, price FROM drink WHERE restaurant_id = $1',
         [restaurant_id]
     );
-    return drinks;
+    return drinks.rows;
 }
 export { getDrinksByRestaurant };
