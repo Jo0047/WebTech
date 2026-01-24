@@ -17,26 +17,11 @@ export class SideBarMenu {
   @Input() isMenuOpen = false;
   @Output() menuClosed = new EventEmitter<void>();
 
-  items = [
-    {
-      routelink: '/customer/restaurants',
-      label: 'Home',
-      icon: 'fa-solid fa-utensils',
-      isActive: true
-    },
-    {
-      routelink: '/customer/dashboard',
-      label: 'Orders',
-      icon: 'fa-solid fa-basket-shopping',
-      isActive: false
-    },
-    {
-      routelink: '/customer/profile',
-      label: 'Profile',
-      icon: "fa-solid fa-user",
-      isActive: false
-    }
-  ];
+  @Input() items: {
+    routelink: string;
+    label: string;
+    icon: string;
+  }[] = [];
 
   constructor(private router: Router) {}
 

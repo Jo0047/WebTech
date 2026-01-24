@@ -9,6 +9,10 @@ import {CustomerMain} from './customer/customer-main/customer-main';
 import {CustomerDashboard} from './customer/customer-dashboard/customer-dashboard';
 import {Profile} from './customer/profile/profile';
 import {CustomerRestaurantList} from './customer/customer-restaurant-list/customer-restaurant-list';
+import {RestaurantMain} from './restaurant/restaurant-main/restaurant-main';
+import {RestaurantDashboard} from './restaurant/restaurant-dashboard/restaurant-dashboard';
+import {RestaurantProcessOrder} from './restaurant/restaurant-process-order/restaurant-process-order';
+import {RestaurantProductList} from './restaurant/restaurant-product-list/restaurant-product-list';
 
 export const routes: Routes = [
   { path: '', component: Main },
@@ -27,12 +31,13 @@ export const routes: Routes = [
       { path: 'profile', component: Profile }
     ]},
 
-  { path: 'owner',
-    component: CustomerMain,
+  { path: 'restaurant',
+    component: RestaurantMain,
     children: [
-      { path: '', redirectTo: 'restaurants', pathMatch: 'full' },
-      { path: 'restaurants', component: CustomerRestaurantList },
-      { path: 'dashboard', component: CustomerDashboard },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', component: RestaurantDashboard },
+      { path: 'orders', component: RestaurantProcessOrder },
+      { path: 'products', component: RestaurantProductList },
       { path: 'profile', component: Profile }
     ]},
 

@@ -1,37 +1,43 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { SideBarMenu } from '../../general/components/side-bar-menu/side-bar-menu';
+import {RouterOutlet} from '@angular/router';
+import {SideBarMenu} from '../../general/components/side-bar-menu/side-bar-menu';
 
 @Component({
-  selector: 'app-customer-main',
+  selector: 'app-restaurant-main',
   imports: [
     RouterOutlet,
     SideBarMenu
   ],
-  templateUrl: './customer-main.html',
-  styleUrl: './customer-main.css',
+  templateUrl: './restaurant-main.html',
+  styleUrl: './restaurant-main.css',
 })
-export class CustomerMain {
+export class RestaurantMain {
   isMenuOpen = false;
   user = "Mustermann"; // Todo get from login
 
-  customerMenu = [
+  restaurantMenu = [
     {
-      routelink: '/customer/restaurants',
-      label: 'Home',
-      icon: 'fa-solid fa-utensils',
+      routelink: '/restaurant/dashboard',
+      label: 'Dashboard',
+      icon: 'fa-solid fa-chart-line',
     },
     {
-      routelink: '/customer/dashboard',
+      routelink: '/restaurant/orders',
       label: 'Orders',
-      icon: 'fa-solid fa-basket-shopping',
+      icon: 'fa-solid fa-receipt',
     },
     {
-      routelink: '/customer/profile',
+      routelink: '/restaurant/products',
+      label: 'Menu',
+      icon: 'fa-solid fa-list',
+    },
+    {
+      routelink: '/restaurant/profile',
       label: 'Profile',
       icon: 'fa-solid fa-user',
     }
   ];
+
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
