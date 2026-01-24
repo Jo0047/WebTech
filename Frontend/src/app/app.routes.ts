@@ -13,6 +13,7 @@ import {RestaurantMain} from './restaurant/restaurant-main/restaurant-main';
 import {RestaurantDashboard} from './restaurant/restaurant-dashboard/restaurant-dashboard';
 import {RestaurantProcessOrder} from './restaurant/restaurant-process-order/restaurant-process-order';
 import {RestaurantProductList} from './restaurant/restaurant-product-list/restaurant-product-list';
+import {RestaurantOrderList} from './restaurant/restaurant-order-list/restaurant-order-list';
 
 export const routes: Routes = [
   { path: '', component: Main },
@@ -36,7 +37,7 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: RestaurantDashboard },
-      { path: 'orders', component: RestaurantProcessOrder },
+      { path: 'orders', component: RestaurantOrderList },
       { path: 'products', component: RestaurantProductList },
       { path: 'profile', component: Profile }
     ]},
