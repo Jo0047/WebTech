@@ -1,0 +1,21 @@
+<div class="restaurant-card">
+  @if (orders.length > 0) {
+    @for (order of orders; track order.id) {
+      <div class="order-card">
+        <h3>Order #{{ order.id }} - Status: <span class="{{ order.status }}">{{ order.status }}</span></h3>
+
+        <div class="drinks-grid">
+          @for (drink of order.drinks; track drink.drink_name) {
+            <div class="drink-card">
+              <h4>{{ drink.drink_name }}</h4>
+              <p>Quantity: {{ drink.quantity }}</p>
+              <p>Price: ${{ drink.price }}</p>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  } @else {
+    <p>No orders for this restaurant yet.</p>
+  }
+</div>
