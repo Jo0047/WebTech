@@ -27,7 +27,7 @@ export class RestaurantMain {
       icon: 'fa-solid fa-receipt',
     },
     {
-      routelink: '/restaurant/menu',
+      routelink: '/restaurant/products',
       label: 'Menu',
       icon: 'fa-solid fa-list',
     },

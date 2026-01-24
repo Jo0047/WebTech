@@ -30,6 +30,6 @@ export class Main {
   }
 
   protected navigateToRestaurant() {
-    this.router.navigate(['/owner']);
+    this.router.navigate(['/restaurant']);
   }
 }
