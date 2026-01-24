@@ -2,6 +2,7 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import loginRoutes from './routes/auth/login.routes';
+import drinkRoutes from './routes/drinks/drinks.routes';
 
 const app: Application = express();
 
@@ -15,6 +16,7 @@ app.get('/', (_req, res) => {
 
 
 app.use('/auth', loginRoutes);
+app.use('/data', drinkRoutes);
 
 const PORT = process.env["PORT"] || 3000;
 app.listen(PORT, () => {
