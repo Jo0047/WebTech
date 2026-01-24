@@ -9,6 +9,7 @@ import {CustomerMain} from './customer/customer-main/customer-main';
 import {CustomerDashboard} from './customer/customer-dashboard/customer-dashboard';
 import {Profile} from './customer/profile/profile';
 import {CustomerRestaurantList} from './customer/customer-restaurant-list/customer-restaurant-list';
+import {RestaurantMain} from './restaurant/restaurant-main/restaurant-main';
 
 export const routes: Routes = [
   { path: '', component: Main },
@@ -28,7 +29,7 @@ export const routes: Routes = [
     ]},
 
   { path: 'owner',
-    component: CustomerMain,
+    component: RestaurantMain,
     children: [
       { path: '', redirectTo: 'restaurants', pathMatch: 'full' },
       { path: 'restaurants', component: CustomerRestaurantList },
