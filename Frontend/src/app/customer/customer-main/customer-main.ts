@@ -15,6 +15,24 @@ export class CustomerMain {
   isMenuOpen = false;
   user = "Mustermann"; // Todo get from login
 
+  customerMenu = [
+    {
+      routelink: '/customer/restaurants',
+      label: 'Home',
+      icon: 'fa-solid fa-utensils',
+    },
+    {
+      routelink: '/customer/dashboard',
+      label: 'Orders',
+      icon: 'fa-solid fa-basket-shopping',
+    },
+    {
+      routelink: '/customer/profile',
+      label: 'Profile',
+      icon: 'fa-solid fa-user',
+    }
+  ];
+
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
 

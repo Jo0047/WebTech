@@ -24,7 +24,8 @@
 
   <app-side-bar-menu
     [isMenuOpen]="isMenuOpen"
-    (menuClosed)="closeMenu()">
+    (menuClosed)="closeMenu()"
+    [items]="customerMenu">
   </app-side-bar-menu>
 
   <div class="main-container">

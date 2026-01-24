@@ -28,4 +28,8 @@ export class Main {
   protected navigateToCustomer() {
     this.router.navigate(['/customer']);
   }
+
+  protected navigateToRestaurant() {
+    this.router.navigate(['/owner']);
+  }
 }
