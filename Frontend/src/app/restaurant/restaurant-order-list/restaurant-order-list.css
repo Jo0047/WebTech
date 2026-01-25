@@ -1,0 +1,104 @@
+/* Grid container for all orders (optional, can wrap all orders) */
+.orders-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* stack orders vertically */
+  gap: 24px;
+  padding: 20px;
+}
+
+/* Individual order card */
+.order-card {
+  background-color: #fefefe;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Hover effect for order card */
+.order-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Order header */
+.order-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+  color: #2c3e50;
+}
+
+/* Order status badge */
+.order-card span {
+  font-weight: bold;
+  text-transform: capitalize;
+  padding: 2px 8px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.85rem;
+}
+
+.pending    { background-color: #f39c12; } /* orange */
+.preparing  { background-color: #3498db; } /* blue */
+.ready      { background-color: #2ecc71; } /* green */
+.dispatched { background-color: #9b59b6; } /* purple */
+.arrived    { background-color: #16a085; } /* teal */
+.rejected   { background-color: #e74c3c; } /* red */
+
+/* Grid for drinks inside each order */
+.drinks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 16px;
+}
+
+/* Individual drink card */
+.drink-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Hover effect */
+.drink-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Drink text styling */
+.drink-card h4 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  color: #2c3e50;
+}
+
+.drink-card p {
+  font-size: 0.9rem;
+  margin: 4px 0;
+  color: #555;
+}
+
+.drink-card .price {
+  font-weight: bold;
+  margin-top: 8px;
+  color: #e74c3c; /* accent color */
+}
+
+.drink-card p span {
+  font-weight: bold;
+  color: #16a085;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .drinks-grid {
+    grid-template-columns: 1fr; /* stack drink cards on mobile */
+  }
+}

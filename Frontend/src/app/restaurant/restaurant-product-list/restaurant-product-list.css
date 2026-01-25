@@ -1,0 +1,57 @@
+/* Grid container */
+.drinks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;        /* space between cards */
+  padding: 20px;
+}
+
+/* Individual card */
+.drink-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Hover effect */
+.drink-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Card text styling */
+.drink-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  color: #2c3e50;
+}
+
+.drink-card p {
+  font-size: 0.9rem;
+  margin: 4px 0;
+  color: #555;
+}
+
+.drink-card .price {
+  font-weight: bold;
+  margin-top: 8px;
+  color: #e74c3c; /* accent color */
+}
+
+.drink-card p span {
+  font-weight: bold;
+  color: #16a085;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .drinks-grid {
+    grid-template-columns: 1fr; /* stack on mobile */
+  }
+}

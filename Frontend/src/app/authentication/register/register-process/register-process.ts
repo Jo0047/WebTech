@@ -3,9 +3,9 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {MatInput} from '@angular/material/input';
 import {MatStep, MatStepLabel, MatStepper, MatStepperNext, MatStepperPrevious} from '@angular/material/stepper';
 import {UserRole} from '@models/user-role';
-import {AuthService} from '../../auth-service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RegistrationData} from '@models/user-data';
+import {AuthenticationService} from '../../../general/services/authentication.service';
 
 @Component({
   selector: 'app-register-process',
@@ -29,7 +29,7 @@ export class RegisterProcess {
 
   userRole = UserRole.restaurant
   isLinear = true;
-  authService = inject(AuthService);
+  authService = inject(AuthenticationService);
   passwordMismatchError = false;
 
   basicInfoForm = new FormGroup({

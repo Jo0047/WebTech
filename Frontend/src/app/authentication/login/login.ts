@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {AuthService} from '../auth-service';
+import {AuthenticationService} from '../../general/services/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +16,7 @@ export class Login {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required])
   })
-  authService = inject(AuthService);
+  authService = inject(AuthenticationService);
 
   constructor(
     private router: Router,
