@@ -34,10 +34,23 @@ export class Login {
         password: formValue.password,
       });
 
-      this.authService.handleLogin(formValue.email?.toString(), formValue.password?.toString());
+      this.authService.handleLogin(formValue.email?.toString(), formValue.password?.toString()).subscribe({
+        next: (response) => {
+          console.log('Success:', response);
+          this.router.navigate(['/customer']);
+        },
+        error: (error) => {
+          console.error('Error:', error);
+          if (error.status === 400) {
+            alert(error.error.message);
+          } else {
+            alert('Login failed. Please try again.');
+          }
+        }
+      });
 
       //todo redirect zu dashboard wenn erfolgreich, sonst error
-
+      //todo basierend auf is_owner userRole festelgen und zum "Main" screen navigieren und Sidebar/(Warenkorb) dementsprechend anzeigen.
     } else {
       console.log('Login failed - form is invalid');
     }

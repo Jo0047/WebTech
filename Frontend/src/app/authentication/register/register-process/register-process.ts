@@ -33,7 +33,8 @@ export class RegisterProcess {
   passwordMismatchError = false;
 
   basicInfoForm = new FormGroup({
-    name: new FormControl('', Validators.required),
+    firstname: new FormControl('', Validators.required),
+    lastname: new FormControl('', Validators.required),
     email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
     password: new FormControl('', [Validators.required]),
     confirmPassword: new FormControl('', Validators.required),
@@ -79,7 +80,8 @@ export class RegisterProcess {
       }
 
       const registrationData = new RegistrationData(
-        basicInfoFormValue.name!,
+        basicInfoFormValue.firstname!,
+        basicInfoFormValue.lastname!,
         basicInfoFormValue.email!,
         basicInfoFormValue.password!,
         addressFormValue.street!,
@@ -91,20 +93,23 @@ export class RegisterProcess {
         this.userRole === UserRole.restaurant ? restaurantFormValue.phoneNumber! : undefined,
       );
 
-      if (this.userRole == UserRole.customer) {
+      console.log(registrationData);
 
-        if(this.authService.registerCustomer(registrationData)){
-          //todo navigieren zum richtigen Dashboard/Screen
+      this.authService.register(registrationData).subscribe({
+        next: (response) => {
+          console.log('Success:', response);
+          alert('Successfully registered!');
+          this.router.navigate(['/login']);
+        },
+        error: (error) => {
+          console.error('Error:', error);
+          if (error.status === 400) {
+            alert(error.error.message);
+          } else {
+            alert('Registration failed. Please try again.');
+          }
         }
-
-      }else{
-
-        if(this.authService.registerRestaurant(registrationData)){
-          //todo navigieren zum richtigen Dashboard/Screen
-        }
-
-
-      }
+      });
 
     } else {
       console.log('Registration failed - form is invalid');

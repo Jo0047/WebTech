@@ -1,37 +1,36 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {RegistrationData} from '@models/user-data';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {catchError, Observable, tap} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
 
+  private http = inject(HttpClient);
+  apiUrl: string = 'http://localhost:3000/auth';
 
-  registerCustomer(registrationData: RegistrationData):boolean {
-    console.log(registrationData.toJSONString());
+  constructor() {}
 
-    //todo send to endpoint and handle response
+  register(registrationData: RegistrationData):Observable<Object> {
 
-    return false;
+    const body = registrationData.toJSONString();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.post(`${this.apiUrl}/register`,body,{headers: headers})
   }
 
-  registerRestaurant(registrationData: RegistrationData):boolean{
-    console.log(registrationData.toJSONString());
+  handleLogin(email: string | undefined, password: string | undefined):Observable<Object> {
 
-    //todo send to endpoint and handle response
+    const body = {email: email, password: password};
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
 
-    return false;
-
-  }
-
-  handleLogin(email: string | undefined, password: string | undefined):boolean{
-
-    //todo send to endpoint and handle response
-    //response muss beinhalten ob customer oder restaurant owner.
-    //email muss gespeichert werden -> damit man weis welcher userprofil.
-
-    return false
-
+    return this.http.post(`${this.apiUrl}/login`,body,{headers: headers})
   }
 
 }

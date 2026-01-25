@@ -2,24 +2,24 @@ CREATE TABLE IF NOT EXISTS address (
     id SERIAL PRIMARY KEY,
 
     street TEXT NOT NULL,
-    street_number TEXT NOT NULL,
-    zip_code TEXT NOT NULL,
+    street_number INT NOT NULL,
+    zip_code INT NOT NULL,
     city TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS cuisine (
-    cuisine_name TEXT PRIMARY KEY,
+    cuisine_name TEXT PRIMARY KEY
 );
 
 
 CREATE TABLE IF NOT EXISTS categories (
-    cat_name TEXT PRIMARY KEY,
+    cat_name TEXT PRIMARY KEY
 );
 
 
 CREATE TABLE IF NOT EXISTS drink (
-    drink_name TEXT PRIMARY KEY,
-
+    id SERIAL PRIMARY KEY,
+    drink_name TEXT NOT NULL,
     category TEXT NOT NULL,
     ingredients TEXT,
     alcoholic BOOLEAN DEFAULT FALSE,
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS voucher (
     id SERIAL PRIMARY KEY,
 
     text TEXT NOT NULL,
-    discount NUMBER NOT NULL,
+    discount NUMERIC NOT NULL,
 
     FOREIGN KEY restaurant_id REFERENCES restaurant(id),
     restaurant_id NOT NULL
