@@ -52,8 +52,6 @@ export class Login {
       this.authService.handleLogin(formValue.email?.toString(), formValue.password?.toString()).subscribe({
         next: (response: AuthResponse) => {
           console.log('Success:', response);
-          this.mainMenuService.setEmail(response.email)
-          this.mainMenuService.setIsOwner(response.isOwner)
           this.router.navigate(['/mainmenu']);
         },
         error: (error) => {

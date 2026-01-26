@@ -2,6 +2,7 @@ import {Component, inject} from '@angular/core';
 import {Router, RouterOutlet} from "@angular/router";
 import {SideBarMenu} from "../side-bar-menu/side-bar-menu";
 import {MainMenuService} from '../../services/main-menu.service';
+import {AuthenticationService} from '../../services/auth/authentication.service';
 
 @Component({
   selector: 'app-main-menu',

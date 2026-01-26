@@ -1,28 +1,30 @@
 import { Injectable } from '@angular/core';
+import {AuthResponse} from '@models/user-data';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MainMenuService {
-  private email: any = undefined;
-  private isOwner: boolean = false;
 
-  constructor() {}
+  private _currentUser: AuthResponse | null = null;
 
-  setEmail(email: any) {
-    this.email = email;
+  constructor() {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser != null) {
+      this._currentUser = JSON.parse(storedUser);
+    }
   }
 
-  setIsOwner(isOwner: any) {
-    this.isOwner = isOwner;
+  getCurrentUser(): AuthResponse | null {
+    return this._currentUser;
   }
 
-  getIsOwner() {
-    return this.isOwner;
+  getIsOwner(): boolean {
+    return this._currentUser?.isOwner || false;
   }
 
-  getEmail() {
-    return this.email;
+  getEmail(): string | null {
+    return this._currentUser?.email || null;
   }
 
 }
