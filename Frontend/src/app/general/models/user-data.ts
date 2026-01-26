@@ -73,3 +73,8 @@ export class RegistrationData {
     return JSON.stringify(this.toJSON());
   }
 }
+
+export interface AuthResponse {
+  email: string;
+  isOwner: boolean;
+}

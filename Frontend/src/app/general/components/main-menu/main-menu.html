@@ -1,1 +1,44 @@
-<p>main-menu works!</p>
+<div>
+  <header class="header">
+    <div class="header-container">
+      <div class="logo">
+        <span class="logo-uber">Uber</span>
+        <span class="logo-drinks">Drinks</span>
+      </div>
+
+      <div class="header-controls">
+
+        @if (!mainMenuService.getIsOwner()) {
+          <button class="cart-button" (click)="showCart()">
+            <i class="fa-solid fa-cart-shopping"></i>
+            @if (1 > 0) {
+              <span class="cart-count">{{12}}</span>
+            }
+          </button>
+        }
+
+        <div class="user-profile">
+          <span class="user-name">{{mainMenuService.getEmail()}}</span>
+        </div>
+
+        <button class="menu-toggle"
+                [class.active]="isMenuOpen"
+                (click)="toggleMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <app-side-bar-menu
+    [isMenuOpen]="isMenuOpen"
+    (menuClosed)="closeMenu()"
+    [items]="menuItems()">
+  </app-side-bar-menu>
+
+  <div class="main-container">
+    <router-outlet></router-outlet>
+  </div>
+</div>

@@ -2,6 +2,8 @@ import {Component, inject} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../general/services/authentication.service';
+import {MainMenuService} from '../../general/services/main-menu.service';
+import {AuthResponse} from '@models/user-data';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +19,7 @@ export class Login {
     password: new FormControl('', [Validators.required])
   })
   authService = inject(AuthenticationService);
+  mainMenuService = inject(MainMenuService);
 
   constructor(
     private router: Router,
@@ -35,9 +38,11 @@ export class Login {
       });
 
       this.authService.handleLogin(formValue.email?.toString(), formValue.password?.toString()).subscribe({
-        next: (response) => {
+        next: (response: AuthResponse) => {
           console.log('Success:', response);
-          this.router.navigate(['/customer']);
+          this.mainMenuService.setEmail(response.email)
+          this.mainMenuService.setIsOwner(response.isOwner)
+          this.router.navigate(['/mainmenu']);
         },
         error: (error) => {
           console.error('Error:', error);

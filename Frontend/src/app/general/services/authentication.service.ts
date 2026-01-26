@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {RegistrationData} from '@models/user-data';
+import {AuthResponse, RegistrationData} from '@models/user-data';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -22,14 +22,14 @@ export class AuthenticationService {
     return this.http.post(`${this.apiUrl}/register`,body,{headers: headers})
   }
 
-  handleLogin(email: string | undefined, password: string | undefined):Observable<Object> {
+  handleLogin(email: string | undefined, password: string | undefined):Observable<AuthResponse> {
 
     const body = {email: email, password: password};
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
 
-    return this.http.post(`${this.apiUrl}/login`,body,{headers: headers})
+    return this.http.post<AuthResponse>(`${this.apiUrl}/login`,body,{headers: headers})
   }
 
   resetPassword(){
