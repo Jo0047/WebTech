@@ -98,8 +98,12 @@ export class RegisterProcess {
       this.authService.register(registrationData).subscribe({
         next: (response) => {
           console.log('Success:', response);
-          alert('Successfully registered!');
-          this.router.navigate(['/login']);
+          this.router.navigate(['/login'], {
+            state: {
+              registrationSuccess: true,
+              message: 'Registration successful! Please log in with your credentials.'
+            }
+          });
         },
         error: (error) => {
           console.error('Error:', error);

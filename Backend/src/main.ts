@@ -8,7 +8,11 @@ import getRoutes from './routes/get/get.routes';
 
 const app: Application = express();
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:4200',
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+}));
 app.use(express.json());
 
 app.get('/', (_req, res) => {
