@@ -4,6 +4,7 @@ import cors from 'cors';
 import loginRoutes from './routes/auth/login.routes';
 import drinkRoutes from './routes/drinks/drink.routes';
 import orderRoutes from './routes/orders/order.routes';
+import getRoutes from './routes/get/get.routes';
 
 const app: Application = express();
 
@@ -15,8 +16,8 @@ app.get('/', (_req, res) => {
 });
 
 
-
 app.use('/auth', loginRoutes);
+app.use('/get', getRoutes);
 app.use('/data', drinkRoutes);
 app.use('/data', orderRoutes);
 

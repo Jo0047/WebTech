@@ -1,7 +1,9 @@
 import {Component, inject} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {AuthService} from '../auth-service';
+import {AuthenticationService} from '../../general/services/authentication.service';
+import {MainMenuService} from '../../general/services/main-menu.service';
+import {AuthResponse} from '@models/user-data';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,8 @@ export class Login {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required])
   })
-  authService = inject(AuthService);
+  authService = inject(AuthenticationService);
+  mainMenuService = inject(MainMenuService);
 
   constructor(
     private router: Router,
@@ -34,10 +37,25 @@ export class Login {
         password: formValue.password,
       });
 
-      this.authService.handleLogin(formValue.email?.toString(), formValue.password?.toString());
+      this.authService.handleLogin(formValue.email?.toString(), formValue.password?.toString()).subscribe({
+        next: (response: AuthResponse) => {
+          console.log('Success:', response);
+          this.mainMenuService.setEmail(response.email)
+          this.mainMenuService.setIsOwner(response.isOwner)
+          this.router.navigate(['/mainmenu']);
+        },
+        error: (error) => {
+          console.error('Error:', error);
+          if (error.status === 400) {
+            alert(error.error.message);
+          } else {
+            alert('Login failed. Please try again.');
+          }
+        }
+      });
 
       //todo redirect zu dashboard wenn erfolgreich, sonst error
-
+      //todo basierend auf is_owner userRole festelgen und zum "Main" screen navigieren und Sidebar/(Warenkorb) dementsprechend anzeigen.
     } else {
       console.log('Login failed - form is invalid');
     }

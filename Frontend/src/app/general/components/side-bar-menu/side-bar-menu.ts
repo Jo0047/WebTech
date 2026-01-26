@@ -23,6 +23,8 @@ export class SideBarMenu {
     icon: string;
   }[] = [];
 
+
+
   constructor(private router: Router) {}
 
   closeMenu(): void {

@@ -1,5 +1,6 @@
 export class RegistrationData {
-  name: string;
+  firstname: string;
+  lastname: string;
   email: string;
   password: string;
   street: string;
@@ -11,7 +12,8 @@ export class RegistrationData {
   restaurantPhoneNumber?: string;
 
   constructor(
-    name: string,
+    firstname: string,
+    lastname: string,
     email: string,
     password: string,
     street: string,
@@ -22,7 +24,8 @@ export class RegistrationData {
     restaurantEmail?: string,
     restaurantPhoneNumber?: string,
   ) {
-    this.name = name;
+    this.firstname = firstname;
+    this.lastname = lastname;
     this.email = email;
     this.password = password;
     this.street = street;
@@ -39,7 +42,8 @@ export class RegistrationData {
    */
   toJSON(): object {
     const json: any = {
-      name: this.name,
+      firstname: this.firstname,
+      lastname: this.lastname,
       email: this.email,
       password: this.password,
       street: this.street,
@@ -68,4 +72,9 @@ export class RegistrationData {
   toJSONString(): string {
     return JSON.stringify(this.toJSON());
   }
+}
+
+export interface AuthResponse {
+  email: string;
+  isOwner: boolean;
 }

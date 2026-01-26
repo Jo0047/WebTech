@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {AuthService} from '../auth-service';
 import {Router} from '@angular/router';
+import {AuthenticationService} from '../../general/services/authentication.service';
 
 @Component({
   selector: 'app-password-reset',
@@ -16,7 +16,7 @@ export class PasswordReset {
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
   })
-  authService = inject(AuthService);
+  authService = inject(AuthenticationService);
 
   constructor(
     private router: Router,

@@ -18,15 +18,29 @@
             <ng-template matStepLabel>Personal Information</ng-template>
 
             <div class="form-group">
-              <label>Name</label>
+              <label>Firstname</label>
               <input matInput
                      type="text"
-                     id="name"
-                     placeholder="Name"
-                     formControlName="name"
+                     id="firstnhame"
+                     placeholder="Firstname"
+                     formControlName="firstname"
                      class="form-control"
                      required>
-              @if (hasError(basicInfoForm,'name', 'required')) {
+              @if (hasError(basicInfoForm,'firstname', 'required')) {
+                <span class="error-message">Name is required</span>
+              }
+            </div>
+
+            <div class="form-group">
+              <label>Lastname</label>
+              <input matInput
+                     type="text"
+                     id="lastname"
+                     placeholder="Lastname"
+                     formControlName="lastname"
+                     class="form-control"
+                     required>
+              @if (hasError(basicInfoForm,'lastname', 'required')) {
                 <span class="error-message">Name is required</span>
               }
             </div>

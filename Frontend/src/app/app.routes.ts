@@ -5,15 +5,13 @@ import {Register} from './authentication/register/register';
 import {Main} from './general/components/main/main';
 import {RegisterProcess} from './authentication/register/register-process/register-process';
 import {PasswordReset} from './authentication/password-reset/password-reset';
-import {CustomerMain} from './customer/customer-main/customer-main';
 import {CustomerDashboard} from './customer/customer-dashboard/customer-dashboard';
 import {Profile} from './customer/profile/profile';
 import {CustomerRestaurantList} from './customer/customer-restaurant-list/customer-restaurant-list';
-import {RestaurantMain} from './restaurant/restaurant-main/restaurant-main';
 import {RestaurantDashboard} from './restaurant/restaurant-dashboard/restaurant-dashboard';
-import {RestaurantProcessOrder} from './restaurant/restaurant-process-order/restaurant-process-order';
 import {RestaurantProductList} from './restaurant/restaurant-product-list/restaurant-product-list';
 import {RestaurantOrderList} from './restaurant/restaurant-order-list/restaurant-order-list';
+import {MainMenu} from './general/components/main-menu/main-menu';
 
 export const routes: Routes = [
   { path: '', component: Main },
@@ -22,9 +20,10 @@ export const routes: Routes = [
   { path: 'register', component: Register },
   { path: 'passwordReset', component: PasswordReset },
   { path: 'register/:userRole', component: RegisterProcess },
+  { path: 'mainmenu', component: MainMenu },
 
   { path: 'customer',
-    component: CustomerMain,
+    component: MainMenu,
     children: [
       { path: '', redirectTo: 'restaurants', pathMatch: 'full' },
       { path: 'restaurants', component: CustomerRestaurantList },
@@ -33,7 +32,7 @@ export const routes: Routes = [
     ]},
 
   { path: 'restaurant',
-    component: RestaurantMain,
+    component: MainMenu,
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: RestaurantDashboard },
