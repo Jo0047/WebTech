@@ -88,6 +88,47 @@ async function getAllRestaurants(){
     }
 }
 
+async function getRestaurantsWithCuisine() {
+    const query = {
+        text: `SELECT 
+                   r.id,
+                   r.restaurant_name,
+                   r.restaurant_email,
+                   r.phone_number,
+                   r.address_id,
+                   r.owner_email,
+                   STRING_AGG(cr.cuisine, ', ') AS cuisines
+                FROM restaurant r
+                LEFT JOIN cuisine_restaurant cr ON r.id = cr.restaurant_id
+                GROUP BY r.id, r.restaurant_name, r.restaurant_email, r.phone_number, r.address_id, r.owner_email`
+    };
+
+    try {
+        const result: QueryResult = await pool.query(query);
+
+        if (result.rows.length == 0) {
+            return {
+                success: false,
+                message: `No restaurants found.`,
+            };
+        }
+
+        return {
+            success: true,
+            restaurants: result.rows
+        }
+
+    } catch (error) {
+        console.error('Error fetching restaurants:', error);
+        return {
+            success: false,
+            message: 'Database error: '+error,
+        }
+    }
+
+
+}
+
 /**
  * Get User from Database via email
  * @param email of the user (PK)
@@ -182,4 +223,4 @@ async function getRestaurant(restaurantName: string, addressId: number) {
     }
 }
 
-export {getAllUsers, getAllAddresses, getAllRestaurants, getUser, getAddress, getRestaurant};
+export {getAllUsers, getAllAddresses, getAllRestaurants, getUser, getAddress, getRestaurant,getRestaurantsWithCuisine};
