@@ -23,4 +23,27 @@ async function getOrdersByRestaurant(restaurant_id: number) {
     );
     return response.rows;
 }
-export { getOrdersByRestaurant };
+
+async function rejectOrder(order_id: number) {
+    console.log(order_id, "rejected");
+    await pool.query(
+        'UPDATE "order"\n' +
+        'SET status = \'rejected\'\n' +
+        'WHERE id = $1\n', [order_id]
+    )
+}
+
+async function advanceOrder(order_id: number) {
+    await pool.query(
+        'UPDATE "order"\n' +
+        'SET status = CASE status\n' +
+        '    WHEN \'pending\'    THEN \'preparing\'\n' +
+        '    WHEN \'preparing\'  THEN \'ready\'\n' +
+        '    WHEN \'ready\'      THEN \'dispatched\'\n' +
+        '    WHEN \'dispatched\' THEN \'arrived\'\n' +
+        '    ELSE status\n' +
+        'END\n' +
+        'WHERE id = $1\n', [order_id]
+    )
+}
+export { getOrdersByRestaurant, rejectOrder, advanceOrder };
