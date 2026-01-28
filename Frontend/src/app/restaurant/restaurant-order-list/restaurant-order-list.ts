@@ -59,4 +59,12 @@ export class RestaurantOrderList implements OnInit{
     });
   }
 
+  rejectOrder(order: Order) {
+    console.log(order, "rejected");
+  }
+
+  advanceOrder(order: Order) {
+    console.log(order, "advanced");
+  }
+
 }
