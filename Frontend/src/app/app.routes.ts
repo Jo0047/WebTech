@@ -12,6 +12,7 @@ import {RestaurantDashboard} from './restaurant/restaurant-dashboard/restaurant-
 import {RestaurantProductList} from './restaurant/restaurant-product-list/restaurant-product-list';
 import {RestaurantOrderList} from './restaurant/restaurant-order-list/restaurant-order-list';
 import {MainMenu} from './general/components/main-menu/main-menu';
+import {RestaurantNewProduct} from './restaurant/restaurant-new-product/restaurant-new-product';
 
 export const routes: Routes = [
   { path: '', component: Main },
@@ -38,7 +39,8 @@ export const routes: Routes = [
       { path: 'dashboard', component: RestaurantDashboard },
       { path: 'orders', component: RestaurantOrderList },
       { path: 'products', component: RestaurantProductList },
-      { path: 'profile', component: Profile }
+      { path: 'profile', component: Profile },
+      { path: 'newProduct', component: RestaurantNewProduct },
     ]},
 
 

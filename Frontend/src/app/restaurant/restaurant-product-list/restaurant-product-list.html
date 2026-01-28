@@ -1,9 +1,22 @@
-<h1>
-  Menu
-</h1>
+<div class="menu-header">
+  <h1>Menu</h1>
+  <button class="add-btn" routerLink="/restaurant/newProduct">
+    + Add Item
+  </button>
+</div>
+
+<div class="filter-bar">
+  <label for="category-select">Filter by Category:</label>
+  <select id="category-select" [(ngModel)]="selectedCategory">
+    <option value="">All</option>
+    @for (cat of categories; track cat) {
+      <option value="{{cat}}">{{cat}}</option>
+    }
+  </select>
+</div>
 
 <div class="drinks-grid">
-  @for (product of products; track product.drink_name) {
+  @for (product of filteredProducts; track product.drink_name) {
     <div class="drink-card">
       <h3>{{ product.drink_name }}</h3>
       <p>Category: {{ product.category }}</p>
@@ -11,8 +24,7 @@
       <p>Alcoholic: <span>{{ product.alcoholic ? 'Yes' : 'No' }}</span></p>
       <p class="price">${{ product.price }}</p>
     </div>
-  }@empty {
-    <p>No drinks found for this restaurant.</p>
+  } @empty {
+    <p>No drinks found for this category.</p>
   }
 </div>
-

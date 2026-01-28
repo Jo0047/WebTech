@@ -182,4 +182,23 @@ async function getRestaurant(restaurantName: string, addressId: number) {
     }
 }
 
-export {getAllUsers, getAllAddresses, getAllRestaurants, getUser, getAddress, getRestaurant};
+async function getRestaurantIdByOwnerEmail(email: string) {
+    const query = {
+        text: 'SELECT id FROM restaurant WHERE owner_email=$1',
+        values: [email],
+    };
+     const result: QueryResult = await pool.query(query);
+
+        if (result.rows.length == 0) {
+            return {
+                restaurant_id: -1,
+            };
+        }
+
+        return {
+            restaurant_id: result.rows[0].id,
+        }
+}
+
+
+export {getAllUsers, getAllAddresses, getAllRestaurants, getUser, getAddress, getRestaurant, getRestaurantIdByOwnerEmail};
