@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {RouterLink} from '@angular/router';
 import {FormsModule} from '@angular/forms';
+import {RestaurantService} from '../../general/services/restaurant.service';
 
 interface Drink {
   drink_name: string;
@@ -21,6 +22,7 @@ interface Drink {
   ],
 })
 export class RestaurantProductList implements OnInit {
+  restaurantService: RestaurantService = inject(RestaurantService);
   private http = inject(HttpClient);
   apiUrl = 'http://localhost:3000/data/drink';
 
@@ -36,12 +38,12 @@ export class RestaurantProductList implements OnInit {
     'Tea',
   ];
 
-  ngOnInit() {
-    this.loadDrinks();
+  async ngOnInit() {
+    await this.loadDrinks();
   }
 
-  loadDrinks() {
-    const restaurantId = 1;
+  async loadDrinks() {
+    let restaurantId = await this.restaurantService.getRestaurantId()
 
     this.http.get<Drink[]>(this.apiUrl, {
       params: { restaurant_id: restaurantId }

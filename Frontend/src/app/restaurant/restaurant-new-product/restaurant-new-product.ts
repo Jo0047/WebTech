@@ -1,6 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
+import {RestaurantService} from '../../general/services/restaurant.service';
 
 @Component({
   selector: 'app-restaurant-new-product',
@@ -12,6 +13,7 @@ import {HttpClient} from '@angular/common/http';
 })
 export class RestaurantNewProduct {
   private http = inject(HttpClient);
+  restaurantService: RestaurantService = inject(RestaurantService);
   apiUrl = 'http://localhost:3000/data/drink';
   drinkForm: FormGroup;
 
@@ -34,19 +36,17 @@ export class RestaurantNewProduct {
     });
   }
 
-  submit() {
+  async submit() {
     if (this.drinkForm.invalid) {
       this.drinkForm.markAllAsTouched();
       return;
     }
-
+    let id = await this.restaurantService.getRestaurantId()
     const payload = {
       ...this.drinkForm.value,
-      // todo getRestaurant id from Service
-      restaurant_id: 1,
+      restaurant_id: id,
     };
 
-    console.log('New drink:', payload);
 
     this.http.post(this.apiUrl, payload).subscribe()
   }
