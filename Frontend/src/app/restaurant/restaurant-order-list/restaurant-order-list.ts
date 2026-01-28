@@ -1,5 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import {RestaurantService} from '../../general/services/restaurant.service';
 
 enum OrderStatus {
   pending,
@@ -29,6 +30,8 @@ interface Order {
   styleUrl: './restaurant-order-list.css',
 })
 export class RestaurantOrderList implements OnInit{
+  restaurantService: RestaurantService = inject(RestaurantService);
+
 
   private http = inject(HttpClient);
   apiUrl = 'http://localhost:3000/data/order';
@@ -36,12 +39,12 @@ export class RestaurantOrderList implements OnInit{
   orders: Order[] = [];
 
 
-  ngOnInit() {
-    this.loadOrders();
+  async ngOnInit() {
+    await this.loadOrders();
   }
 
-  loadOrders() {
-    const restaurantId = 1; //TODO Get ID
+  async loadOrders() {
+    let restaurantId = await this.restaurantService.getRestaurantId()
 
     this.http.get<Order[]>(this.apiUrl, {
       params: { restaurant_id: restaurantId }
