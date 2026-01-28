@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-restaurant-new-product',
@@ -10,6 +11,8 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
   ]
 })
 export class RestaurantNewProduct {
+  private http = inject(HttpClient);
+  apiUrl = 'http://localhost:3000/data/drink';
   drinkForm: FormGroup;
 
   categories = [
@@ -45,6 +48,6 @@ export class RestaurantNewProduct {
 
     console.log('New drink:', payload);
 
-    // TODO: send payload to backend
+    this.http.post(this.apiUrl, payload).subscribe()
   }
 }
