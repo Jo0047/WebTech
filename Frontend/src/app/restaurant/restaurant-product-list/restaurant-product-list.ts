@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import {RouterLink} from '@angular/router';
 
 interface Drink {
   drink_name: string;
@@ -12,7 +13,10 @@ interface Drink {
 @Component({
   selector: 'app-restaurant-product-list',
   templateUrl: './restaurant-product-list.html',
-  styleUrl: './restaurant-product-list.css', // Note: standard is usually styleUrls (plural) or styleUrl (Angular 17+)
+  styleUrl: './restaurant-product-list.css',
+  imports: [
+    RouterLink
+  ],
 })
 export class RestaurantProductList implements OnInit {
   private http = inject(HttpClient);
