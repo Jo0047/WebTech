@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {RouterLink} from '@angular/router';
+import {FormsModule} from '@angular/forms';
 
 interface Drink {
   drink_name: string;
@@ -15,7 +16,8 @@ interface Drink {
   templateUrl: './restaurant-product-list.html',
   styleUrl: './restaurant-product-list.css',
   imports: [
-    RouterLink
+    RouterLink,
+    FormsModule
   ],
 })
 export class RestaurantProductList implements OnInit {
@@ -23,24 +25,38 @@ export class RestaurantProductList implements OnInit {
   apiUrl = 'http://localhost:3000/data/drink';
 
   products: Drink[] = [];
+  selectedCategory: string = '';
+
+  categories = [
+    'Soft drink',
+    'Cocktail',
+    'Beer',
+    'Wine',
+    'Coffee',
+    'Tea',
+  ];
 
   ngOnInit() {
     this.loadDrinks();
   }
 
   loadDrinks() {
-    const restaurantId = 1; //TODO Get ID
+    const restaurantId = 1;
 
     this.http.get<Drink[]>(this.apiUrl, {
       params: { restaurant_id: restaurantId }
     }).subscribe({
       next: (data) => {
         this.products = data;
-        console.log('Drinks loaded:', this.products);
       },
-      error: (err) => {
-        console.error('Error fetching drinks:', err);
-      }
+      error: (err) => console.error('Error fetching drinks:', err)
     });
+  }
+
+  get filteredProducts() {
+    if (!this.selectedCategory) return this.products;
+    return this.products.filter(
+      (drink) => drink.category === this.selectedCategory
+    );
   }
 }

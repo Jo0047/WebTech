@@ -32,6 +32,21 @@
   box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
 }
 
+.filter-bar {
+  margin: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-bar select {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+}
+
+
 
 
 /* Grid container */
