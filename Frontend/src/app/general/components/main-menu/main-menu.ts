@@ -19,22 +19,22 @@ export class MainMenu {
 
   restaurantMenu = [
     {
-      routelink: '/restaurant/dashboard',
+      routelink: '/customer/dashboard',
       label: 'Dashboard',
       icon: 'fa-solid fa-chart-line',
     },
     {
-      routelink: '/restaurant/orders',
+      routelink: '/customer/orders',
       label: 'Orders',
       icon: 'fa-solid fa-receipt',
     },
     {
-      routelink: '/restaurant/products',
+      routelink: '/customer/products',
       label: 'Menu',
       icon: 'fa-solid fa-list',
     },
     {
-      routelink: '/restaurant/profile',
+      routelink: '/customer/profile',
       label: 'Profile',
       icon: 'fa-solid fa-user',
     }

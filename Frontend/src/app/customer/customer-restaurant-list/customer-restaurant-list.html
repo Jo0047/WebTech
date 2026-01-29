@@ -38,7 +38,7 @@
   <!-- Restaurant Grid -->
   <div class="restaurant-grid">
     @for(restaurant of restaurants; track restaurant.id) {
-      <div class="restaurant-card">
+      <div class="restaurant-card" (click)="navigateToRestaurant(restaurant)">
         <div class="card-image">
           @if(restaurant.image_link == null || restaurant.image_link == '') {
             <img src="http://localhost:3000/images/defaultImage" [alt]="restaurant.restaurant_name" />

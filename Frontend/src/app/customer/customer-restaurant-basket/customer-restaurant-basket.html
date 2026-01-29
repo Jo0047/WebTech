@@ -1,0 +1,86 @@
+<div class="restaurant-detail-container">
+  @if(restaurant) {
+    <div class="detail-header">
+      <button class="back-button" (click)="goBack()">
+        <span class="back-icon">←</span> Back to Restaurants
+      </button>
+
+      <div class="restaurant-hero">
+        <div class="card-image">
+          @if(restaurant.image_link == null || restaurant.image_link == '') {
+            <img src="http://localhost:3000/images/defaultImage" [alt]="restaurant.restaurant_name" />
+          } @else {
+            <img [src]="restaurant.image_link" [alt]="restaurant.restaurant_name" />
+          }
+        </div>
+
+        <div class="hero-content">
+          <h1 class="restaurant-title">{{ restaurant.restaurant_name }}</h1>
+
+          <div class="restaurant-meta">
+            <div class="cuisines">
+              @for(cuisine of restaurant.cuisines; track cuisine) {
+                <span class="cuisine-badge">{{ cuisine }}</span>
+              }
+            </div>
+
+            <div class="rating-section">
+              <div class="stars">
+                @for(filled of getStarArray(restaurant.average_rating); track $index) {
+                  <span class="star" [class.filled]="filled">★</span>
+                }
+              </div>
+              <span class="rating-value">{{ parseInt(restaurant.average_rating) }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+      <!-- Products Section (Empty for now) -->
+      <div class="products-section">
+        <h2 class="restaurant-title">Menu</h2>
+
+        <div class="empty-state">
+          <p>Menu items will be displayed here</p>
+        </div>
+      </div>
+
+      <!-- Basket Sidebar -->
+      <div class="basket-sidebar">
+        <div class="basket-container">
+          <h3 class="basket-title">Your Order</h3>
+
+          <div class="empty-basket">
+            <p>Your basket is empty</p>
+          </div>
+
+          <!-- Basket Summary (shown even when empty) -->
+          <div class="basket-summary">
+            <div class="summary-row">
+              <span>Items (0)</span>
+              <span>$0.00</span>
+            </div>
+
+            <div class="summary-row total">
+              <span>Total</span>
+              <span class="total-amount">$0.00</span>
+            </div>
+
+            <button
+              class="checkout-btn"
+              disabled>
+              Proceed to Checkout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="loading-state">
+      <p>Loading restaurant details...</p>
+    </div>
+  }
+</div>

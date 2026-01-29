@@ -52,7 +52,7 @@ export class RegistrationData {
       zipCode: this.zipCode,
     };
 
-    // Only include restaurant fields if they exist
+    // Only include customer fields if they exist
     if (this.restaurantName) {
       json.restaurantName = this.restaurantName;
     }

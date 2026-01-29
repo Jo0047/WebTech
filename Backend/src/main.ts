@@ -27,7 +27,7 @@ app.use('/get', getRoutes);
 app.use('/data', drinkRoutes);
 app.use('/data', orderRoutes);
 app.use('/images', imageRoutes);
-app.use('/restaurant', restaurantRoutes);
+app.use('/customer', restaurantRoutes);
 
 const PORT = process.env["PORT"] || 3000;
 app.listen(PORT, () => {

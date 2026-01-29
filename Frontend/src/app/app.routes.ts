@@ -14,6 +14,7 @@ import {RestaurantOrderList} from './restaurant/restaurant-order-list/restaurant
 import {MainMenu} from './general/components/main-menu/main-menu';
 import {authGuard} from './general/services/auth/auth-guard';
 import {RestaurantNewProduct} from './restaurant/restaurant-new-product/restaurant-new-product';
+import {CustomerRestaurantBasket} from './customer/customer-restaurant-basket/customer-restaurant-basket';
 
 export const routes: Routes = [
   { path: '', component: Main },
@@ -30,6 +31,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'restaurants', pathMatch: 'full' },
       { path: 'restaurants', component: CustomerRestaurantList },
       { path: 'dashboard', component: CustomerDashboard },
+      { path: ':restaurantName', component: CustomerRestaurantBasket},
       { path: 'profile', component: Profile }
     ],
     canActivate: [authGuard]

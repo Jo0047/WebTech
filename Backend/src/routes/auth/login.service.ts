@@ -89,7 +89,7 @@ async function register(firstname: string, lastname: string, email: string, pass
         }
 
         const restaurantQuery = {
-            text:  'INSERT INTO restaurant (restaurant_name, restaurant_email, phone_number, address_id, owner_email) VALUES ($1, $2, $3, $4, $5)',
+            text:  'INSERT INTO customer (restaurant_name, restaurant_email, phone_number, address_id, owner_email) VALUES ($1, $2, $3, $4, $5)',
             values: [restaurantName, restaurantEmail, restaurantPhoneNumber,addressId, ownerEmail]
         };
 

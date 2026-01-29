@@ -6,7 +6,7 @@ const imageDir = 'files';
 
 async function getRestaurantImage(restaurantId: number) {
     const query = {
-        text:  'SELECT image_link FROM restaurant WHERE restaurant_id = $1 RETURNING image_link',
+        text:  'SELECT image_link FROM customer WHERE restaurant_id = $1 RETURNING image_link',
         values: [restaurantId],
     };
 

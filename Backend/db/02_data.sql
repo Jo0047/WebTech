@@ -81,7 +81,7 @@ INSERT INTO cuisine_restaurant (cuisine, restaurant_id) VALUES
                                                             ('Mediterranean', 10),
                                                             ('Fusion', 10);
 
--- Drinks for each restaurant (2-3 drinks per restaurant)
+-- Drinks for each customer (2-3 drinks per customer)
 INSERT INTO drink (drink_name, category, ingredients, alcoholic, price, image_link, restaurant_id) VALUES
                                                                                                        -- Sushi Zen (1)
                                                                                                        ('Premium Sake', 'Alcoholic', 'Fermented rice', TRUE, 15.00, null, 1),
@@ -131,7 +131,7 @@ INSERT INTO drink (drink_name, category, ingredients, alcoholic, price, image_li
                                                                                                        ('Mint Lemonade', 'Soft Drink', 'Lemon, Mint, Sugar', FALSE, 4.50, null, 10),
                                                                                                        ('Turkish Coffee', 'Coffee', 'Finely ground coffee', FALSE, 4.00, null, 10);
 
--- Reviews for each restaurant (varied ratings)
+-- Reviews for each customer (varied ratings)
 INSERT INTO review (content, rating, restaurant_id) VALUES
                                                         -- Sushi Zen (1) - Average: 5.0
                                                         ('The Sake was incredible!', 5, 1),
@@ -184,7 +184,7 @@ INSERT INTO review (content, rating, restaurant_id) VALUES
                                                         ('Fresh and healthy options', 5, 10),
                                                         ('Great for vegetarians', 4, 10);
 
--- Vouchers for each restaurant
+-- Vouchers for each customer
 INSERT INTO voucher (text, discount, restaurant_id) VALUES
                                                         ('SUSHI20', 20, 1),
                                                         ('GRILL5', 5, 2),

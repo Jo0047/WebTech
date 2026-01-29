@@ -8,7 +8,7 @@ import {Restaurant} from '@models/restaurant';
 })
 export class RestaurantService {
   private http = inject(HttpClient);
-  apiUrl: string = 'http://localhost:3000/restaurant';
+  apiUrl: string = 'http://localhost:3000/customer';
 
   constructor() {}
 

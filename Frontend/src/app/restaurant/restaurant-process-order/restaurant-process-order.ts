@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-restaurant-process-order',
+  selector: 'app-customer-process-order',
   imports: [],
   templateUrl: './restaurant-process-order.html',
   styleUrl: './restaurant-process-order.css',

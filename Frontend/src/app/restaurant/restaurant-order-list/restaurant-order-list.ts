@@ -25,7 +25,7 @@ interface Order {
 }
 
 @Component({
-  selector: 'app-restaurant-order-list',
+  selector: 'app-customer-order-list',
   imports: [],
   templateUrl: './restaurant-order-list.html',
   styleUrl: './restaurant-order-list.css',

@@ -22,7 +22,7 @@ export class Login {
   private cdr = inject(ChangeDetectorRef);
 
   loginError = signal('')
-  successMessage: string = '';  // Add this
+  successMessage: string = '';
 
   constructor(
     private router: Router,

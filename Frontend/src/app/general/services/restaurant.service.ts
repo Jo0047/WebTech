@@ -32,7 +32,7 @@ export class RestaurantService {
       console.log('Restaurant ID:', res.restaurant_id);
       return res.restaurant_id;
     } catch (error) {
-      console.error('Failed to fetch restaurant ID:', error);
+      console.error('Failed to fetch customer ID:', error);
       return -1; // fallback on error
     }
   }

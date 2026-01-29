@@ -1,10 +1,10 @@
 import {Component, inject} from '@angular/core';
 import {Restaurant} from '@models/restaurant';
 import {Router} from '@angular/router';
-import {RestaurantService} from '../../general/services/restaurant/restaurant.service';
+import {RestaurantService} from '../../general/services/customer/restaurant.service';
 
 @Component({
-  selector: 'app-customer-restaurant-list',
+  selector: 'app-customer-customer-list',
   imports: [],
   templateUrl: './customer-restaurant-list.html',
   styleUrl: './customer-restaurant-list.css',
@@ -27,6 +27,20 @@ export class CustomerRestaurantList {
   getStarArray(restaurant: Restaurant): boolean[] {
     const rating = parseInt(restaurant.average_rating);
     return Array(5).fill(false).map((_, index) => index < Math.round(rating));
+  }
+
+  navigateToRestaurant(restaurant: Restaurant) {
+    this.router.navigate(['/login'], {
+      state: {
+        registrationSuccess: true,
+        message: 'Registration successful! Please log in with your credentials.'
+      }
+    });
+    this.router.navigate(['/customer',restaurant.restaurant_name], {
+      state: {
+        restaurantData: restaurant
+      }
+    });
   }
 
   protected readonly parseInt = parseInt;

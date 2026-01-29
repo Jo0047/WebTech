@@ -13,7 +13,7 @@ interface Drink {
 }
 
 @Component({
-  selector: 'app-restaurant-product-list',
+  selector: 'app-customer-product-list',
   templateUrl: './restaurant-product-list.html',
   styleUrl: './restaurant-product-list.css',
   imports: [
