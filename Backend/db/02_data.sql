@@ -18,9 +18,9 @@ INSERT INTO "user" (email, password, first_name, last_name, is_owner, address_id
 
 -- restaurant_id 1: Sushi Zen (Address 2)
 -- restaurant_id 2: The Big Grill (Address 3)
-INSERT INTO restaurant (restaurant_name, restaurant_email, phone_number, address_id, owner_email) VALUES
-                                                                                                      ('Sushi Zen', 'order@sushizen.com', '555-0101', 2, 'owner@eats.com'),
-                                                                                                      ('The Big Grill', 'hello@biggrill.com', '555-0202', 3, 'owner@eats.com');
+INSERT INTO restaurant (restaurant_name, restaurant_email, phone_number, image_link, address_id, owner_email) VALUES
+                                                                                                      ('Sushi Zen', 'order@sushizen.com', '555-0101', null,2, 'owner@eats.com'),
+                                                                                                      ('The Big Grill', 'hello@biggrill.com', '555-0202', null,3, 'owner@eats.com');
 
 -- Linking Cuisines to Restaurants
 INSERT INTO cuisine_restaurant (cuisine, restaurant_id) VALUES
@@ -29,10 +29,10 @@ INSERT INTO cuisine_restaurant (cuisine, restaurant_id) VALUES
                                                             ('Fusion', 1);
 
 -- Drinks for Sushi Zen (ID 1) and Big Grill (ID 2)
-INSERT INTO drink (drink_name, category, ingredients, alcoholic, price, restaurant_id) VALUES
-                                                                                           ('Premium Sake', 'Alcoholic', 'Fermented rice', TRUE, 15.00, 1),
-                                                                                           ('Green Tea Soda', 'Soft Drink', 'Matcha, Carbonated water', FALSE, 4.50, 1),
-                                                                                           ('Vanilla Milkshake', 'Soft Drink', 'Milk, Vanilla bean, Cream', FALSE, 6.00, 2);
+INSERT INTO drink (drink_name, category, ingredients, alcoholic, price, image_link, restaurant_id) VALUES
+                                                                                           ('Premium Sake', 'Alcoholic', 'Fermented rice', TRUE, 15.00, null,1),
+                                                                                           ('Green Tea Soda', 'Soft Drink', 'Matcha, Carbonated water', FALSE, 4.50, null,1),
+                                                                                           ('Vanilla Milkshake', 'Soft Drink', 'Milk, Vanilla bean, Cream', FALSE, 6.00, null,2);
 
 INSERT INTO review (content, rating, restaurant_id) VALUES
                                                         ('The Sake was incredible!', 5, 1),

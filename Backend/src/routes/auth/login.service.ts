@@ -1,5 +1,5 @@
 import { pool } from '../../db';
-import * as getService from "../get/get.service";
+import * as getService from "../general/get.service";
 import * as bcrypt from 'bcrypt';
 
 import {QueryResult} from "pg";

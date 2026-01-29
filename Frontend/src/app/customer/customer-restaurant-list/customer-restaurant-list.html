@@ -1,1 +1,30 @@
-<p>customer-restaurant-list works!</p>
+<div class="restaurant-container">
+
+  <div class="restaurant-grid">
+    @for(restaurant of restaurants; track restaurant.id){
+      <div class="restaurant-card">
+        <div class="card-image">
+          @if(restaurant.image_link == null || restaurant.image_link == ''){
+            <img src="http://localhost:3000/images/defaultImage" [alt]="restaurant.restaurant_name" />
+          }
+          @else{
+            <img [src]="restaurant.image_link" [alt]="restaurant.restaurant_name" />
+          }
+        </div>
+
+        <div class="card-content">
+          <h3 class="restaurant-name">{{ restaurant.restaurant_name }}</h3>
+
+
+          <div class="rating-section">
+            <div class="stars">
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+    }
+  </div>
+</div>

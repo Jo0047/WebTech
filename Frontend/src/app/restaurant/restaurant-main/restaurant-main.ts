@@ -13,7 +13,7 @@ import {SideBarMenu} from '../../general/components/side-bar-menu/side-bar-menu'
 })
 export class RestaurantMain {
   isMenuOpen = false;
-  user = "Mustermann"; // Todo get from login
+  user = "Mustermann"; // Todo general from login
 
   restaurantMenu = [
     {

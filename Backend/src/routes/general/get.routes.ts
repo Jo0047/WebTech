@@ -1,4 +1,4 @@
-import * as getService from "../get/get.service";
+import * as getService from ".//get.service";
 import {Router} from "express";
 import * as authService from "../auth/login.service";
 
@@ -74,20 +74,6 @@ router.post("/address", async (req, res) => {
     if (result.success) {
         return res.status(200).json({
             address: result.address
-        });
-    } else {
-        return res.status(400).json({
-            message: result.message
-        });
-    }
-})
-
-router.get("/restaurantsWithCuisines", async (req, res) => {
-    const result = await getService.getRestaurantsWithCuisine();
-
-    if (result.success) {
-        return res.status(200).json({
-            restaurants: result.restaurants
         });
     } else {
         return res.status(400).json({
