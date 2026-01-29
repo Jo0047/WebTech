@@ -59,4 +59,34 @@ async function getRestaurantsWithCuisine() {
 
 }
 
-export {getRestaurantsWithCuisine};
+async function getDrinksByRestaurant(restaurantId: number) {
+    const query = {
+        text: 'SELECT * FROM drink WHERE restaurant_id = $1',
+        values: [restaurantId]
+    };
+
+    try {
+        const result: QueryResult = await pool.query(query);
+
+        if (result.rows.length == 0) {
+            return {
+                success: false,
+                message: `No drinks found.`,
+            };
+        }
+
+        return {
+            success: true,
+            drinks: result.rows
+        }
+
+    } catch (error) {
+        console.error('Error fetching restaurants:', error);
+        return {
+            success: false,
+            message: 'Database error: '+error,
+        }
+    }
+}
+
+export {getRestaurantsWithCuisine, getDrinksByRestaurant};

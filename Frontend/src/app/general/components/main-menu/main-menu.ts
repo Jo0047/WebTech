@@ -39,7 +39,7 @@ export class MainMenu {
       icon: 'fa-solid fa-list',
     },
     {
-      routelink: '/restaurant/profile',
+      routelink: '/customer/profile',
       label: 'Profile',
       icon: 'fa-solid fa-user',
     }

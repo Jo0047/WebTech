@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {Restaurant} from '@models/restaurant';
 import {Router} from '@angular/router';
-import {RestaurantService} from '../../general/services/customer/restaurant.service';
+import {RestaurantService} from '../../general/services/restaurant.service';
 
 @Component({
   selector: 'app-customer-customer-list',
@@ -12,7 +12,6 @@ import {RestaurantService} from '../../general/services/customer/restaurant.serv
 export class CustomerRestaurantList {
 
   restaurantService = inject(RestaurantService);
-
   restaurants: Restaurant[] = [];
 
   constructor(
@@ -30,12 +29,6 @@ export class CustomerRestaurantList {
   }
 
   navigateToRestaurant(restaurant: Restaurant) {
-    this.router.navigate(['/login'], {
-      state: {
-        registrationSuccess: true,
-        message: 'Registration successful! Please log in with your credentials.'
-      }
-    });
     this.router.navigate(['/customer',restaurant.restaurant_name], {
       state: {
         restaurantData: restaurant

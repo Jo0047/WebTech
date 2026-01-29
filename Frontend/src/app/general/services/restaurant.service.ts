@@ -1,7 +1,9 @@
 import {inject, Injectable} from '@angular/core';
 import {MainMenuService} from './main-menu.service';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {firstValueFrom} from 'rxjs';
+import {firstValueFrom, Observable} from 'rxjs';
+import {Restaurant} from '@models/restaurant';
+import {Drink} from '@models/drink';
 
 @Injectable({
   providedIn: 'root',
@@ -9,11 +11,19 @@ import {firstValueFrom} from 'rxjs';
 export class RestaurantService {
   mainMenuService: MainMenuService = inject(MainMenuService);
 
-  http = inject(HttpClient);
+  private http = inject(HttpClient);
   apiUrl = 'http://localhost:3000/get/';
-
+  restaurantUrl: string = 'http://localhost:3000/restaurant';
 
   constructor() {
+  }
+
+  getRestaurantsWithCuisineAndRating(): Observable<Restaurant[]> {
+    return this.http.get<Restaurant[]>(`${this.restaurantUrl}/restaurantsWithCuisines`);
+  }
+
+  getDrinksByRestaurant(restaurantId: number | undefined): Observable<Drink[]> {
+    return this.http.get<Drink[]>(`${this.restaurantUrl}/drinks/${restaurantId}`);
   }
 
   async getRestaurantId(): Promise<number> {

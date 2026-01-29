@@ -2,6 +2,13 @@ import {Component, inject} from '@angular/core';
 import {RestaurantService} from '../../general/services/restaurant.service';
 import {Restaurant} from '@models/restaurant';
 import {Router} from '@angular/router';
+import {Drink} from '@models/drink';
+
+
+interface BasketItem {
+  drink: Drink;
+  quantity: number;
+}
 
 @Component({
   selector: 'app-customer-customer-basket',
@@ -10,7 +17,11 @@ import {Router} from '@angular/router';
   styleUrl: './customer-restaurant-basket.css',
 })
 export class CustomerRestaurantBasket {
+
+  restaurantService = inject(RestaurantService);
   restaurant: Restaurant | null = null;
+  drinks: Drink[] = []
+  basket: BasketItem[] = [];
 
   constructor(private router: Router) {
     if (window.history.state.restaurantData) {
@@ -19,6 +30,11 @@ export class CustomerRestaurantBasket {
       // No data available, navigate back to restaurant list
       this.router.navigate(['/customer']);
     }
+
+    this.restaurantService.getDrinksByRestaurant(this.restaurant?.id).subscribe(data => {
+      this.drinks = (data as any).drinks;
+      console.log(this.drinks);
+    });
   }
 
   goBack() {
@@ -30,6 +46,80 @@ export class CustomerRestaurantBasket {
     return Array(5).fill(false).map((_, index) => index < Math.round(ratingNum));
   }
 
-  protected readonly parseInt = parseInt;
+  // Basket Management Methods
+  addToBasket(drink: Drink): void {
+    const existingItem = this.basket.find(item => item.drink.id === drink.id);
 
+    if (existingItem) {
+      existingItem.quantity++;
+    } else {
+      this.basket.push({
+        drink: drink,
+        quantity: 1
+      });
+    }
+
+    console.log('Basket updated:', this.basket);
+  }
+
+  increaseQuantity(drinkId: number): void {
+    const item = this.basket.find(item => item.drink.id === drinkId);
+    if (item) {
+      item.quantity++;
+    }
+  }
+
+  decreaseQuantity(drinkId: number): void {
+    const item = this.basket.find(item => item.drink.id === drinkId);
+    if (item) {
+      if (item.quantity > 1) {
+        item.quantity--;
+      } else {
+        // Remove item if quantity would be 0
+        this.basket = this.basket.filter(basketItem => basketItem.drink.id !== drinkId);
+      }
+    }
+  }
+
+  removeFromBasket(drinkId: number): void {
+    this.basket = this.basket.filter(item => item.drink.id !== drinkId);
+  }
+
+  getQuantityInBasket(drinkId: number): number {
+    const item = this.basket.find(item => item.drink.id === drinkId);
+    return item ? item.quantity : 0;
+  }
+
+  getTotalItems(): number {
+    return this.basket.reduce((total, item) => total + item.quantity, 0);
+  }
+
+  getSubtotal(): number {
+    return this.basket.reduce((total, item) => {
+      const price = typeof item.drink.price === 'string'
+        ? parseFloat(item.drink.price)
+        : item.drink.price;
+      return total + (price * item.quantity);
+    }, 0);
+  }
+
+  getTotal(): number {
+    // You can add delivery fee, taxes, etc. here
+    return this.getSubtotal();
+  }
+
+  formatPrice(price: number | string): string {
+    const numPrice = typeof price === 'string' ? parseFloat(price) : price;
+    return `€${numPrice.toFixed(2)}`;
+  }
+
+  proceedToCheckout(): void {
+    if (this.basket.length > 0) {
+      console.log('Proceeding to checkout with:', this.basket);
+      // Navigate to checkout page or open checkout modal
+      // this.router.navigate(['/checkout'], { state: { basket: this.basket, restaurant: this.restaurant } });
+    }
+  }
+
+  protected readonly parseInt = parseInt;
 }
