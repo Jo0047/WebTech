@@ -1,6 +1,6 @@
 import { Router } from "express";
 import * as authService from "./login.service";
-import * as getService from "../get/get.service";
+import * as getService from "../general/get.service";
 
 const router = Router();
 

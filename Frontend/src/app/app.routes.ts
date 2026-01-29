@@ -12,7 +12,9 @@ import {RestaurantDashboard} from './restaurant/restaurant-dashboard/restaurant-
 import {RestaurantProductList} from './restaurant/restaurant-product-list/restaurant-product-list';
 import {RestaurantOrderList} from './restaurant/restaurant-order-list/restaurant-order-list';
 import {MainMenu} from './general/components/main-menu/main-menu';
+import {authGuard} from './general/services/auth/auth-guard';
 import {RestaurantNewProduct} from './restaurant/restaurant-new-product/restaurant-new-product';
+import {CustomerRestaurantBasket} from './customer/customer-restaurant-basket/customer-restaurant-basket';
 
 export const routes: Routes = [
   { path: '', component: Main },
@@ -21,7 +23,7 @@ export const routes: Routes = [
   { path: 'register', component: Register },
   { path: 'passwordReset', component: PasswordReset },
   { path: 'register/:userRole', component: RegisterProcess },
-  { path: 'mainmenu', component: MainMenu },
+  { path: 'mainmenu', component: MainMenu,canActivate: [authGuard]},
 
   { path: 'customer',
     component: MainMenu,
@@ -29,8 +31,11 @@ export const routes: Routes = [
       { path: '', redirectTo: 'restaurants', pathMatch: 'full' },
       { path: 'restaurants', component: CustomerRestaurantList },
       { path: 'dashboard', component: CustomerDashboard },
+      { path: ':restaurantName', component: CustomerRestaurantBasket},
       { path: 'profile', component: Profile }
-    ]},
+    ],
+    canActivate: [authGuard]
+  },
 
   { path: 'restaurant',
     component: MainMenu,
@@ -41,7 +46,9 @@ export const routes: Routes = [
       { path: 'products', component: RestaurantProductList },
       { path: 'profile', component: Profile },
       { path: 'newProduct', component: RestaurantNewProduct },
-    ]},
+    ],
+    canActivate: [authGuard]
+  },
 
 
 ];

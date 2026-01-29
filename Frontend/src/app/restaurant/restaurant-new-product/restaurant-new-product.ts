@@ -4,7 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {RestaurantService} from '../../general/services/restaurant.service';
 
 @Component({
-  selector: 'app-restaurant-new-product',
+  selector: 'app-customer-new-product',
   templateUrl: './restaurant-new-product.html',
   styleUrl: './restaurant-new-product.css',
   imports: [

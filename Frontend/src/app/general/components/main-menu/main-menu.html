@@ -8,17 +8,8 @@
 
       <div class="header-controls">
 
-        @if (!mainMenuService.getIsOwner()) {
-          <button class="cart-button" (click)="showCart()">
-            <i class="fa-solid fa-cart-shopping"></i>
-            @if (1 > 0) {
-              <span class="cart-count">{{12}}</span>
-            }
-          </button>
-        }
-
         <div class="user-profile">
-          <span class="user-name">{{mainMenuService.getEmail()}}</span>
+          <span class="user-name">{{authService.getCurrentUser()?.email}}</span>
         </div>
 
         <button class="menu-toggle"

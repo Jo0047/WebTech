@@ -1,7 +1,7 @@
-import {Component, inject} from '@angular/core';
+import {ChangeDetectorRef, Component, inject, signal} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {AuthenticationService} from '../../general/services/authentication.service';
+import {AuthenticationService} from '../../general/services/auth/authentication.service';
 import {MainMenuService} from '../../general/services/main-menu.service';
 import {AuthResponse} from '@models/user-data';
 
@@ -19,16 +19,27 @@ export class Login {
     password: new FormControl('', [Validators.required])
   })
   authService = inject(AuthenticationService);
-  mainMenuService = inject(MainMenuService);
+  private cdr = inject(ChangeDetectorRef);
+
+  loginError = signal('')
+  successMessage: string = '';
 
   constructor(
     private router: Router,
-  ) {}
+  ) {
+    if (window.history.state.registrationSuccess) {
+      this.successMessage = window.history.state.message || 'Registration successful!';
+    }
+  }
 
   /**
    * Handle form submission
    */
   onSubmit(): void {
+
+    this.loginError.set('')
+    this.successMessage = '';  // Clear success message on login attempt
+
     if (this.loginForm.valid) {
       const formValue = this.loginForm.value;
 
@@ -40,24 +51,24 @@ export class Login {
       this.authService.handleLogin(formValue.email?.toString(), formValue.password?.toString()).subscribe({
         next: (response: AuthResponse) => {
           console.log('Success:', response);
-          this.mainMenuService.setEmail(response.email)
-          this.mainMenuService.setIsOwner(response.isOwner)
           this.router.navigate(['/mainmenu']);
         },
         error: (error) => {
           console.error('Error:', error);
           if (error.status === 400) {
-            alert(error.error.message);
+            this.loginError.set(error.error.message);
           } else {
-            alert('Login failed. Please try again.');
+            console.log(error.status);
+            this.loginError.set('Login failed. Please try again.');
           }
+
+          this.cdr.detectChanges();
         }
       });
 
-      //todo redirect zu dashboard wenn erfolgreich, sonst error
-      //todo basierend auf is_owner userRole festelgen und zum "Main" screen navigieren und Sidebar/(Warenkorb) dementsprechend anzeigen.
     } else {
       console.log('Login failed - form is invalid');
+      this.cdr.detectChanges();
     }
   }
 

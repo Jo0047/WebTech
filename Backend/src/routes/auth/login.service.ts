@@ -1,8 +1,8 @@
 import { pool } from '../../db';
-import * as getService from "../get/get.service";
+import * as getService from "../general/get.service";
+import * as bcrypt from 'bcrypt';
 
 import {QueryResult} from "pg";
-
 
 async function login(email: string, password: string) {
     const query = {
@@ -13,7 +13,7 @@ async function login(email: string, password: string) {
     try {
         const result: QueryResult = await pool.query(query);
 
-        if (result.rows[0].password == password) {
+        if (await bcrypt.compare(password,result.rows[0].password)){
             return {
                 success: true,
                 email: email,
@@ -67,9 +67,11 @@ async function register(firstname: string, lastname: string, email: string, pass
 
     let isOwner = (restaurantName !== undefined && restaurantEmail !== undefined && restaurantPhoneNumber !== undefined);
 
+    let hashedPassword = await bcrypt.hash(password,15); //hash for 15 rounds
+
     const userQuery = {
         text:  'INSERT INTO "user" (email, password, first_name, last_name, is_owner, address_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING email',
-        values: [email, password, firstname, lastname, isOwner, addressId]
+        values: [email, hashedPassword, firstname, lastname, isOwner, addressId]
     };
 
     let userResult = await pool.query(userQuery)
@@ -87,7 +89,7 @@ async function register(firstname: string, lastname: string, email: string, pass
         }
 
         const restaurantQuery = {
-            text:  'INSERT INTO restaurant (restaurant_name, restaurant_email, phone_number, address_id, owner_email) VALUES ($1, $2, $3, $4, $5)',
+            text:  'INSERT INTO customer (restaurant_name, restaurant_email, phone_number, address_id, owner_email) VALUES ($1, $2, $3, $4, $5)',
             values: [restaurantName, restaurantEmail, restaurantPhoneNumber,addressId, ownerEmail]
         };
 

@@ -61,7 +61,7 @@ async function getAllAddresses() {
 
 async function getAllRestaurants(){
     const query = {
-        text:  'SELECT * FROM restaurant',
+        text:  'SELECT * FROM customer',
     };
 
     try {
@@ -174,7 +174,7 @@ async function getRestaurant(restaurantName: string, addressId: number) {
         }
 
     } catch (error) {
-        console.error('Error fetching restaurant:', error);
+        console.error('Error fetching customer:', error);
         return {
             success: false,
             message: 'Database error: '+error,

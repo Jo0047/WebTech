@@ -2,6 +2,12 @@ import {Component, inject} from '@angular/core';
 import {Router, RouterOutlet} from "@angular/router";
 import {SideBarMenu} from "../side-bar-menu/side-bar-menu";
 import {MainMenuService} from '../../services/main-menu.service';
+import {AuthenticationService} from '../../services/auth/authentication.service';
+import {RestaurantDashboard} from '../../../restaurant/restaurant-dashboard/restaurant-dashboard';
+import {RestaurantOrderList} from '../../../restaurant/restaurant-order-list/restaurant-order-list';
+import {RestaurantProductList} from '../../../restaurant/restaurant-product-list/restaurant-product-list';
+import {Profile} from '../../../customer/profile/profile';
+import {RestaurantNewProduct} from '../../../restaurant/restaurant-new-product/restaurant-new-product';
 
 @Component({
   selector: 'app-main-menu',
@@ -14,7 +20,7 @@ import {MainMenuService} from '../../services/main-menu.service';
 })
 export class MainMenu {
   isMenuOpen = false;
-  mainMenuService = inject(MainMenuService);
+  authService = inject(AuthenticationService);
 
   restaurantMenu = [
     {
@@ -33,7 +39,7 @@ export class MainMenu {
       icon: 'fa-solid fa-list',
     },
     {
-      routelink: '/restaurant/profile',
+      routelink: '/customer/profile',
       label: 'Profile',
       icon: 'fa-solid fa-user',
     }
@@ -60,7 +66,10 @@ export class MainMenu {
   constructor(
     private router: Router
   ){
-    if (this.mainMenuService.getIsOwner()) {
+
+
+
+    if (this.authService.getCurrentUser()?.isOwner) {
       this.router.navigate(['/restaurant/dashboard']);
     } else {
       this.router.navigate(['/customer/restaurants']);
@@ -68,11 +77,7 @@ export class MainMenu {
   }
 
   menuItems() {
-    return this.mainMenuService.getIsOwner() ? this.restaurantMenu : this.customerMenu;
-  }
-
-  showCart(){
-    //Todo
+    return this.authService.getCurrentUser()?.isOwner ? this.restaurantMenu : this.customerMenu;
   }
 
   toggleMenu(): void {

@@ -1,7 +1,6 @@
-import * as getService from "../get/get.service";
+import * as getService from ".//get.service";
 import {Router} from "express";
 import * as authService from "../auth/login.service";
-import {getRestaurantIdByOwnerEmail} from "../get/get.service";
 
 const router = Router();
 
@@ -90,7 +89,7 @@ router.get("/restaurantId", async (req, res) => {
         return res.status(400).json({ error: "owner_email is required" });
     }
 
-    const { restaurant_id } = await getRestaurantIdByOwnerEmail(owner_email);
+    const { restaurant_id } = await getService.getRestaurantIdByOwnerEmail(owner_email);
 
     return res.status(200).json({ restaurant_id });
 });

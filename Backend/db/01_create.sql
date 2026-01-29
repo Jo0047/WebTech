@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS restaurant (
                                           restaurant_name TEXT NOT NULL,
                                           restaurant_email TEXT,
                                           phone_number TEXT,
+                                          image_link TEXT,
 
                                           FOREIGN KEY (address_id) REFERENCES address(id),
     address_id INT NOT NULL,
@@ -68,6 +69,7 @@ CREATE TABLE IF NOT EXISTS drink (
                                      ingredients TEXT,
                                      alcoholic BOOLEAN DEFAULT FALSE,
                                      price DECIMAL(10, 2) NOT NULL,
+                                     image_link TEXT,
 
     restaurant_id INT NOT NULL,
     FOREIGN KEY (restaurant_id) REFERENCES restaurant(id)

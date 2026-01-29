@@ -1,0 +1,149 @@
+<div class="restaurant-detail-container">
+  @if(restaurant) {
+    <div class="detail-header">
+      <button class="back-button" (click)="goBack()">
+        <span class="back-icon">←</span> Back to Restaurants
+      </button>
+
+      <div class="restaurant-hero">
+        <div class="card-image">
+          @if(restaurant.image_link == null || restaurant.image_link == '') {
+            <img src="http://localhost:3000/images/defaultImage" [alt]="restaurant.restaurant_name" />
+          } @else {
+            <img [src]="restaurant.image_link" [alt]="restaurant.restaurant_name" />
+          }
+        </div>
+
+        <div class="hero-content">
+          <h1 class="restaurant-title">{{ restaurant.restaurant_name }}</h1>
+
+          <div class="restaurant-meta">
+            <div class="cuisines">
+              @for(cuisine of restaurant.cuisines; track cuisine) {
+                <span class="cuisine-badge">{{ cuisine }}</span>
+              }
+            </div>
+
+            <div class="rating-section">
+              <div class="stars">
+                @for(filled of getStarArray(restaurant.average_rating); track $index) {
+                  <span class="star" [class.filled]="filled">★</span>
+                }
+              </div>
+              <span class="rating-value">{{ parseInt(restaurant.average_rating) }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+      <!-- Products Section -->
+      <div class="products-section">
+        <h2 class="section-title">Menu</h2>
+
+        @if(this.drinks && this.drinks.length > 0){
+          <div class="drinks-grid">
+            @for(drink of drinks; track drink.id) {
+              <div class="drink-card">
+                <!-- Drink Image -->
+                <div class="drink-image">
+                  @if(drink.image_link == null || drink.image_link == '') {
+                    <img src="http://localhost:3000/images/defaultImage" [alt]="drink.drink_name" />
+                  } @else {
+                    <img [src]="drink.image_link" [alt]="drink.drink_name" />
+                  }
+
+                  <!-- Add to Basket Button -->
+                  <button class="add-basket-icon-btn" (click)="addToBasket(drink)" title="Add to basket">
+                    <span class="plus-icon">+</span>
+                  </button>
+                </div>
+
+                <!-- Drink Info -->
+                <div class="drink-info">
+                  <div class="drink-header">
+                    <h3 class="drink-name">{{ drink.drink_name }}</h3>
+                    <span class="drink-price">{{ formatPrice(drink.price) }}</span>
+                  </div>
+
+                  @if(drink.category) {
+                    <span class="category-tag">{{ drink.category }}</span>
+                  }
+
+                  @if(drink.ingredients) {
+                    <p class="drink-ingredients">{{ drink.ingredients }}</p>
+                  }
+
+                </div>
+              </div>
+            }
+          </div>
+        }@else{
+          <div class="empty-state">
+            <p>Menu items will be displayed here</p>
+          </div>
+        }
+
+      </div>
+
+      <!-- Basket Sidebar -->
+      <div class="basket-sidebar">
+        <div class="basket-container">
+          <h3 class="basket-title">Your Order</h3>
+
+          @if(basket.length === 0) {
+            <div class="empty-basket">
+              <div class="empty-icon">🛒</div>
+              <p>Your basket is empty</p>
+              <p style="font-size: 12px; margin-top: 8px;">Add items from the menu to get started</p>
+            </div>
+          } @else {
+            <div class="basket-items">
+              @for(item of basket; track item.drink.id) {
+                <div class="basket-item">
+                  <div class="item-details">
+                    <span class="item-name">{{ item.drink.drink_name }}</span>
+                    <span class="item-price">{{ formatPrice(item.drink.price) }}</span>
+                  </div>
+
+                  <div class="quantity-controls">
+                    <button class="quantity-btn" (click)="decreaseQuantity(item.drink.id)">−</button>
+                    <span class="quantity-display">{{ item.quantity }}</span>
+                    <button class="quantity-btn" (click)="increaseQuantity(item.drink.id)">+</button>
+                    <span class="item-total">{{ formatPrice(item.drink.price * item.quantity) }}</span>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+
+          <!-- Basket Summary -->
+          <div class="basket-summary">
+            <div class="summary-row">
+              <span>Items ({{ getTotalItems() }})</span>
+              <span>{{ formatPrice(getSubtotal()) }}</span>
+            </div>
+
+            <div class="summary-row total">
+              <span>Total</span>
+              <span class="total-amount">{{ formatPrice(getTotal()) }}</span>
+            </div>
+
+            <button
+              class="checkout-btn"
+              [disabled]="basket.length === 0"
+              (click)="proceedToCheckout()">
+              Proceed to Checkout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="loading-state">
+      <p>Loading restaurant details...</p>
+    </div>
+  }
+</div>
