@@ -8,6 +8,7 @@ import {firstValueFrom} from 'rxjs';
 })
 export class RestaurantService {
   mainMenuService: MainMenuService = inject(MainMenuService);
+
   http = inject(HttpClient);
   apiUrl = 'http://localhost:3000/get/';
 

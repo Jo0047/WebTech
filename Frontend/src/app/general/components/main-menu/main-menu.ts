@@ -3,6 +3,11 @@ import {Router, RouterOutlet} from "@angular/router";
 import {SideBarMenu} from "../side-bar-menu/side-bar-menu";
 import {MainMenuService} from '../../services/main-menu.service';
 import {AuthenticationService} from '../../services/auth/authentication.service';
+import {RestaurantDashboard} from '../../../restaurant/restaurant-dashboard/restaurant-dashboard';
+import {RestaurantOrderList} from '../../../restaurant/restaurant-order-list/restaurant-order-list';
+import {RestaurantProductList} from '../../../restaurant/restaurant-product-list/restaurant-product-list';
+import {Profile} from '../../../customer/profile/profile';
+import {RestaurantNewProduct} from '../../../restaurant/restaurant-new-product/restaurant-new-product';
 
 @Component({
   selector: 'app-main-menu',
@@ -19,22 +24,22 @@ export class MainMenu {
 
   restaurantMenu = [
     {
-      routelink: '/customer/dashboard',
+      routelink: '/restaurant/dashboard',
       label: 'Dashboard',
       icon: 'fa-solid fa-chart-line',
     },
     {
-      routelink: '/customer/orders',
+      routelink: '/restaurant/orders',
       label: 'Orders',
       icon: 'fa-solid fa-receipt',
     },
     {
-      routelink: '/customer/products',
+      routelink: '/restaurant/products',
       label: 'Menu',
       icon: 'fa-solid fa-list',
     },
     {
-      routelink: '/customer/profile',
+      routelink: '/restaurant/profile',
       label: 'Profile',
       icon: 'fa-solid fa-user',
     }

@@ -154,7 +154,7 @@ async function getAddress(street: string, streetNumber: number, zipCode: number,
 
 async function getRestaurant(restaurantName: string, addressId: number) {
     const query = {
-        text: 'SELECT * FROM customer WHERE restaurant_name=$1 AND address_id=$2',
+        text: 'SELECT * FROM restaurant WHERE restaurant_name=$1 AND address_id=$2',
         values: [restaurantName, addressId],
     };
 
@@ -184,7 +184,7 @@ async function getRestaurant(restaurantName: string, addressId: number) {
 
 async function getRestaurantIdByOwnerEmail(email: string) {
     const query = {
-        text: 'SELECT id FROM customer WHERE owner_email=$1',
+        text: 'SELECT id FROM restaurant WHERE owner_email=$1',
         values: [email],
     };
      const result: QueryResult = await pool.query(query);
