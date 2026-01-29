@@ -12,4 +12,17 @@ router.get("/drink", async (req, res) => {
 
     res.json(drinks);
 });
+
+router.post("/drink", async (req, res) => {
+    let drinkData = req.body;
+    await drinkService.addDrink(
+        drinkData.drink_name,
+        drinkData.category,
+        drinkData.ingredients,
+        drinkData.alcoholic,
+        drinkData.price,
+        drinkData.restaurant_id,
+
+    )
+})
 export default router;

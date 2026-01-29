@@ -6,6 +6,54 @@
   padding: 20px;
 }
 
+/* Container for order action buttons */
+.order-actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 12px;
+}
+
+/* General button styling to match card theme */
+.order-actions button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+/* Hover effect */
+.order-actions button:hover {
+  transform: translateY(-2px);
+}
+
+/* Specific button colors */
+.order-actions button:nth-child(1) { /* Reject button */
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.order-actions button:nth-child(1):hover {
+  background-color: #c0392b;
+}
+
+.order-actions button:nth-child(2) { /* Next Status button */
+  background-color: #3498db;
+  color: #fff;
+}
+
+.order-actions button:nth-child(2):hover {
+  background-color: #2980b9;
+}
+
+/* Disable Next Status button if needed */
+.order-actions button:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+  color: #7f8c8d;
+}
 /* Individual order card */
 .order-card {
   background-color: #fefefe;
