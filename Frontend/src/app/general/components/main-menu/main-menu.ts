@@ -15,7 +15,7 @@ import {AuthenticationService} from '../../services/auth/authentication.service'
 })
 export class MainMenu {
   isMenuOpen = false;
-  mainMenuService = inject(MainMenuService);
+  authService = inject(AuthenticationService);
 
   restaurantMenu = [
     {
@@ -61,7 +61,10 @@ export class MainMenu {
   constructor(
     private router: Router
   ){
-    if (this.mainMenuService.getIsOwner()) {
+
+
+
+    if (this.authService.getCurrentUser()?.isOwner) {
       this.router.navigate(['/restaurant/dashboard']);
     } else {
       this.router.navigate(['/customer/restaurants']);
@@ -69,11 +72,7 @@ export class MainMenu {
   }
 
   menuItems() {
-    return this.mainMenuService.getIsOwner() ? this.restaurantMenu : this.customerMenu;
-  }
-
-  showCart(){
-    //Todo
+    return this.authService.getCurrentUser()?.isOwner ? this.restaurantMenu : this.customerMenu;
   }
 
   toggleMenu(): void {

@@ -1,13 +1,48 @@
 <div class="restaurant-container">
 
+  <!-- Filters and Sort Section -->
+  <div class="controls-section">
+    <div class="filter-group">
+      <select
+        id="cuisine-filter"
+        class="filter-select">
+        <option value="all">All Cuisines</option>
+        <option value="Japanese">Japanese</option>
+        <option value="American">American</option>
+        <option value="Italian">Italian</option>
+        <option value="Mexican">Mexican</option>
+        <option value="Indian">Indian</option>
+        <option value="Thai">Thai</option>
+        <option value="BBQ">BBQ</option>
+        <option value="Steakhouse">Steakhouse</option>
+        <option value="Mediterranean">Mediterranean</option>
+        <option value="Fusion">Fusion</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <select
+        id="sort-select"
+        class="filter-select">
+        <option value="name">Name (A-Z)</option>
+        <option value="rating-high">Rating (High to Low)</option>
+        <option value="rating-low">Rating (Low to High)</option>
+      </select>
+    </div>
+
+    <div class="results-count">
+      Showing {{ restaurants.length }} restaurant{{ restaurants.length !== 1 ? 's' : '' }}
+    </div>
+  </div>
+
+  <!-- Restaurant Grid -->
   <div class="restaurant-grid">
-    @for(restaurant of restaurants; track restaurant.id){
+    @for(restaurant of restaurants; track restaurant.id) {
       <div class="restaurant-card">
         <div class="card-image">
-          @if(restaurant.image_link == null || restaurant.image_link == ''){
+          @if(restaurant.image_link == null || restaurant.image_link == '') {
             <img src="http://localhost:3000/images/defaultImage" [alt]="restaurant.restaurant_name" />
-          }
-          @else{
+          } @else {
             <img [src]="restaurant.image_link" [alt]="restaurant.restaurant_name" />
           }
         </div>
@@ -15,16 +50,22 @@
         <div class="card-content">
           <h3 class="restaurant-name">{{ restaurant.restaurant_name }}</h3>
 
+          <div class="cuisines">
+            @for(cuisine of restaurant.cuisines; track cuisine) {
+              <span class="cuisine-badge">{{ cuisine }}</span>
+            }
+          </div>
 
           <div class="rating-section">
             <div class="stars">
+              @for(filled of getStarArray(restaurant); track $index) {
+                <span class="star" [class.filled]="filled">★</span>
+              }
             </div>
+            <span class="rating-value">{{ parseInt(restaurant.average_rating) }}</span>
           </div>
         </div>
       </div>
-
-
-
     }
   </div>
 </div>

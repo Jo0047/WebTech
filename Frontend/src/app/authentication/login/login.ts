@@ -19,7 +19,6 @@ export class Login {
     password: new FormControl('', [Validators.required])
   })
   authService = inject(AuthenticationService);
-  mainMenuService = inject(MainMenuService);
   private cdr = inject(ChangeDetectorRef);
 
   loginError = signal('')

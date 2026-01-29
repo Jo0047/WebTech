@@ -24,4 +24,10 @@ export class CustomerRestaurantList {
     });
   }
 
+  getStarArray(restaurant: Restaurant): boolean[] {
+    const rating = parseInt(restaurant.average_rating);
+    return Array(5).fill(false).map((_, index) => index < Math.round(rating));
+  }
+
+  protected readonly parseInt = parseInt;
 }
