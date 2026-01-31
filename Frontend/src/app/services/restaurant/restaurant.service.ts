@@ -1,9 +1,9 @@
 import {inject, Injectable} from '@angular/core';
-import {MainMenuService} from './main-menu.service';
+import {MainMenuService} from '../main-menu.service';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {firstValueFrom, Observable} from 'rxjs';
-import {Restaurant} from '@models/restaurant';
-import {Drink} from '@models/drink';
+import {Restaurant} from '../../models/restaurant';
+import {Drink} from '../../models/drink';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,6 @@ export class RestaurantService {
   mainMenuService: MainMenuService = inject(MainMenuService);
 
   private http = inject(HttpClient);
-  apiUrl = 'http://localhost:3000/get/';
   restaurantUrl: string = 'http://localhost:3000/restaurant';
 
   constructor() {
@@ -20,10 +19,6 @@ export class RestaurantService {
 
   getRestaurantsWithCuisineAndRating(): Observable<Restaurant[]> {
     return this.http.get<Restaurant[]>(`${this.restaurantUrl}/restaurantsWithCuisines`);
-  }
-
-  getDrinksByRestaurant(restaurantId: number | undefined): Observable<Drink[]> {
-    return this.http.get<Drink[]>(`${this.restaurantUrl}/drinks/${restaurantId}`);
   }
 
   async getRestaurantId(): Promise<number> {
@@ -38,12 +33,12 @@ export class RestaurantService {
 
     try {
       const res = await firstValueFrom(
-        this.http.get<{ restaurant_id: number }>(this.apiUrl + 'restaurantId', { params })
+        this.http.get<{ restaurant_id: number }>(`${this.restaurantUrl}/restaurantId`, { params })
       );
       console.log('Restaurant ID:', res.restaurant_id);
       return res.restaurant_id;
     } catch (error) {
-      console.error('Failed to fetch customer ID:', error);
+      console.error('Failed to fetch order ID:', error);
       return -1; // fallback on error
     }
   }

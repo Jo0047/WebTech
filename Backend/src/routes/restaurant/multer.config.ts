@@ -4,7 +4,7 @@ import { Request } from 'express';
 
 // Set up storage engine
 const storage = multer.diskStorage({
-    destination: './files/',
+    destination: './images/',
     filename: (req, file, cb) => {
         cb(
             null,

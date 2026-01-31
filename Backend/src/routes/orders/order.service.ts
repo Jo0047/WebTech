@@ -17,7 +17,7 @@ async function getOrdersByRestaurant(restaurant_id: number) {
         'FROM "order" o\n' +
         'JOIN order_drinks od ON o.id = od.order_id\n' +
         'JOIN drink d ON od.drink_id = d.id\n' +
-        'WHERE d.restaurant_id = $1 -- Filter by your customer ID\n' +
+        'WHERE d.restaurant_id = $1 -- Filter by your order ID\n' +
         'GROUP BY o.id, o.status;',
         [restaurant_id]
     );

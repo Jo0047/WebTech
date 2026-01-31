@@ -1,9 +1,9 @@
 import {ChangeDetectorRef, Component, inject, signal} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {AuthenticationService} from '../../general/services/auth/authentication.service';
-import {MainMenuService} from '../../general/services/main-menu.service';
-import {AuthResponse} from '@models/user-data';
+import {AuthenticationService} from '../../services/auth/authentication.service';
+import {MainMenuService} from '../../services/main-menu.service';
+import {AuthResponse} from '../../models/user-data';
 
 @Component({
   selector: 'app-login',

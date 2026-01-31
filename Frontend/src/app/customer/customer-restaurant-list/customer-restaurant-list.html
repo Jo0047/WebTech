@@ -41,7 +41,7 @@
       <div class="restaurant-card" (click)="navigateToRestaurant(restaurant)">
         <div class="card-image">
           @if(restaurant.image_link == null || restaurant.image_link == '') {
-            <img src="http://localhost:3000/images/defaultImage" [alt]="restaurant.restaurant_name" />
+            <img src="http://localhost:3000/restaurant/defaultImage" [alt]="restaurant.restaurant_name" />
           } @else {
             <img [src]="restaurant.image_link" [alt]="restaurant.restaurant_name" />
           }

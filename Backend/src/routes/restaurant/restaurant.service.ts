@@ -1,6 +1,42 @@
 import {QueryResult} from "pg";
 import {pool} from "../../db";
 
+/**
+ * Select all Restaurants
+ */
+async function getAllRestaurants(){
+    const query = {
+        text:  'SELECT * FROM order',
+    };
+
+    try {
+        const result: QueryResult = await pool.query(query);
+
+        if (result.rows.length == 0) {
+            return {
+                success: false,
+                message: `No restaurants found.`,
+            };
+        }
+
+        return {
+            success: true,
+            restaurants: result.rows
+        }
+
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        return {
+            success: false,
+            message: 'Database error: '+error,
+        }
+    }
+}
+
+
+/**
+ * Select all Restaurants including cuisines and rating
+ */
 async function getRestaurantsWithCuisine() {
     const query = {
         text: `SELECT
@@ -59,10 +95,10 @@ async function getRestaurantsWithCuisine() {
 
 }
 
-async function getDrinksByRestaurant(restaurantId: number) {
+async function getRestaurantByName(restaurantName: string, addressId: number) {
     const query = {
-        text: 'SELECT * FROM drink WHERE restaurant_id = $1',
-        values: [restaurantId]
+        text: 'SELECT * FROM restaurant WHERE restaurant_name=$1 AND address_id=$2',
+        values: [restaurantName, addressId],
     };
 
     try {
@@ -71,17 +107,17 @@ async function getDrinksByRestaurant(restaurantId: number) {
         if (result.rows.length == 0) {
             return {
                 success: false,
-                message: `No drinks found.`,
+                message: `Restaurant does not exist`
             };
         }
 
         return {
             success: true,
-            drinks: result.rows
+            restaurant: result.rows[0]
         }
 
     } catch (error) {
-        console.error('Error fetching restaurants:', error);
+        console.error('Error fetching order:', error);
         return {
             success: false,
             message: 'Database error: '+error,
@@ -89,4 +125,53 @@ async function getDrinksByRestaurant(restaurantId: number) {
     }
 }
 
-export {getRestaurantsWithCuisine, getDrinksByRestaurant};
+async function getRestaurantIdByOwnerEmail(email: string) {
+    const query = {
+        text: 'SELECT id FROM restaurant WHERE owner_email=$1',
+        values: [email],
+    };
+    const result: QueryResult = await pool.query(query);
+
+    if (result.rows.length == 0) {
+        return {
+            restaurant_id: -1,
+        };
+    }
+
+    return {
+        restaurant_id: result.rows[0].id,
+    }
+}
+
+
+async function getRestaurantImage(restaurantId: number) {
+    const query = {
+        text:  'SELECT image_link FROM order WHERE restaurant_id = $1 RETURNING image_link',
+        values: [restaurantId],
+    };
+
+    try {
+        const result: QueryResult = await pool.query(query);
+
+        if (result.rows.length == 0) {
+            return {
+                success: false,
+                message: `No Restaurant found.`,
+            };
+        }
+
+        return {
+            success: true,
+            restaurant: result.rows[0].image_link
+        }
+
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        return {
+            success: false,
+            message: 'Database error: '+error,
+        }
+    }
+}
+
+export {getRestaurantsWithCuisine, getRestaurantIdByOwnerEmail, getRestaurantByName, getRestaurantImage, getAllRestaurants};

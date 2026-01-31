@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {SideBarMenu} from '../../general/components/side-bar-menu/side-bar-menu';
+import {SideBarMenu} from '../../general-components/side-bar-menu/side-bar-menu';
 
 @Component({
-  selector: 'app-customer-main',
+  selector: 'app-order-main',
   imports: [
     RouterOutlet,
     SideBarMenu
@@ -13,26 +13,26 @@ import {SideBarMenu} from '../../general/components/side-bar-menu/side-bar-menu'
 })
 export class RestaurantMain {
   isMenuOpen = false;
-  user = "Mustermann"; // Todo general from login
+  user = "Mustermann"; // Todo general-components from login
 
   restaurantMenu = [
     {
-      routelink: '/customer/dashboard',
+      routelink: '/order/dashboard',
       label: 'Dashboard',
       icon: 'fa-solid fa-chart-line',
     },
     {
-      routelink: '/customer/orders',
+      routelink: '/order/orders',
       label: 'Orders',
       icon: 'fa-solid fa-receipt',
     },
     {
-      routelink: '/customer/products',
+      routelink: '/order/products',
       label: 'Menu',
       icon: 'fa-solid fa-list',
     },
     {
-      routelink: '/customer/profile',
+      routelink: '/order/profile',
       label: 'Profile',
       icon: 'fa-solid fa-user',
     }

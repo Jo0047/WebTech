@@ -1,8 +1,8 @@
 import {Component, inject} from '@angular/core';
-import {RestaurantService} from '../../general/services/restaurant.service';
-import {Restaurant} from '@models/restaurant';
+import {Restaurant} from '../../models/restaurant';
 import {Router} from '@angular/router';
-import {Drink} from '@models/drink';
+import {Drink} from '../../models/drink';
+import {DrinkService} from '../../services/drink/drink.service';
 
 
 interface BasketItem {
@@ -11,14 +11,14 @@ interface BasketItem {
 }
 
 @Component({
-  selector: 'app-customer-customer-basket',
+  selector: 'app-order-order-basket',
   imports: [],
   templateUrl: './customer-restaurant-basket.html',
   styleUrl: './customer-restaurant-basket.css',
 })
 export class CustomerRestaurantBasket {
 
-  restaurantService = inject(RestaurantService);
+  drinkService = inject(DrinkService);
   restaurant: Restaurant | null = null;
   drinks: Drink[] = []
   basket: BasketItem[] = [];
@@ -31,7 +31,7 @@ export class CustomerRestaurantBasket {
       this.router.navigate(['/customer']);
     }
 
-    this.restaurantService.getDrinksByRestaurant(this.restaurant?.id).subscribe(data => {
+    this.drinkService.getDrinksByRestaurant(this.restaurant?.id).subscribe(data => {
       this.drinks = (data as any).drinks;
       console.log(this.drinks);
     });

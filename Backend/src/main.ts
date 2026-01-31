@@ -1,11 +1,10 @@
 
 import express, { Application } from 'express';
 import cors from 'cors';
-import loginRoutes from './routes/auth/login.routes';
+import loginRoutes from './routes/auth/auth.routes';
 import drinkRoutes from './routes/drinks/drink.routes';
 import orderRoutes from './routes/orders/order.routes';
-import getRoutes from './routes/general/get.routes';
-import imageRoutes from "./routes/images/image.routes";
+import imageRoutes from "./routes/restaurant/image.routes";
 import restaurantRoutes from "./routes/restaurant/restaurant.routes";
 
 const app: Application = express();
@@ -23,10 +22,11 @@ app.get('/', (_req, res) => {
 
 
 app.use('/auth', loginRoutes);
-app.use('/get', getRoutes);
-app.use('/data', drinkRoutes);
-app.use('/data', orderRoutes);
-app.use('/images', imageRoutes);
+
+app.use('/drinks', drinkRoutes);
+app.use('/orders', orderRoutes);
+
+app.use('/restaurant', imageRoutes);
 app.use('/restaurant', restaurantRoutes);
 
 const PORT = process.env["PORT"] || 3000;

@@ -1,10 +1,10 @@
 import {Component, inject} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
-import {RestaurantService} from '../../general/services/restaurant.service';
+import {RestaurantService} from '../../services/restaurant/restaurant.service';
 
 @Component({
-  selector: 'app-customer-new-product',
+  selector: 'app-order-new-product',
   templateUrl: './restaurant-new-product.html',
   styleUrl: './restaurant-new-product.css',
   imports: [
