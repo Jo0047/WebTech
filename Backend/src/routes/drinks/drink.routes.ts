@@ -1,18 +1,32 @@
 import { Router } from "express";
 import * as drinkService from "./drink.service";
+import * as restaurantService from "../restaurant/restaurant.service";
 
 const router = Router();
 
-router.get("/drink", async (req, res) => {
+/**
+ * Get all drinks by restaurantID
+ */
+router.get("/:restaurantId", async (req, res) => {
+    const restaurantId: number = parseInt(req.params.restaurantId)
 
-    const restaurant_id_str = req.query["restaurant_id"];
-    const restaurant_id = Number(restaurant_id_str);
+    const result = await drinkService.getDrinksByRestaurant(restaurantId);
 
-    const drinks = await drinkService.getDrinksByRestaurant(restaurant_id);
+    if (result.success) {
+        return res.status(200).json({
+            drinks: result.drinks
+        });
+    } else {
+        return res.status(400).json({
+            message: result.message
+        });
+    }
+})
 
-    res.json(drinks);
-});
 
+/**
+ * Add new drink to BD
+ */
 router.post("/drink", async (req, res) => {
     let drinkData = req.body;
     await drinkService.addDrink(

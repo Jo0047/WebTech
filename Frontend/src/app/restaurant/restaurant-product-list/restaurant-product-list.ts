@@ -2,18 +2,12 @@ import { Component, inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {RouterLink} from '@angular/router';
 import {FormsModule} from '@angular/forms';
-import {RestaurantService} from '../../general/services/restaurant.service';
-
-interface Drink {
-  drink_name: string;
-  category: string;
-  ingredients: string;
-  alcoholic: boolean;
-  price: number;
-}
+import {RestaurantService} from '../../services/restaurant/restaurant.service';
+import {DrinkService} from '../../services/drink/drink.service';
+import {Drink} from '../../models/drink';
 
 @Component({
-  selector: 'app-customer-product-list',
+  selector: 'app-order-product-list',
   templateUrl: './restaurant-product-list.html',
   styleUrl: './restaurant-product-list.css',
   imports: [
@@ -23,10 +17,12 @@ interface Drink {
 })
 export class RestaurantProductList implements OnInit {
   restaurantService: RestaurantService = inject(RestaurantService);
-  private http = inject(HttpClient);
-  apiUrl = 'http://localhost:3000/data/drink';
+  drinkService: DrinkService = inject(DrinkService);
 
-  products: Drink[] = [];
+  private http = inject(HttpClient);
+  apiUrl = 'http://localhost:3000/drinks';
+
+  drinks: Drink[] = [];
   selectedCategory: string = '';
 
   categories = [
@@ -45,19 +41,18 @@ export class RestaurantProductList implements OnInit {
   async loadDrinks() {
     let restaurantId = await this.restaurantService.getRestaurantId()
 
-    this.http.get<Drink[]>(this.apiUrl, {
-      params: { restaurant_id: restaurantId }
-    }).subscribe({
-      next: (data) => {
-        this.products = data;
-      },
-      error: (err) => console.error('Error fetching drinks:', err)
+    this.drinkService.getDrinksByRestaurant(restaurantId).subscribe(data => {
+      this.drinks = (data as any).drinks;
+      console.log(this.drinks);
     });
+
+
+
   }
 
   get filteredProducts() {
-    if (!this.selectedCategory) return this.products;
-    return this.products.filter(
+    if (!this.selectedCategory) return this.drinks;
+    return this.drinks.filter(
       (drink) => drink.category === this.selectedCategory
     );
   }

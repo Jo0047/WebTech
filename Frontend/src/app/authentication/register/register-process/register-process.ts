@@ -2,10 +2,10 @@ import {Component, inject} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatInput} from '@angular/material/input';
 import {MatStep, MatStepLabel, MatStepper, MatStepperNext, MatStepperPrevious} from '@angular/material/stepper';
-import {UserRole} from '@models/user-role';
+import {UserRole} from '../../../models/user-role';
 import {ActivatedRoute, Router} from '@angular/router';
-import {RegistrationData} from '@models/user-data';
-import {AuthenticationService} from '../../../general/services/auth/authentication.service';
+import {RegistrationData} from '../../../models/user-data';
+import {AuthenticationService} from '../../../services/auth/authentication.service';
 
 @Component({
   selector: 'app-register-process',

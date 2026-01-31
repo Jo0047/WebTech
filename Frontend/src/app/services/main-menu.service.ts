@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {AuthResponse} from '@models/user-data';
+import {AuthResponse} from '../models/user-data';
 
 @Injectable({
   providedIn: 'root',

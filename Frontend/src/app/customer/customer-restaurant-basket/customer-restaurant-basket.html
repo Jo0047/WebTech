@@ -8,7 +8,7 @@
       <div class="restaurant-hero">
         <div class="card-image">
           @if(restaurant.image_link == null || restaurant.image_link == '') {
-            <img src="http://localhost:3000/images/defaultImage" [alt]="restaurant.restaurant_name" />
+            <img src="http://localhost:3000/restaurant/defaultImage" [alt]="restaurant.restaurant_name" />
           } @else {
             <img [src]="restaurant.image_link" [alt]="restaurant.restaurant_name" />
           }
@@ -50,7 +50,7 @@
                 <!-- Drink Image -->
                 <div class="drink-image">
                   @if(drink.image_link == null || drink.image_link == '') {
-                    <img src="http://localhost:3000/images/defaultImage" [alt]="drink.drink_name" />
+                    <img src="http://localhost:3000/restaurant/defaultImage" [alt]="drink.drink_name" />
                   } @else {
                     <img [src]="drink.image_link" [alt]="drink.drink_name" />
                   }

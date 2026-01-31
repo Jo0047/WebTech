@@ -52,7 +52,7 @@ export class RegistrationData {
       zipCode: this.zipCode,
     };
 
-    // Only include customer fields if they exist
+    // Only include order fields if they exist
     if (this.restaurantName) {
       json.restaurantName = this.restaurantName;
     }
@@ -77,4 +77,5 @@ export class RegistrationData {
 export interface AuthResponse {
   email: string;
   isOwner: boolean;
+  restaurantId?: number;
 }

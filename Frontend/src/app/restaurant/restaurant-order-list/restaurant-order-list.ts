@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {RestaurantService} from '../../general/services/restaurant.service';
+import {RestaurantService} from '../../services/restaurant/restaurant.service';
 
 enum OrderStatus {
   pending = 'pending',
@@ -25,7 +25,7 @@ interface Order {
 }
 
 @Component({
-  selector: 'app-customer-order-list',
+  selector: 'app-order-order-list',
   imports: [],
   templateUrl: './restaurant-order-list.html',
   styleUrl: './restaurant-order-list.css',
@@ -35,7 +35,7 @@ export class RestaurantOrderList implements OnInit{
 
 
   private http = inject(HttpClient);
-  apiUrl = 'http://localhost:3000/data';
+  apiUrl = 'http://localhost:3000/orders';
 
   orders: Order[] = [];
 

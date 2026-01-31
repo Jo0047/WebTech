@@ -1,10 +1,10 @@
 import {Component, inject} from '@angular/core';
-import {Restaurant} from '@models/restaurant';
+import {Restaurant} from '../../models/restaurant';
 import {Router} from '@angular/router';
-import {RestaurantService} from '../../general/services/restaurant.service';
+import {RestaurantService} from '../../services/restaurant/restaurant.service';
 
 @Component({
-  selector: 'app-customer-customer-list',
+  selector: 'app-order-order-list',
   imports: [],
   templateUrl: './customer-restaurant-list.html',
   styleUrl: './customer-restaurant-list.css',
