@@ -1,5 +1,5 @@
---docker compose down -v && docker compose up --build --force-recreate -d
-
+--sudo docker compose down -v && sudo docker compose up --build --force-recreate -d
+-- sudo docker exec -it postgres_db psql -U postgres -d angular_app
 -------------------ENUMS--------------------------------
 CREATE TYPE order_status AS ENUM (
     'pending',
@@ -11,7 +11,16 @@ CREATE TYPE order_status AS ENUM (
 );
 
 CREATE TYPE cuisine AS ENUM (
-
+  'japanese',
+  'american',
+  'fusion',
+  'italian',
+  'mexican',
+  'indian',
+  'thai',
+  'bbq',
+  'steakhouse',
+  'mediterranean'
 );
 
 -------------------TABLES--------------------------------
