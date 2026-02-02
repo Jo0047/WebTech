@@ -10,7 +10,7 @@ CREATE TYPE order_status AS ENUM (
     'arrived'
 );
 
-CREATE TYPE cuisine_type AS ENUM (
+CREATE TYPE cuisine AS ENUM (
 
 );
 
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS restaurant (
                                           restaurant_email TEXT,
                                           phone_number TEXT,
                                           image_link TEXT,
-    cuisine cuisine_type,
+    cuisines cuisine[],
 
                                           FOREIGN KEY (address_id) REFERENCES address(id),
     address_id INT NOT NULL,
