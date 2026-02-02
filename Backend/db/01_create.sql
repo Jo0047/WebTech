@@ -23,6 +23,15 @@ CREATE TYPE cuisine AS ENUM (
   'mediterranean'
 );
 
+CREATE TYPE cat AS ENUM (
+    'soft drink',
+    'cocktail',
+    'beer',
+    'wine',
+    'coffee',
+    'tea'
+);
+
 -------------------TABLES--------------------------------
 
 CREATE TABLE IF NOT EXISTS address (
@@ -67,17 +76,11 @@ CREATE TABLE IF NOT EXISTS "order" (
 );
 
 
-
-CREATE TABLE IF NOT EXISTS categories (
-                                          cat_name TEXT PRIMARY KEY
-);
-
-
 CREATE TABLE IF NOT EXISTS drink (
                                      id SERIAL PRIMARY KEY,
                                      drink_name TEXT NOT NULL,
 
-                                     category TEXT NOT NULL,
+                                     category cat NOT NULL,
                                      ingredients TEXT,
                                      alcoholic BOOLEAN DEFAULT FALSE,
                                      price DECIMAL(10, 2) NOT NULL,
