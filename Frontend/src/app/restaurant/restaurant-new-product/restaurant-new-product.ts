@@ -17,14 +17,6 @@ export class RestaurantNewProduct {
   apiUrl = 'http://localhost:3000/data/drink';
   drinkForm: FormGroup;
 
-  categories = [
-    'Soft drink',
-    'Cocktail',
-    'Beer',
-    'Wine',
-    'Coffee',
-    'Tea',
-  ];
 
   constructor(private fb: FormBuilder) {
     this.drinkForm = this.fb.group({
