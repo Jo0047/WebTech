@@ -5,6 +5,7 @@ import {FormsModule} from '@angular/forms';
 import {RestaurantService} from '../../services/restaurant/restaurant.service';
 import {DrinkService} from '../../services/drink/drink.service';
 import {Drink} from '../../models/drink';
+import {Category} from '../../models/category';
 
 @Component({
   selector: 'app-order-product-list',
@@ -25,14 +26,6 @@ export class RestaurantProductList implements OnInit {
   drinks: Drink[] = [];
   selectedCategory: string = '';
 
-  categories = [
-    'Soft drink',
-    'Cocktail',
-    'Beer',
-    'Wine',
-    'Coffee',
-    'Tea',
-  ];
 
   async ngOnInit() {
     await this.loadDrinks();
@@ -56,4 +49,6 @@ export class RestaurantProductList implements OnInit {
       (drink) => drink.category === this.selectedCategory
     );
   }
+
+  protected readonly Category = Category;
 }

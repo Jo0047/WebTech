@@ -9,9 +9,13 @@
   <label for="category-select">Filter by Category:</label>
   <select id="category-select" [(ngModel)]="selectedCategory">
     <option value="">All</option>
-    @for (cat of categories; track cat) {
-      <option value="{{cat}}">{{cat}}</option>
-    }
+    <option value="soft drink">Soft drink</option>
+    <option value="cocktail">Cocktail</option>
+    <option value="beer">Beer</option>
+    <option value="wine">Wine</option>
+    <option value="coffee">Coffee</option>
+    <option value="tea">Tea</option>
+
   </select>
 </div>
 
