@@ -1,217 +1,86 @@
--- Add more addresses for the new restaurants
+-- -------------------ADDRESSES--------------------------------
 INSERT INTO address (street, street_number, zip_code, city) VALUES
-                                                                ('Maple Avenue', '42', '90210', 'Beverly Hills'),
-                                                                ('Sushi Lane', '7', '10001', 'New York'),
-                                                                ('Burger Boulevard', '101', '60601', 'Chicago'),
-                                                                ('Pizza Plaza', '15', '02108', 'Boston'),
-                                                                ('Taco Trail', '88', '78701', 'Austin'),
-                                                                ('Pasta Place', '23', '98101', 'Seattle'),
-                                                                ('Curry Corner', '56', '94102', 'San Francisco'),
-                                                                ('BBQ Street', '99', '37201', 'Nashville'),
-                                                                ('Noodle Lane', '12', '33101', 'Miami'),
-                                                                ('Steakhouse Drive', '77', '85001', 'Phoenix');
+                                                                ('Baker Street', '221B', 'NW1 6XE', 'London'),
+                                                                ('Main Street', '123', '10001', 'New York'),
+                                                                ('Sunset Blvd', '456', '90028', 'Los Angeles'),
+                                                                ('Champs-Élysées', '12', '75008', 'Paris');
 
-
-INSERT INTO categories (cat_name) VALUES
-                                      ('Soft Drink'),
-                                      ('Alcoholic'),
-                                      ('Smoothie'),
-                                      ('Coffee'),
-                                      ('Tea'),
-                                      ('Juice');
-
--- Users (address_id 1 is Beverly Hills)
+-- -------------------USERS--------------------------------
 INSERT INTO "user" (email, password, first_name, last_name, is_owner, address_id) VALUES
                                                                                       ('owner@eats.com', '$2a$15$z7Yo91URlV13wMMn8j7aGeee8m5hD1SxdZAFVUy/pPbexruiGUjCC', 'Gordon', 'Ramsey', TRUE, 1),
-                                                                                      ('foodie@gmail.com', '$2a$15$z7Yo91URlV13wMMn8j7aGeee8m5hD1SxdZAFVUy/pPbexruiGUjCC', 'Alice', 'Wonderland', FALSE, 1),
-                                                                                      ('john.doe@email.com', '$2a$15$z7Yo91URlV13wMMn8j7aGeee8m5hD1SxdZAFVUy/pPbexruiGUjCC', 'John', 'Doe', FALSE, 1),
-                                                                                      ('jane.smith@email.com', '$2a$15$z7Yo91URlV13wMMn8j7aGeee8m5hD1SxdZAFVUy/pPbexruiGUjCC', 'Jane', 'Smith', FALSE, 1);
+                                                                                      ('foodie@gmail.com', '$2a$15$z7Yo91URlV13wMMn8j7aGeee8m5hD1SxdZAFVUy/pPbexruiGUjCC', 'Alice', 'Wonderland', FALSE, 2),
+                                                                                      ('john.doe@email.com', '$2a$15$z7Yo91URlV13wMMn8j7aGeee8m5hD1SxdZAFVUy/pPbexruiGUjCC', 'John', 'Doe', FALSE, 3),
+                                                                                      ('jane.smith@email.com', '$2a$15$z7Yo91URlV13wMMn8j7aGeee8m5hD1SxdZAFVUy/pPbexruiGUjCC', 'Jane', 'Smith', FALSE, 4);
 
--- 10 Restaurants with diverse cuisines
-INSERT INTO restaurant (
-    restaurant_name,
-    restaurant_email,
-    phone_number,
-    image_link,
-    cuisines,
-    address_id,
-    owner_email
-) VALUES
-      ('Sushi Zen', 'order@sushizen.com', '555-0101', NULL, ARRAY['japanese', 'fusion']::cuisine[], 2, 'owner@eats.com'),
-      ('The Big Grill', 'hello@biggrill.com', '555-0202', NULL, ARRAY['american']::cuisine[], 3, 'owner@eats.com'),
-      ('Bella Italia', 'info@bellaitalia.com', '555-0303', NULL, ARRAY['italian']::cuisine[], 4, 'owner@eats.com'),
-      ('Taco Fiesta', 'orders@tacofiesta.com', '555-0404', NULL, ARRAY['mexican']::cuisine[], 5, 'owner@eats.com'),
-      ('Spice Garden', 'contact@spicegarden.com', '555-0505', NULL, ARRAY['indian', 'fusion']::cuisine[], 6, 'owner@eats.com'),
-      ('Thai Paradise', 'hello@thaiparadise.com', '555-0606', NULL, ARRAY['thai']::cuisine[], 7, 'owner@eats.com'),
-      ('Smokey Joe''s BBQ', 'bbq@smokeyjo.com', '555-0707', NULL, ARRAY['bbq', 'american']::cuisine[], 8, 'owner@eats.com'),
-      ('Ocean Noodles', 'info@oceannoodles.com', '555-0808', NULL, ARRAY['japanese', 'thai']::cuisine[], 9, 'owner@eats.com'),
-      ('Prime Cuts Steakhouse', 'reservations@primecuts.com', '555-0909', NULL, ARRAY['steakhouse', 'american']::cuisine[], 10, 'owner@eats.com'),
-      ('Mediterranean Breeze', 'hello@medbreeze.com', '555-1010', NULL, ARRAY['mediterranean', 'fusion']::cuisine[], 1, 'owner@eats.com');
+-- -------------------RESTAURANTS--------------------------------
+INSERT INTO restaurant (restaurant_name, restaurant_email, phone_number, image_link, cuisines, address_id, owner_email) VALUES
+                                                                                                                            ('Sushi Paradise', 'contact@sushiparadise.com', '+44 20 7946 0958', 'https://example.com/sushi.jpg', ARRAY['japanese', 'fusion']::cuisine[], 1, 'owner@eats.com'),
+                                                                                                                            ('Burger Queen', 'hello@burgerqueen.com', '+1 212 555 0198', 'https://example.com/burger.jpg', ARRAY['american', 'fusion']::cuisine[], 2, 'owner@eats.com'),
+                                                                                                                            ('Pasta Heaven', 'info@pastaheaven.com', '+33 1 44 55 66 77', 'https://example.com/pasta.jpg', ARRAY['italian', 'mediterranean']::cuisine[], 4, 'owner@eats.com');
 
--- Drinks for each order (2-3 drinks per order)
+-- -------------------DRINKS--------------------------------
 INSERT INTO drink (drink_name, category, ingredients, alcoholic, price, image_link, restaurant_id) VALUES
-                                                                                                       -- Sushi Zen (1)
-                                                                                                       ('Premium Sake', 'Alcoholic', 'Fermented rice', TRUE, 15.00, null, 1),
-                                                                                                       ('Green Tea Soda', 'Soft Drink', 'Matcha, Carbonated water', FALSE, 4.50, null, 1),
-                                                                                                       ('Yuzu Lemonade', 'Soft Drink', 'Yuzu juice, Lemon, Sugar', FALSE, 5.50, null, 1),
+                                                                                                       ('Coca-Cola', 'soft drink', 'Carbonated water, sugar, caffeine', FALSE, 2.50, 'https://example.com/coke.jpg', 1),
+                                                                                                       ('Green Tea', 'tea', 'Green tea leaves, water', FALSE, 2.00, 'https://example.com/greentea.jpg', 1),
+                                                                                                       ('Sake', 'wine', 'Rice wine', TRUE, 6.50, 'https://example.com/sake.jpg', 1),
+                                                                                                       ('Plum Wine', 'wine', 'Plum wine', TRUE, 7.00, 'https://example.com/plumwine.jpg', 1),
+                                                                                                       ('Yuzu Soda', 'soft drink', 'Carbonated water, yuzu juice', FALSE, 3.00, 'https://example.com/yuzusoda.jpg', 1),
+                                                                                                       ('Matcha Latte', 'coffee', 'Matcha powder, milk', FALSE, 3.50, 'https://example.com/matchalatte.jpg', 1),
+                                                                                                       ('Shochu', 'cocktail', 'Distilled spirit', TRUE, 5.50, 'https://example.com/shochu.jpg', 1),
+                                                                                                       ('Margarita', 'cocktail', 'Tequila, triple sec, lime juice', TRUE, 8.00, 'https://example.com/margarita.jpg', 2),
+                                                                                                       ('Espresso', 'coffee', 'Coffee beans, water', FALSE, 3.00, 'https://example.com/espresso.jpg', 3),
+                                                                                                       ('Chardonnay', 'wine', 'Grapes', TRUE, 12.50, 'https://example.com/chardonnay.jpg', 3);
 
-                                                                                                       -- The Big Grill (2)
-                                                                                                       ('Vanilla Milkshake', 'Soft Drink', 'Milk, Vanilla bean, Cream', FALSE, 6.00, null, 2),
-                                                                                                       ('Craft Beer', 'Alcoholic', 'Hops, Barley, Yeast', TRUE, 7.50, null, 2),
-
-                                                                                                       -- Bella Italia (3)
-                                                                                                       ('Italian Red Wine', 'Alcoholic', 'Sangiovese grapes', TRUE, 12.00, null, 3),
-                                                                                                       ('Sparkling Water', 'Soft Drink', 'Carbonated mineral water', FALSE, 3.00, null, 3),
-                                                                                                       ('Espresso', 'Coffee', 'Italian coffee beans', FALSE, 4.00, null, 3),
-
-                                                                                                       -- Taco Fiesta (4)
-                                                                                                       ('Margarita', 'Alcoholic', 'Tequila, Lime, Triple sec', TRUE, 10.00, null, 4),
-                                                                                                       ('Horchata', 'Soft Drink', 'Rice milk, Cinnamon, Vanilla', FALSE, 4.50, null, 4),
-                                                                                                       ('Jamaica Water', 'Soft Drink', 'Hibiscus, Sugar, Lime', FALSE, 4.00, null, 4),
-
-                                                                                                       -- Spice Garden (5)
-                                                                                                       ('Mango Lassi', 'Smoothie', 'Mango, Yogurt, Cardamom', FALSE, 5.50, null, 5),
-                                                                                                       ('Masala Chai', 'Tea', 'Black tea, Spices, Milk', FALSE, 3.50, null, 5),
-                                                                                                       ('Rose Sherbet', 'Soft Drink', 'Rose water, Sugar, Lemon', FALSE, 4.00, null, 5),
-
-                                                                                                       -- Thai Paradise (6)
-                                                                                                       ('Thai Iced Tea', 'Tea', 'Black tea, Condensed milk, Star anise', FALSE, 4.50, null, 6),
-                                                                                                       ('Coconut Water', 'Soft Drink', 'Fresh coconut water', FALSE, 5.00, null, 6),
-                                                                                                       ('Lychee Smoothie', 'Smoothie', 'Lychee, Ice, Syrup', FALSE, 6.00, null, 6),
-
-                                                                                                       -- Smokey Joe's BBQ (7)
-                                                                                                       ('Sweet Tea', 'Tea', 'Black tea, Sugar, Lemon', FALSE, 3.00, null, 7),
-                                                                                                       ('Root Beer', 'Soft Drink', 'Sassafras, Vanilla, Spices', FALSE, 3.50, null, 7),
-                                                                                                       ('Bourbon', 'Alcoholic', 'Aged whiskey', TRUE, 11.00, null, 7),
-
-                                                                                                       -- Ocean Noodles (8)
-                                                                                                       ('Bubble Tea', 'Tea', 'Black tea, Tapioca pearls, Milk', FALSE, 5.50, null, 8),
-                                                                                                       ('Plum Wine', 'Alcoholic', 'Fermented plums', TRUE, 9.00, null, 8),
-
-                                                                                                       -- Prime Cuts Steakhouse (9)
-                                                                                                       ('Cabernet Sauvignon', 'Alcoholic', 'Red wine grapes', TRUE, 16.00, null, 9),
-                                                                                                       ('Old Fashioned', 'Alcoholic', 'Whiskey, Bitters, Sugar', TRUE, 13.00, null, 9),
-                                                                                                       ('Sparkling Water', 'Soft Drink', 'Carbonated water', FALSE, 3.50, null, 9),
-
-                                                                                                       -- Mediterranean Breeze (10)
-                                                                                                       ('Greek Wine', 'Alcoholic', 'Assyrtiko grapes', TRUE, 14.00, null, 10),
-                                                                                                       ('Mint Lemonade', 'Soft Drink', 'Lemon, Mint, Sugar', FALSE, 4.50, null, 10),
-                                                                                                       ('Turkish Coffee', 'Coffee', 'Finely ground coffee', FALSE, 4.00, null, 10);
-
--- Reviews for each order (varied ratings)
-INSERT INTO review (content, rating, restaurant_id) VALUES
-                                                        -- Sushi Zen (1) - Average: 5.0
-                                                        ('The Sake was incredible!', 5, 1),
-                                                        ('Best sushi in town!', 5, 1),
-                                                        ('Authentic Japanese experience', 5, 1),
-
-                                                        -- The Big Grill (2) - Average: 4.0
-                                                        ('Burger was okay, but the shake was the star.', 4, 2),
-                                                        ('Great atmosphere and good food', 4, 2),
-
-                                                        -- Bella Italia (3) - Average: 4.7
-                                                        ('Felt like I was in Rome!', 5, 3),
-                                                        ('Pasta was perfectly al dente', 5, 3),
-                                                        ('Wine selection is excellent', 4, 3),
-
-                                                        -- Taco Fiesta (4) - Average: 4.3
-                                                        ('Fresh ingredients and generous portions', 5, 4),
-                                                        ('Margaritas are strong!', 4, 4),
-                                                        ('Good value for money', 4, 4),
-
-                                                        -- Spice Garden (5) - Average: 4.8
-                                                        ('Most authentic Indian food outside of India', 5, 5),
-                                                        ('Spice levels are perfect', 5, 5),
-                                                        ('Mango lassi is heavenly', 5, 5),
-                                                        ('Service could be faster', 4, 5),
-
-                                                        -- Thai Paradise (6) - Average: 4.5
-                                                        ('Pad Thai was amazing', 5, 6),
-                                                        ('Great curry selection', 4, 6),
-
-                                                        -- Smokey Joe's BBQ (7) - Average: 4.2
-                                                        ('Ribs fall off the bone', 5, 7),
-                                                        ('A bit too smoky for my taste', 3, 7),
-                                                        ('Best BBQ in the city', 5, 7),
-
-                                                        -- Ocean Noodles (8) - Average: 3.8
-                                                        ('Decent noodles, nothing special', 4, 8),
-                                                        ('Bubble tea was watery', 3, 8),
-                                                        ('Good for a quick meal', 4, 8),
-
-                                                        -- Prime Cuts Steakhouse (9) - Average: 4.9
-                                                        ('Steak cooked to perfection', 5, 9),
-                                                        ('Expensive but worth every penny', 5, 9),
-                                                        ('Best steakhouse experience ever', 5, 9),
-                                                        ('Wine pairing was spot on', 5, 9),
-                                                        ('Small portions for the price', 4, 9),
-
-                                                        -- Mediterranean Breeze (10) - Average: 4.6
-                                                        ('Love the mezze platter', 5, 10),
-                                                        ('Fresh and healthy options', 5, 10),
-                                                        ('Great for vegetarians', 4, 10);
-
--- Vouchers for each order
-INSERT INTO voucher (text, discount, restaurant_id) VALUES
-                                                        ('SUSHI20', 20, 1),
-                                                        ('GRILL5', 5, 2),
-                                                        ('ITALIA15', 15, 3),
-                                                        ('TACO10', 10, 4),
-                                                        ('SPICE25', 25, 5),
-                                                        ('THAI10', 10, 6),
-                                                        ('BBQ15', 15, 7),
-                                                        ('NOODLE5', 5, 8),
-                                                        ('STEAK20', 20, 9),
-                                                        ('MED10', 10, 10);
-
--- Sample orders
+-- -------------------ORDERS--------------------------------
 INSERT INTO "order" (status) VALUES
-                                 ('dispatched'),
+                                 ('pending'),
+                                 ('preparing'),
                                  ('ready'),
-                                 ('preparing');
+                                 ('dispatched'),
+                                 ('pending'),
+                                 ('ready'),
+                                 ('preparing'),
+                                 ('dispatched'),
+                                 ('ready');
 
--- Link orders to users
+-- -------------------USER_ORDERS--------------------------------
 INSERT INTO user_order (user_email, order_id) VALUES
                                                   ('foodie@gmail.com', 1),
                                                   ('john.doe@email.com', 2),
-                                                  ('jane.smith@email.com', 3);
+                                                  ('jane.smith@email.com', 3),
+                                                  ('foodie@gmail.com', 5),
+                                                  ('john.doe@email.com', 6),
+                                                  ('jane.smith@email.com', 7),
+                                                  ('foodie@gmail.com', 8),
+                                                  ('john.doe@email.com', 9);
 
--- Order details
-INSERT INTO order_drinks (quantity, order_id, drink_id) VALUES
-                                                            (3, 1, 2),  -- Alice orders 3 Green Tea Sodas
-                                                            (2, 2, 7),  -- John orders 2 Sparkling Waters
-                                                            (1, 2, 6),  -- John orders 1 Italian Red Wine
-                                                            (2, 3, 11), -- Jane orders 2 Margaritas
-                                                            (1, 3, 12); -- Jane orders 1 Horchata
+-- -------------------ORDER_DRINKS--------------------------------
+INSERT INTO order_drinks (order_id, drink_id, quantity) VALUES
+                                                            (1, 1, 2),
+                                                            (1, 3, 1),
+                                                            (2, 2, 1),
+                                                            (3, 4, 2),
+                                                            (5, 5, 2),
+                                                            (5, 6, 1),
+                                                            (6, 3, 1),
+                                                            (6, 7, 2),
+                                                            (7, 1, 1),
+                                                            (7, 2, 2),
+                                                            (8, 5, 1),
+                                                            (8, 6, 1),
+                                                            (9, 3, 1),
+                                                            (9, 7, 1);
 
--- Query to verify all restaurants with cuisines and ratings
-SELECT
-    r.id,
-    r.restaurant_name,
-    r.restaurant_email,
-    r.phone_number,
-    r.image_link,
-    r.address_id,
-    r.owner_email,
-    COALESCE(
-            ARRAY_AGG(DISTINCT cr.cuisine) FILTER (WHERE cr.cuisine IS NOT NULL),
-            ARRAY[]::TEXT[]
-    ) AS cuisines,
-    COALESCE(AVG(rev.rating), 0) AS average_rating,
-    COUNT(DISTINCT rev.id) AS review_count
-FROM
-    restaurant r
-        LEFT JOIN
-    cuisine_restaurant cr ON r.id = cr.restaurant_id
-        LEFT JOIN
-    review rev ON r.id = rev.restaurant_id
-GROUP BY
-    r.id,
-    r.restaurant_name,
-    r.restaurant_email,
-    r.phone_number,
-    r.image_link,
-    r.address_id,
-    r.owner_email
-ORDER BY
-    r.restaurant_name;
+-- -------------------REVIEWS--------------------------------
+INSERT INTO review (content, rating, restaurant_id) VALUES
+                                                        ('Amazing sushi, very fresh!', 5, 1),
+                                                        ('Burgers were great but service was slow.', 4, 2),
+                                                        ('Pasta was delicious and authentic!', 5, 3),
+                                                        ('Sake selection was excellent!', 5, 1),
+                                                        ('Matcha latte was perfect and creamy!', 4, 1);
+
+-- -------------------VOUCHERS--------------------------------
+INSERT INTO voucher (text, discount, restaurant_id) VALUES
+                                                        ('10% off on your first order', 10, 1),
+                                                        ('Free drink with any burger', 0, 2),
+                                                        ('20% off weekend special', 20, 3);
