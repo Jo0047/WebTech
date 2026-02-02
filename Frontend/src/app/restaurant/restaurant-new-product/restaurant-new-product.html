@@ -13,9 +13,12 @@
         Category
         <select formControlName="category">
           <option value="" disabled>Select category</option>
-          @for (c of categories; track c) {
-            <option value="{{ c }}">{{ c }}</option>
-          }
+          <option value="soft drink">Soft drink</option>
+          <option value="cocktail">Cocktail</option>
+          <option value="beer">Beer</option>
+          <option value="wine">Wine</option>
+          <option value="coffee">Coffee</option>
+          <option value="tea">Tea</option>
         </select>
       </label>
 
