@@ -1,3 +1,5 @@
+import {Cuisine} from './cuisine';
+
 export interface Restaurant {
   id: number;
   restaurant_name: string;
@@ -6,6 +8,6 @@ export interface Restaurant {
   image_link: string | null;
   address_id: number;
   owner_email: string;
-  cuisines: string[];
+  cuisines: Cuisine[];
   average_rating: string;
 }

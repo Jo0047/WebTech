@@ -11,18 +11,6 @@ INSERT INTO address (street, street_number, zip_code, city) VALUES
                                                                 ('Noodle Lane', '12', '33101', 'Miami'),
                                                                 ('Steakhouse Drive', '77', '85001', 'Phoenix');
 
--- Add more cuisines
-INSERT INTO cuisine (cuisine_name) VALUES
-                                       ('Japanese'),
-                                       ('American'),
-                                       ('Fusion'),
-                                       ('Italian'),
-                                       ('Mexican'),
-                                       ('Indian'),
-                                       ('Thai'),
-                                       ('BBQ'),
-                                       ('Steakhouse'),
-                                       ('Mediterranean');
 
 INSERT INTO categories (cat_name) VALUES
                                       ('Soft Drink'),
@@ -40,46 +28,25 @@ INSERT INTO "user" (email, password, first_name, last_name, is_owner, address_id
                                                                                       ('jane.smith@email.com', '$2a$15$z7Yo91URlV13wMMn8j7aGeee8m5hD1SxdZAFVUy/pPbexruiGUjCC', 'Jane', 'Smith', FALSE, 1);
 
 -- 10 Restaurants with diverse cuisines
-INSERT INTO restaurant (restaurant_name, restaurant_email, phone_number, image_link, address_id, owner_email) VALUES
-                                                                                                                  ('Sushi Zen', 'order@sushizen.com', '555-0101', null, 2, 'owner@eats.com'),
-                                                                                                                  ('The Big Grill', 'hello@biggrill.com', '555-0202', null, 3, 'owner@eats.com'),
-                                                                                                                  ('Bella Italia', 'info@bellaitalia.com', '555-0303', null, 4, 'owner@eats.com'),
-                                                                                                                  ('Taco Fiesta', 'orders@tacofiesta.com', '555-0404', null, 5, 'owner@eats.com'),
-                                                                                                                  ('Spice Garden', 'contact@spicegarden.com', '555-0505', null, 6, 'owner@eats.com'),
-                                                                                                                  ('Thai Paradise', 'hello@thaiparadise.com', '555-0606', null, 7, 'owner@eats.com'),
-                                                                                                                  ('Smokey Joe''s BBQ', 'bbq@smokeyjo.com', '555-0707', null, 8, 'owner@eats.com'),
-                                                                                                                  ('Ocean Noodles', 'info@oceannoodles.com', '555-0808', null, 9, 'owner@eats.com'),
-                                                                                                                  ('Prime Cuts Steakhouse', 'reservations@primecuts.com', '555-0909', null, 10, 'owner@eats.com'),
-                                                                                                                  ('Mediterranean Breeze', 'hello@medbreeze.com', '555-1010', null, 1, 'owner@eats.com');
-
--- Link cuisines to restaurants
-INSERT INTO cuisine_restaurant (cuisine, restaurant_id) VALUES
-                                                            -- Sushi Zen (1)
-                                                            ('Japanese', 1),
-                                                            ('Fusion', 1),
-                                                            -- The Big Grill (2)
-                                                            ('American', 2),
-                                                            -- Bella Italia (3)
-                                                            ('Italian', 3),
-                                                            -- Taco Fiesta (4)
-                                                            ('Mexican', 4),
-                                                            -- Spice Garden (5)
-                                                            ('Indian', 5),
-                                                            ('Fusion', 5),
-                                                            -- Thai Paradise (6)
-                                                            ('Thai', 6),
-                                                            -- Smokey Joe's BBQ (7)
-                                                            ('BBQ', 7),
-                                                            ('American', 7),
-                                                            -- Ocean Noodles (8)
-                                                            ('Japanese', 8),
-                                                            ('Thai', 8),
-                                                            -- Prime Cuts Steakhouse (9)
-                                                            ('Steakhouse', 9),
-                                                            ('American', 9),
-                                                            -- Mediterranean Breeze (10)
-                                                            ('Mediterranean', 10),
-                                                            ('Fusion', 10);
+INSERT INTO restaurant (
+    restaurant_name,
+    restaurant_email,
+    phone_number,
+    image_link,
+    cuisines,
+    address_id,
+    owner_email
+) VALUES
+      ('Sushi Zen', 'order@sushizen.com', '555-0101', NULL, ARRAY['japanese', 'fusion']::cuisine[], 2, 'owner@eats.com'),
+      ('The Big Grill', 'hello@biggrill.com', '555-0202', NULL, ARRAY['american']::cuisine[], 3, 'owner@eats.com'),
+      ('Bella Italia', 'info@bellaitalia.com', '555-0303', NULL, ARRAY['italian']::cuisine[], 4, 'owner@eats.com'),
+      ('Taco Fiesta', 'orders@tacofiesta.com', '555-0404', NULL, ARRAY['mexican']::cuisine[], 5, 'owner@eats.com'),
+      ('Spice Garden', 'contact@spicegarden.com', '555-0505', NULL, ARRAY['indian', 'fusion']::cuisine[], 6, 'owner@eats.com'),
+      ('Thai Paradise', 'hello@thaiparadise.com', '555-0606', NULL, ARRAY['thai']::cuisine[], 7, 'owner@eats.com'),
+      ('Smokey Joe''s BBQ', 'bbq@smokeyjo.com', '555-0707', NULL, ARRAY['bbq', 'american']::cuisine[], 8, 'owner@eats.com'),
+      ('Ocean Noodles', 'info@oceannoodles.com', '555-0808', NULL, ARRAY['japanese', 'thai']::cuisine[], 9, 'owner@eats.com'),
+      ('Prime Cuts Steakhouse', 'reservations@primecuts.com', '555-0909', NULL, ARRAY['steakhouse', 'american']::cuisine[], 10, 'owner@eats.com'),
+      ('Mediterranean Breeze', 'hello@medbreeze.com', '555-1010', NULL, ARRAY['mediterranean', 'fusion']::cuisine[], 1, 'owner@eats.com');
 
 -- Drinks for each order (2-3 drinks per order)
 INSERT INTO drink (drink_name, category, ingredients, alcoholic, price, image_link, restaurant_id) VALUES

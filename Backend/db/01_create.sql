@@ -1,3 +1,5 @@
+--sudo docker compose down -v && sudo docker compose up --build --force-recreate -d
+-- sudo docker exec -it postgres_db psql -U postgres -d angular_app
 -------------------ENUMS--------------------------------
 CREATE TYPE order_status AS ENUM (
     'pending',
@@ -6,6 +8,19 @@ CREATE TYPE order_status AS ENUM (
     'ready',
     'dispatched',
     'arrived'
+);
+
+CREATE TYPE cuisine AS ENUM (
+  'japanese',
+  'american',
+  'fusion',
+  'italian',
+  'mexican',
+  'indian',
+  'thai',
+  'bbq',
+  'steakhouse',
+  'mediterranean'
 );
 
 -------------------TABLES--------------------------------
@@ -38,6 +53,7 @@ CREATE TABLE IF NOT EXISTS restaurant (
                                           restaurant_email TEXT,
                                           phone_number TEXT,
                                           image_link TEXT,
+    cuisines cuisine[],
 
                                           FOREIGN KEY (address_id) REFERENCES address(id),
     address_id INT NOT NULL,
@@ -50,10 +66,6 @@ CREATE TABLE IF NOT EXISTS "order" (
                                        status order_status NOT NULL DEFAULT 'pending'
 );
 
-
-CREATE TABLE IF NOT EXISTS cuisine (
-                                       cuisine_name TEXT PRIMARY KEY
-);
 
 
 CREATE TABLE IF NOT EXISTS categories (
@@ -102,15 +114,7 @@ CREATE TABLE IF NOT EXISTS voucher (
 
 
 --------------------------------------JUNCTION TABLES-----------------------------------------
-CREATE TABLE IF NOT EXISTS cuisine_restaurant (
-                                                  PRIMARY KEY (cuisine, restaurant_id),
 
-    cuisine TEXT NOT NULL,
-    restaurant_id INT NOT NULL,
-
-    FOREIGN KEY (cuisine) REFERENCES cuisine(cuisine_name),
-    FOREIGN KEY (restaurant_id) REFERENCES restaurant(id)
-    );
 
 CREATE TABLE IF NOT EXISTS user_order (
                                           PRIMARY KEY (user_email, order_id),
