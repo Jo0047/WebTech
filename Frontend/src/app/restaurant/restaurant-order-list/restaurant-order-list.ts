@@ -1,15 +1,7 @@
 import {Component, inject, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {RestaurantService} from '../../services/restaurant/restaurant.service';
-
-enum OrderStatus {
-  pending = 'pending',
-  rejected = 'rejected',
-  preparing = 'preparing',
-  ready = 'ready',
-  dispatched = 'dispatched',
-  arrived = 'arrived'
-}
+import {OrderStatus} from '../../models/OrderStatus';
 
 
 interface DrinkItem {
