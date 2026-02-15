@@ -15,6 +15,7 @@ import {MainMenu} from './general-components/main-menu/main-menu';
 import {authGuard} from './services/auth/auth-guard';
 import {RestaurantNewProduct} from './restaurant/restaurant-new-product/restaurant-new-product';
 import {CustomerRestaurantBasket} from './customer/customer-restaurant-basket/customer-restaurant-basket';
+import {NewPassword} from './authentication/password-reset/new-password/new-password';
 
 export const routes: Routes = [
   { path: '', component: Main },
@@ -24,6 +25,7 @@ export const routes: Routes = [
   { path: 'passwordReset', component: PasswordReset },
   { path: 'register/:userRole', component: RegisterProcess },
   { path: 'mainmenu', component: MainMenu,canActivate: [authGuard]},
+  { path: 'newPassword', component: NewPassword},
 
   { path: 'customer',
     component: MainMenu,

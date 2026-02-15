@@ -13,10 +13,11 @@ import {AuthenticationService} from '../../services/auth/authentication.service'
   styleUrl: './password-reset.css',
 })
 export class PasswordReset {
-  loginForm = new FormGroup({
+  resetForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
   })
   authService = inject(AuthenticationService);
+  emailSent = false;
 
   constructor(
     private router: Router,
@@ -26,14 +27,17 @@ export class PasswordReset {
    * Handle form submission
    */
   onSubmit(): void {
-    if (this.loginForm.valid) {
-      const formValue = this.loginForm.value;
+    if (this.resetForm.valid) {
+      const formValue = this.resetForm.value;
 
       console.log('Reset attempt with:', {
         email: formValue.email,
       });
 
-      //todo email für passwort reset senden
+      this.authService.requestPasswordReset(formValue.email).subscribe(data => {
+        console.log(data);
+        this.emailSent = true;
+      });
 
     } else {
       console.log('Password Reset failed - form is invalid');
@@ -44,7 +48,7 @@ export class PasswordReset {
    * Helper method to check if a field has an error
    */
   hasError(fieldName: string, errorType: string): boolean {
-    const field = this.loginForm.get(fieldName);
+    const field = this.resetForm.get(fieldName);
     return !!(field?.hasError(errorType) && (field?.dirty || field?.touched));
   }
 
