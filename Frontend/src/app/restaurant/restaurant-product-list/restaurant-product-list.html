@@ -27,6 +27,12 @@
       <p>Ingredients: {{ product.ingredients }}</p>
       <p>Alcoholic: <span>{{ product.alcoholic ? 'Yes' : 'No' }}</span></p>
       <p class="price">${{ product.price }}</p>
+
+      <!-- ACTION BUTTONS -->
+      <div class="card-actions">
+        <button class="edit-btn" routerLink="/restaurant/editProduct/{{product.id}}">Edit</button>
+        <button class="delete-btn" (click)="deleteDrink(product.id)">Delete</button>
+      </div>
     </div>
   } @empty {
     <p>No drinks found for this category.</p>

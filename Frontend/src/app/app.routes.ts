@@ -15,6 +15,7 @@ import {MainMenu} from './general-components/main-menu/main-menu';
 import {authGuard} from './services/auth/auth-guard';
 import {RestaurantNewProduct} from './restaurant/restaurant-new-product/restaurant-new-product';
 import {CustomerRestaurantBasket} from './customer/customer-restaurant-basket/customer-restaurant-basket';
+import {RestaurantEditProduct} from './restaurant/restaurant-edit-product/restaurant-edit-product';
 
 export const routes: Routes = [
   { path: '', component: Main },
@@ -46,6 +47,7 @@ export const routes: Routes = [
       { path: 'products', component: RestaurantProductList },
       { path: 'profile', component: Profile },
       { path: 'newProduct', component: RestaurantNewProduct },
+      {path : 'editProduct/:id', component: RestaurantEditProduct },
     ],
     canActivate: [authGuard]
   },

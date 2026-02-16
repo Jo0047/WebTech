@@ -7,7 +7,7 @@ import {QueryResult} from "pg";
  */
 async function getDrinksByRestaurant(restaurantId: number) {
     const query = {
-        text: 'SELECT * FROM drink WHERE restaurant_id = $1',
+        text: 'SELECT * FROM drink WHERE restaurant_id = $1 AND deleted = FALSE',
         values: [restaurantId]
     };
 
@@ -49,4 +49,58 @@ async function addDrink(drink_name: string, category: string, ingredients: strin
         [drink_name, category, ingredients, alcoholic, price, restaurant_id])
 }
 
-export { getDrinksByRestaurant, addDrink };
+/**
+ * delete Drink by setting deleted flag in DB
+ * @param id
+ */
+async function deleteDrink(id: number) {
+    const query = {
+        text: 'UPDATE drink SET deleted = TRUE WHERE id = $1;',
+        values: [id]
+    }
+    await pool.query(query)
+}
+
+/**
+ * Update drink in DB
+ * @param id
+ * @param drink_name
+ * @param category
+ * @param ingredients
+ * @param alcoholic
+ * @param price
+ */
+async function updateDrink(
+    id: number,
+    drink_name: string,
+    category: string,
+    ingredients: string,
+    alcoholic: boolean,
+    price: number
+) {
+    await pool.query(
+        `UPDATE drink
+         SET drink_name=$1,
+             category=$2,
+             ingredients=$3,
+             alcoholic=$4,
+             price=$5
+         WHERE id=$6`,
+        [drink_name, category, ingredients, alcoholic, price, id]
+    );
+}
+
+/**
+ * Get Drink by id
+ * @param id
+ */
+async function getDrinkById(id: number) {
+    const result = await pool.query(
+        "SELECT * FROM drink WHERE id=$1",
+        [id]
+    );
+    return result.rows[0];
+}
+
+
+export { getDrinksByRestaurant, addDrink, deleteDrink, updateDrink, getDrinkById };

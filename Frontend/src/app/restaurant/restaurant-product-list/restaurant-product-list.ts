@@ -50,5 +50,12 @@ export class RestaurantProductList implements OnInit {
     );
   }
 
-  protected readonly Category = Category;
+  deleteDrink(id: number) {
+    if (!confirm('Are you sure you want to delete this drink?')) return;
+
+    this.drinkService.deleteDrink(id).subscribe(() => {
+      this.drinks = this.drinks.filter(d => d.id !== id);
+    });
+  }
+
 }
