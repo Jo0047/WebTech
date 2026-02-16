@@ -14,7 +14,7 @@ import {RestaurantService} from '../../services/restaurant/restaurant.service';
 export class RestaurantNewProduct {
   private http = inject(HttpClient);
   restaurantService: RestaurantService = inject(RestaurantService);
-  apiUrl = 'http://localhost:3000/data/drink';
+  apiUrl = 'http://localhost:3000/drinks/drink';
   drinkForm: FormGroup;
 
 

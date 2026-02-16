@@ -30,7 +30,7 @@
 
       <!-- ACTION BUTTONS -->
       <div class="card-actions">
-        <button class="edit-btn" (click)="editDrink(product)">Edit</button>
+        <button class="edit-btn" routerLink="/restaurant/editProduct/{{product.id}}">Edit</button>
         <button class="delete-btn" (click)="deleteDrink(product.id)">Delete</button>
       </div>
     </div>

@@ -42,8 +42,34 @@ router.post("/drink", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
     let id = parseInt(req.params.id);
-    console.log(id);
     await drinkService.deleteDrink(id);
     return res.status(200).json({});
 })
+
+router.put("/:id", async (req, res) => {
+    let id = parseInt(req.params.id);
+    let drinkData = req.body;
+
+    await drinkService.updateDrink(
+        id,
+        drinkData.drink_name,
+        drinkData.category,
+        drinkData.ingredients,
+        drinkData.alcoholic,
+        drinkData.price
+    );
+
+    return res.status(200).json({});
+});
+
+
+router.get("/drink/:id", async (req, res) => {
+    const id = parseInt(req.params.id);
+    console.log(id);
+    const drink = await drinkService.getDrinkById(id);
+    res.json(drink);
+});
+
+
+
 export default router;

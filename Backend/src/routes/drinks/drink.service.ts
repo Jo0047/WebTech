@@ -57,4 +57,42 @@ async function deleteDrink(id: number) {
     await pool.query(query)
 }
 
-export { getDrinksByRestaurant, addDrink, deleteDrink };
+/**
+ * Update drink in DB
+ * @param id
+ * @param drink_name
+ * @param category
+ * @param ingredients
+ * @param alcoholic
+ * @param price
+ */
+async function updateDrink(
+    id: number,
+    drink_name: string,
+    category: string,
+    ingredients: string,
+    alcoholic: boolean,
+    price: number
+) {
+    await pool.query(
+        `UPDATE drink
+         SET drink_name=$1,
+             category=$2,
+             ingredients=$3,
+             alcoholic=$4,
+             price=$5
+         WHERE id=$6`,
+        [drink_name, category, ingredients, alcoholic, price, id]
+    );
+}
+
+async function getDrinkById(id: number) {
+    const result = await pool.query(
+        "SELECT * FROM drink WHERE id=$1",
+        [id]
+    );
+    return result.rows[0];
+}
+
+
+export { getDrinksByRestaurant, addDrink, deleteDrink, updateDrink, getDrinkById };

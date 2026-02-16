@@ -50,11 +50,6 @@ export class RestaurantProductList implements OnInit {
     );
   }
 
-  editDrink(drink: Drink) {
-    // navigate to edit page with id
-    //window.location.href = `/restaurant/editProduct/${drink.id}`;
-  }
-
   deleteDrink(id: number) {
     if (!confirm('Are you sure you want to delete this drink?')) return;
 
