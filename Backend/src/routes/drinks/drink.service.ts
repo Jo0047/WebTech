@@ -49,6 +49,10 @@ async function addDrink(drink_name: string, category: string, ingredients: strin
         [drink_name, category, ingredients, alcoholic, price, restaurant_id])
 }
 
+/**
+ * delete Drink by setting deleted flag in DB
+ * @param id
+ */
 async function deleteDrink(id: number) {
     const query = {
         text: 'UPDATE drink SET deleted = TRUE WHERE id = $1;',
@@ -86,6 +90,10 @@ async function updateDrink(
     );
 }
 
+/**
+ * Get Drink by id
+ * @param id
+ */
 async function getDrinkById(id: number) {
     const result = await pool.query(
         "SELECT * FROM drink WHERE id=$1",

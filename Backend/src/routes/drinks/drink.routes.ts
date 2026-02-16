@@ -40,6 +40,9 @@ router.post("/drink", async (req, res) => {
     )
 })
 
+/**
+ * delete drink by setting deleted flag
+ */
 router.delete("/:id", async (req, res) => {
     let id = parseInt(req.params.id);
     await drinkService.deleteDrink(id);
@@ -62,10 +65,11 @@ router.put("/:id", async (req, res) => {
     return res.status(200).json({});
 });
 
-
+/**
+ * get drink by id
+ */
 router.get("/drink/:id", async (req, res) => {
     const id = parseInt(req.params.id);
-    console.log(id);
     const drink = await drinkService.getDrinkById(id);
     res.json(drink);
 });
