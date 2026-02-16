@@ -39,4 +39,11 @@ router.post("/drink", async (req, res) => {
 
     )
 })
+
+router.delete("/:id", async (req, res) => {
+    let id = parseInt(req.params.id);
+    console.log(id);
+    await drinkService.deleteDrink(id);
+    return res.status(200).json({});
+})
 export default router;

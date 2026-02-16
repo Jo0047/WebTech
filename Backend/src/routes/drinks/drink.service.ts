@@ -7,7 +7,7 @@ import {QueryResult} from "pg";
  */
 async function getDrinksByRestaurant(restaurantId: number) {
     const query = {
-        text: 'SELECT * FROM drink WHERE restaurant_id = $1',
+        text: 'SELECT * FROM drink WHERE restaurant_id = $1 AND deleted = FALSE',
         values: [restaurantId]
     };
 
@@ -49,4 +49,12 @@ async function addDrink(drink_name: string, category: string, ingredients: strin
         [drink_name, category, ingredients, alcoholic, price, restaurant_id])
 }
 
-export { getDrinksByRestaurant, addDrink };
+async function deleteDrink(id: number) {
+    const query = {
+        text: 'UPDATE drink SET deleted = TRUE WHERE id = $1;',
+        values: [id]
+    }
+    await pool.query(query)
+}
+
+export { getDrinksByRestaurant, addDrink, deleteDrink };

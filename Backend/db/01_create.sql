@@ -85,6 +85,7 @@ CREATE TABLE IF NOT EXISTS drink (
                                      alcoholic BOOLEAN DEFAULT FALSE,
                                      price DECIMAL(10, 2) NOT NULL,
                                      image_link TEXT,
+    deleted BOOLEN DEFAULT FALSE,
 
     restaurant_id INT NOT NULL,
     FOREIGN KEY (restaurant_id) REFERENCES restaurant(id)
