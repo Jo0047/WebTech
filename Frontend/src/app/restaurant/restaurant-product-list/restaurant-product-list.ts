@@ -50,5 +50,17 @@ export class RestaurantProductList implements OnInit {
     );
   }
 
-  protected readonly Category = Category;
+  editDrink(drink: Drink) {
+    // navigate to edit page with id
+    //window.location.href = `/restaurant/editProduct/${drink.id}`;
+  }
+
+  deleteDrink(id: number) {
+    if (!confirm('Are you sure you want to delete this drink?')) return;
+
+    //this.drinkService.deleteDrink(id).subscribe(() => {
+      //this.drinks = this.drinks.filter(d => d.id !== id);
+    //});
+  }
+
 }
