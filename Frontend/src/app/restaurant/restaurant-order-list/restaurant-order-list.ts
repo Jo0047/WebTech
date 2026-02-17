@@ -1,8 +1,9 @@
 import {Component, inject, OnInit} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {RestaurantService} from '../../services/restaurant/restaurant.service';
 import {OrderStatus} from '../../models/OrderStatus';
-import {Restaurant} from '../../models/restaurant';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 
 interface DrinkItem {
@@ -25,6 +26,8 @@ interface Order {
 })
 export class RestaurantOrderList implements OnInit{
   restaurantService: RestaurantService = inject(RestaurantService);
+  private snackBar = inject(MatSnackBar);
+
 
   private http = inject(HttpClient);
   apiUrl = 'http://localhost:3000/orders';
@@ -46,7 +49,7 @@ export class RestaurantOrderList implements OnInit{
       params: { restaurant_id: id }
     }).subscribe({
       next: data => {
-        this.orders = data;
+        this.orders = data.sort((a, b) => b.order_id - a.order_id);
         console.log('orders loaded:', this.orders);
       },
       error: err => console.error(err)
@@ -54,20 +57,20 @@ export class RestaurantOrderList implements OnInit{
   }
 
   async rejectOrder(order: Order) {
-    console.log(order, "rejecting...");
     this.http.post(this.apiUrl + '/reject', order).subscribe({
       next: () => {
         this.loadOrders()
       }
     })
   }
-//TODO restrict changes
+
   advanceOrder(order: Order) {
-    console.log(order, "advancing...");
-    this.http.post(this.apiUrl + '/advance', order).subscribe({
-      next: () => {
-        this.loadOrders()
-      }
-    })
+      this.http.post(this.apiUrl + '/advance', order).subscribe({
+        next: () => {
+          this.loadOrders()
+        }
+      })
   }
+
+  protected readonly OrderStatus = OrderStatus;
 }
