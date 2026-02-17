@@ -27,20 +27,12 @@ export class RestaurantProductList implements OnInit {
   selectedCategory: string = '';
 
 
-  async ngOnInit() {
-    await this.loadDrinks();
-  }
-
-  async loadDrinks() {
-    let restaurantId = await this.restaurantService.getRestaurantId()
-
-    this.drinkService.getDrinksByRestaurant(restaurantId).subscribe(data => {
-      this.drinks = (data as any).drinks;
-      console.log(this.drinks);
-    });
-
-
-
+  ngOnInit() {
+      this.restaurantService.getRestaurantId()
+        .then(id => this.drinkService.getDrinksByRestaurant(id))
+        .then(obs => obs.subscribe(data => {
+          this.drinks = (data as any).drinks;
+        }));
   }
 
   get filteredProducts() {

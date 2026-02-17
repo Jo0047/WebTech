@@ -2,6 +2,7 @@ import {Component, inject, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {RestaurantService} from '../../services/restaurant/restaurant.service';
 import {OrderStatus} from '../../models/OrderStatus';
+import {Restaurant} from '../../models/restaurant';
 
 
 interface DrinkItem {
@@ -25,30 +26,30 @@ interface Order {
 export class RestaurantOrderList implements OnInit{
   restaurantService: RestaurantService = inject(RestaurantService);
 
-
   private http = inject(HttpClient);
   apiUrl = 'http://localhost:3000/orders';
 
   orders: Order[] = [];
 
-
-  async ngOnInit() {
-    await this.loadOrders();
+  ngOnInit() {
+    this.loadOrders()
   }
 
-  async loadOrders() {
-    let restaurantId = await this.restaurantService.getRestaurantId()
+  loadOrders() {
+    this.restaurantService.getRestaurantId().then(id => {
+      this.fetchOrders(id);
+    });
+  }
 
+  fetchOrders(id: number) {
     this.http.get<Order[]>(this.apiUrl + '/order', {
-      params: { restaurant_id: restaurantId }
+      params: { restaurant_id: id }
     }).subscribe({
-      next: (data) => {
+      next: data => {
         this.orders = data;
         console.log('orders loaded:', this.orders);
       },
-      error: (err) => {
-        console.error('Error fetching drinks:', err);
-      }
+      error: err => console.error(err)
     });
   }
 
@@ -56,21 +57,17 @@ export class RestaurantOrderList implements OnInit{
     console.log(order, "rejecting...");
     this.http.post(this.apiUrl + '/reject', order).subscribe({
       next: () => {
-        this.loadOrders();
-        console.log(order, "rejection successful" );
-
+        this.loadOrders()
       }
     })
   }
-//TODO reload page, and restrict changes
+//TODO restrict changes
   advanceOrder(order: Order) {
     console.log(order, "advancing...");
     this.http.post(this.apiUrl + '/advance', order).subscribe({
       next: () => {
-        this.loadOrders();
-      console.log(order, "advance successful");}
+        this.loadOrders()
+      }
     })
-
   }
-
 }
