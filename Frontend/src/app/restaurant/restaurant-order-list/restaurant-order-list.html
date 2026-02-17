@@ -17,8 +17,14 @@
       </div>
 
       <div class="order-actions">
-        <button (click)="rejectOrder(order)">Reject</button>
-        <button (click)="advanceOrder(order)">Advance Order</button>
+        <button (click)="rejectOrder(order)"
+                [disabled]="order.order_status != OrderStatus.pending">
+          Reject
+        </button>
+        <button (click)="advanceOrder(order)"
+                [disabled]="order.order_status == OrderStatus.arrived || order.order_status == OrderStatus.rejected">
+
+        Advance Order</button>
       </div>
     </div>
   }@empty {
