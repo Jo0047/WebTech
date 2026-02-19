@@ -2,6 +2,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RestaurantService } from '../../services/restaurant/restaurant.service';
 import { Order } from '../../models/order';
+import {RestaurantOrderList} from '../restaurant-order-list/restaurant-order-list';
+import {RestaurantProductList} from '../restaurant-product-list/restaurant-product-list';
 
 interface DrinkStats {
   name: string;
@@ -12,6 +14,10 @@ interface DrinkStats {
   selector: 'app-restaurant-dashboard',
   templateUrl: './restaurant-dashboard.html',
   styleUrls: ['./restaurant-dashboard.css'],
+  imports: [
+    RestaurantOrderList,
+    RestaurantProductList
+  ]
 })
 export class RestaurantDashboard implements OnInit {
   restaurantService: RestaurantService = inject(RestaurantService);

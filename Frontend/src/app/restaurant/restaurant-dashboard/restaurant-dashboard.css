@@ -37,3 +37,8 @@
   padding: 4px 0;
   color: #34495e;
 }
+.bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
