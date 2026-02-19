@@ -29,9 +29,10 @@ export class RestaurantOrderList implements OnInit{
   apiUrl = 'http://localhost:3000/orders';
 
   orders: Order[] = [];
-
   ngOnInit() {
-    this.loadOrders()
+    this.loadAddress();
+    this.loadOrders();
+
     delete (L.Icon.Default.prototype as any)._getIconUrl;
 
     L.Icon.Default.mergeOptions({
@@ -47,6 +48,12 @@ export class RestaurantOrderList implements OnInit{
     this.restaurantService.getRestaurantId().then(id => {
       this.fetchOrders(id);
     });
+  }
+
+  loadAddress() {
+    this.restaurantService.getRestaurantAddress().then(address => {
+      console.log(address);
+    })
   }
 
   fetchOrders(id: number) {
