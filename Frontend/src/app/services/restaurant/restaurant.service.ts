@@ -43,4 +43,13 @@ export class RestaurantService {
     }
   }
 
+  async getRestaurantAddress(): Promise<Address> {
+    let restaurant_id = await this.getRestaurantId();
+    const params = new HttpParams().set('id', restaurant_id);
+
+    const res = await firstValueFrom(this.http.get<{address: Address}>(`${this.restaurantUrl}/address`));
+    return res.address
+
+  }
+
 }
