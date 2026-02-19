@@ -8,6 +8,7 @@ async function getOrdersByRestaurant(restaurant_id: number) {
     SELECT 
         o.id AS order_id,
         o.status AS order_status,
+        o.created_at AS created_at,
 
         json_agg(
             json_build_object(
