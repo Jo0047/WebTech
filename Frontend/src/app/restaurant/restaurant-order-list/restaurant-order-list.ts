@@ -89,47 +89,72 @@ export class RestaurantOrderList implements OnInit{
   showMap(order: Order) {
     this.activeOrderId = order.order_id;
 
-    const fullAddress = `${order.address.street} ${order.address.street_number}, ${order.address.zip_code} ${order.address.city}`;
+    // Full order address
+    const orderAddress = `${order.address.street} ${order.address.street_number}, ${order.address.zip_code} ${order.address.city}`;
 
-    // Geocode address using OpenStreetMap Nominatim
-    this.http.get<any>('https://nominatim.openstreetmap.org/search', {
-      params: { q: fullAddress, format: 'json', limit: '1' }
-    }).subscribe(result => {
-      if (!result.length) {
-        console.warn('Address not found');
-        return;
-      }
+    // Get restaurant address from service
+    this.restaurantService.getRestaurantAddress().then(restaurantAddr => {
+      const restaurantAddress = `${restaurantAddr.street} ${restaurantAddr.street_number}, ${restaurantAddr.zip_code} ${restaurantAddr.city}`;
 
-      const lat = parseFloat(result[0].lat);
-      const lon = parseFloat(result[0].lon);
+      // Geocode both addresses using Nominatim
+      const geocode = (address: string) =>
+        this.http.get<any>('https://nominatim.openstreetmap.org/search', {
+          params: { q: address, format: 'json', limit: '1' }
+        }).toPromise();
 
-      // wait a tick to make sure Angular rendered the div
-      setTimeout(() => {
-        const mapId = 'map-' + order.order_id;
-        const mapDiv = document.getElementById(mapId);
+      Promise.all([geocode(orderAddress), geocode(restaurantAddress)])
+        .then(results => {
+          if (!results[0].length || !results[1].length) {
+            console.warn('Address not found');
+            return;
+          }
 
-        if (!mapDiv) return;
+          const orderLat = parseFloat(results[0][0].lat);
+          const orderLon = parseFloat(results[0][0].lon);
 
-        // Remove existing map if Leaflet has one attached
-        if ((mapDiv as any)._leaflet_map) {
-          (mapDiv as any)._leaflet_map.remove();
-        }
+          const restaurantLat = parseFloat(results[1][0].lat);
+          const restaurantLon = parseFloat(results[1][0].lon);
 
-        // Initialize Leaflet map
-        const map = L.map(mapId).setView([lat, lon], 15);
+          setTimeout(() => {
+            const mapId = 'map-' + order.order_id;
+            const mapDiv = document.getElementById(mapId);
+            if (!mapDiv) return;
 
-        // Store reference to map on the div
-        (mapDiv as any)._leaflet_map = map;
+            // Remove existing map if present
+            if ((mapDiv as any)._leaflet_map) {
+              (mapDiv as any)._leaflet_map.remove();
+            }
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
+            // Initialize map centered between the two points
+            const map = L.map(mapId).fitBounds([
+              [orderLat, orderLon],
+              [restaurantLat, restaurantLon]
+            ]);
 
-        L.marker([lat, lon])
-          .addTo(map)
-          .bindPopup(fullAddress)
-          .openPopup();
-      }, 0);
+            (mapDiv as any)._leaflet_map = map;
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Add markers
+            L.marker([orderLat, orderLon])
+              .addTo(map)
+              .bindPopup(`Order: ${orderAddress}`)
+              .openPopup();
+
+            L.marker([restaurantLat, restaurantLon], {icon: L.icon({
+                iconUrl: 'assets/marker-icon-2x.png',
+                shadowUrl: 'assets/marker-shadow.png',
+                iconSize: [25,41],
+                iconAnchor: [12,41],
+                popupAnchor: [1,-34]
+              })})
+              .addTo(map)
+              .bindPopup(`Restaurant: ${restaurantAddress}`);
+          }, 0);
+        })
+        .catch(err => console.error('Geocoding error:', err));
     });
   }
 
