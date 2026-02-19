@@ -7,25 +7,9 @@ import * as L from 'leaflet';
 
 
 
-interface DrinkItem {
-  drink_name: string;
-  quantity: number;
-  unit_price: number;
-}
 
-interface Order {
-  order_id: number;
-  order_status: OrderStatus;
-  drinks: DrinkItem[];
-  address: Address;
-}
 
-interface Address {
-  street: string;
-  street_number: string;
-  zip_code: string;
-  city: string;
-}
+
 
 
 @Component({
