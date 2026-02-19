@@ -16,7 +16,16 @@ interface Order {
   order_id: number;
   order_status: OrderStatus;
   drinks: DrinkItem[];
+  address: Address;
 }
+
+interface Address {
+  street: string;
+  street_number: string;
+  zip_code: string;
+  city: string;
+}
+
 
 @Component({
   selector: 'app-order-order-list',
