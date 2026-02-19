@@ -3,7 +3,6 @@ import {MainMenuService} from '../main-menu.service';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {firstValueFrom, Observable} from 'rxjs';
 import {Restaurant} from '../../models/restaurant';
-import {Drink} from '../../models/drink';
 
 @Injectable({
   providedIn: 'root',

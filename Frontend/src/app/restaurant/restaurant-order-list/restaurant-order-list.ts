@@ -2,7 +2,6 @@ import {Component, inject, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {RestaurantService} from '../../services/restaurant/restaurant.service';
 import {OrderStatus} from '../../models/OrderStatus';
-import {MatSnackBar} from '@angular/material/snack-bar';
 import * as L from 'leaflet';
 import {Order} from '../../models/order';
 import {firstValueFrom} from 'rxjs';
@@ -16,7 +15,6 @@ import {firstValueFrom} from 'rxjs';
 })
 export class RestaurantOrderList implements OnInit {
   restaurantService: RestaurantService = inject(RestaurantService);
-  private snackBar = inject(MatSnackBar);
   map: L.Map | null = null;
   activeOrderId: number | null = null;
 
