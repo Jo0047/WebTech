@@ -4,7 +4,7 @@ import {RestaurantService} from '../../services/restaurant/restaurant.service';
 import {OrderStatus} from '../../models/OrderStatus';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as L from 'leaflet';
-
+import {Order} from '../../models/order';
 
 
 

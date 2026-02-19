@@ -1,6 +1,6 @@
 import {OrderStatus} from './OrderStatus';
 
-interface Order {
+export interface Order {
   order_id: number;
   order_status: OrderStatus;
   drinks: DrinkItem[];
