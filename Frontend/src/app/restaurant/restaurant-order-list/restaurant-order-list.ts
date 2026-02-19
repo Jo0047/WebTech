@@ -5,6 +5,7 @@ import {OrderStatus} from '../../models/OrderStatus';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as L from 'leaflet';
 import {Order} from '../../models/order';
+import {firstValueFrom} from 'rxjs';
 
 
 
@@ -98,9 +99,12 @@ export class RestaurantOrderList implements OnInit{
 
       // Geocode both addresses using Nominatim
       const geocode = (address: string) =>
-        this.http.get<any>('https://nominatim.openstreetmap.org/search', {
-          params: { q: address, format: 'json', limit: '1' }
-        }).toPromise();
+        firstValueFrom(
+          this.http.get<any>('https://nominatim.openstreetmap.org/search', {
+            params: { q: address, format: 'json', limit: '1' }
+          })
+        );
+
 
       Promise.all([geocode(orderAddress), geocode(restaurantAddress)])
         .then(results => {
