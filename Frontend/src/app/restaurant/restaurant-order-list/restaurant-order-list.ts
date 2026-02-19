@@ -19,7 +19,7 @@ import {firstValueFrom} from 'rxjs';
   templateUrl: './restaurant-order-list.html',
   styleUrl: './restaurant-order-list.css',
 })
-export class RestaurantOrderList implements OnInit{
+export class RestaurantOrderList implements OnInit {
   restaurantService: RestaurantService = inject(RestaurantService);
   private snackBar = inject(MatSnackBar);
   map: L.Map | null = null;
@@ -30,6 +30,7 @@ export class RestaurantOrderList implements OnInit{
   apiUrl = 'http://localhost:3000/orders';
 
   orders: Order[] = [];
+
   ngOnInit() {
     this.loadAddress();
     this.loadOrders();
@@ -59,7 +60,7 @@ export class RestaurantOrderList implements OnInit{
 
   fetchOrders(id: number) {
     this.http.get<Order[]>(this.apiUrl + '/order', {
-      params: { restaurant_id: id }
+      params: {restaurant_id: id}
     }).subscribe({
       next: data => {
         this.orders = data.sort((a, b) => b.order_id - a.order_id);
@@ -78,88 +79,98 @@ export class RestaurantOrderList implements OnInit{
   }
 
   advanceOrder(order: Order) {
-      this.http.post(this.apiUrl + '/advance', order).subscribe({
-        next: () => {
-          this.loadOrders()
-        }
-      })
+    this.http.post(this.apiUrl + '/advance', order).subscribe({
+      next: () => {
+        this.loadOrders()
+      }
+    })
   }
 
   protected readonly OrderStatus = OrderStatus;
 
-  showMap(order: Order) {
-    this.activeOrderId = order.order_id;
 
-    // Full order address
-    const orderAddress = `${order.address.street} ${order.address.street_number}, ${order.address.zip_code} ${order.address.city}`;
+async showMap(order: Order) {
+  this.activeOrderId = order.order_id;
 
-    // Get restaurant address from service
-    this.restaurantService.getRestaurantAddress().then(restaurantAddr => {
-      const restaurantAddress = `${restaurantAddr.street} ${restaurantAddr.street_number}, ${restaurantAddr.zip_code} ${restaurantAddr.city}`;
+  const orderAddress = `${order.address.street} ${order.address.street_number}, ${order.address.zip_code} ${order.address.city}`;
 
-      // Geocode both addresses using Nominatim
-      const geocode = (address: string) =>
-        firstValueFrom(
-          this.http.get<any>('https://nominatim.openstreetmap.org/search', {
-            params: { q: address, format: 'json', limit: '1' }
-          })
-        );
+  try {
+    // Get restaurant address
+    const restaurantAddr = await this.restaurantService.getRestaurantAddress();
+    const restaurantAddress = `${restaurantAddr.street} ${restaurantAddr.street_number}, ${restaurantAddr.zip_code} ${restaurantAddr.city}`;
 
-
-      Promise.all([geocode(orderAddress), geocode(restaurantAddress)])
-        .then(results => {
-          if (!results[0].length || !results[1].length) {
-            console.warn('Address not found');
-            return;
-          }
-
-          const orderLat = parseFloat(results[0][0].lat);
-          const orderLon = parseFloat(results[0][0].lon);
-
-          const restaurantLat = parseFloat(results[1][0].lat);
-          const restaurantLon = parseFloat(results[1][0].lon);
-
-          setTimeout(() => {
-            const mapId = 'map-' + order.order_id;
-            const mapDiv = document.getElementById(mapId);
-            if (!mapDiv) return;
-
-            // Remove existing map if present
-            if ((mapDiv as any)._leaflet_map) {
-              (mapDiv as any)._leaflet_map.remove();
-            }
-
-            // Initialize map centered between the two points
-            const map = L.map(mapId).fitBounds([
-              [orderLat, orderLon],
-              [restaurantLat, restaurantLon]
-            ]);
-
-            (mapDiv as any)._leaflet_map = map;
-
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-              attribution: '© OpenStreetMap contributors'
-            }).addTo(map);
-
-            // Add markers
-            L.marker([orderLat, orderLon])
-              .addTo(map)
-              .bindPopup(`Order: ${orderAddress}`)
-              .openPopup();
-
-            L.marker([restaurantLat, restaurantLon], {icon: L.icon({
-                iconUrl: 'assets/marker-icon-2x.png',
-                shadowUrl: 'assets/marker-shadow.png',
-                iconSize: [25,41],
-                iconAnchor: [12,41],
-                popupAnchor: [1,-34]
-              })})
-              .addTo(map)
-              .bindPopup(`Restaurant: ${restaurantAddress}`);
-          }, 0);
+    // Geocode function using firstValueFrom
+    const geocode = (address: string) =>
+      firstValueFrom(
+        this.http.get<any>('https://nominatim.openstreetmap.org/search', {
+          params: { q: address, format: 'json', limit: '1' }
         })
-        .catch(err => console.error('Geocoding error:', err));
-    });
+      );
+
+    // Geocode both addresses in parallel
+    const [orderResult, restaurantResult] = await Promise.all([
+      geocode(orderAddress),
+      geocode(restaurantAddress)
+    ]);
+
+    if (!orderResult.length || !restaurantResult.length) {
+      console.warn('Address not found');
+      return;
+    }
+
+    const orderLat = parseFloat(orderResult[0].lat);
+    const orderLon = parseFloat(orderResult[0].lon);
+    const restaurantLat = parseFloat(restaurantResult[0].lat);
+    const restaurantLon = parseFloat(restaurantResult[0].lon);
+
+    // Calculate distance in km
+    const orderLatLng = L.latLng(orderLat, orderLon);
+    const restaurantLatLng = L.latLng(restaurantLat, restaurantLon);
+    const distanceKm = (restaurantLatLng.distanceTo(orderLatLng) / 1000).toFixed(2);
+
+    setTimeout(() => {
+      const mapId = 'map-' + order.order_id;
+      const mapDiv = document.getElementById(mapId);
+      if (!mapDiv) return;
+
+      // Remove existing map
+      if ((mapDiv as any)._leaflet_map) {
+        (mapDiv as any)._leaflet_map.remove();
+      }
+
+      // Initialize map and fit both points (LatLngTuple)
+      const map = L.map(mapId).fitBounds([
+        [restaurantLat, restaurantLon],
+        [orderLat, orderLon]
+      ]);
+      (mapDiv as any)._leaflet_map = map;
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+
+      // Order marker
+      L.marker([orderLat, orderLon])
+        .addTo(map)
+        .bindPopup(`Order: ${orderAddress}<br>Distance from restaurant: ${distanceKm} km`)
+        .openPopup();
+
+      // Restaurant marker
+      L.marker([restaurantLat, restaurantLon])
+        .addTo(map)
+        .bindPopup(`Restaurant: ${restaurantAddress}`);
+
+      // Draw a line between restaurant and order
+      L.polyline([
+        [restaurantLat, restaurantLon],
+        [orderLat, orderLon]
+      ], { color: 'blue', weight: 3, dashArray: '5,5' }).addTo(map);
+
+    }, 0);
+
+  } catch (err) {
+    console.error('Error loading map:', err);
   }
+}
 
 }
