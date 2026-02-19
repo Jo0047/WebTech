@@ -44,6 +44,13 @@ router.get("/restaurantId", async (req, res) => {
     return res.status(200).json({ restaurant_id });
 });
 
+router.get("/address", async (req, res) => {
+    const restaurant_id = parseInt(req.query["id"] as string, 10);
+
+    const address = await restaurantService.getRestaurantAddress(restaurant_id);
+    return res.status(200).json({address});
+})
+
 /**
  * Get Image by restaurantID and Filename
  */

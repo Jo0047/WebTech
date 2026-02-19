@@ -3,6 +3,18 @@ import {pool} from "../../db";
 import {parsePgArray} from "../../postgresParser";
 import {Cuisine} from "../../types";
 
+export async function getRestaurantAddress(id: number) {
+    const query = `
+      SELECT id, street, street_number, zip_code, city
+      FROM address
+      WHERE id = $1
+    `;
+    const result = await pool.query(query, [id]);
+
+    return result.rows[0]
+}
+
+
 /**
  * Select all Restaurants
  */
