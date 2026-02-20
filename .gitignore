@@ -2,3 +2,4 @@
 /.idea/
 /Backend/.env
 /Backend/dist
+/node_modules/

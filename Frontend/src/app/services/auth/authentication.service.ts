@@ -2,6 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AuthResponse, RegistrationData} from '../../models/user-data';
 import {Observable, tap} from 'rxjs';
+import {FormControl, ɵValue} from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -57,9 +58,30 @@ export class AuthenticationService {
     localStorage.removeItem('user');
   }
 
-  resetPassword(){
-    //todo send email
+  requestPasswordReset(email: ɵValue<FormControl<string | null>> | undefined) : Observable<Object> {
+
+    const body = {email: email};
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.post(`${this.apiUrl}/password-reset-request`,body,{headers: headers})
   }
+
+  verifyResetToken(token: any) {
+    return this.http.get(`${this.apiUrl}/verify-reset-token/${token}`);
+  }
+
+  resetPassword(token: string, newPassword: string): Observable<any> {
+
+    const body = {token: token, newPassword: newPassword};
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.post(`${this.apiUrl}/password-reset`, body, {headers: headers});
+  }
+
 
   isAuthenticated(): boolean {
     return this._isAuthenticated;
@@ -73,7 +95,8 @@ export class AuthenticationService {
     return this._currentUser?.isOwner || false;
   }
 
-  getEmail(): string | null {
-    return this._currentUser?.email || null;
+  getEmail(): string {
+    return <string>this._currentUser?.email;
   }
+
 }

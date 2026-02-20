@@ -30,6 +30,11 @@ export class Login {
     if (window.history.state.registrationSuccess) {
       this.successMessage = window.history.state.message || 'Registration successful!';
     }
+
+    if (window.history.state.passwordResetSuccess) {
+      this.successMessage = window.history.state.message || 'Password reset successful!';
+    }
+
   }
 
   /**

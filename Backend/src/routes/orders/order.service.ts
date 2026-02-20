@@ -70,4 +70,36 @@ async function advanceOrder(order_id: number) {
         WHERE id = $1`, [order_id]
     )
 }
-export { getOrdersByRestaurant, rejectOrder, advanceOrder };
+
+async function placeOrder(user_email: string, items: { drink_id: number; quantity: number }[]) {
+
+    const orderQuery = {
+        text:  'INSERT INTO "order" (status) VALUES (\'pending\') RETURNING id',
+    };
+
+    let orderResult: QueryResult = await pool.query(orderQuery)
+    const order_id: number = orderResult.rows[0].id;
+
+    const orderUserQuery = {
+        text: 'INSERT INTO user_order (user_email, order_id) VALUES ($1, $2)',
+        values: [user_email, order_id]
+    }
+
+    let orderUserResult: QueryResult = await pool.query(orderUserQuery)
+
+    for (const item of items) {
+        let orderDrinskQuery = {
+            text: 'INSERT INTO order_drinks (order_id, drink_id, quantity) VALUES ($1, $2, $3)',
+            values:  [order_id, item.drink_id, item.quantity]
+        }
+
+        let orderDrinksResult: QueryResult = await pool.query(orderDrinskQuery);
+    }
+
+    return {
+        success: true,
+        orderId: order_id,
+    };
+}
+
+export { getOrdersByRestaurant, rejectOrder, advanceOrder, placeOrder };

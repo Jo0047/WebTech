@@ -37,9 +37,7 @@
       </div>
     </div>
 
-    <!-- Main Content Area -->
     <div class="main-content">
-      <!-- Products Section -->
       <div class="products-section">
         <h2 class="section-title">Menu</h2>
 
@@ -47,7 +45,6 @@
           <div class="drinks-grid">
             @for(drink of drinks; track drink.id) {
               <div class="drink-card">
-                <!-- Drink Image -->
                 <div class="drink-image">
                   @if(drink.image_link == null || drink.image_link == '') {
                     <img src="http://localhost:3000/restaurant/defaultImage" [alt]="drink.drink_name" />
@@ -55,13 +52,11 @@
                     <img [src]="drink.image_link" [alt]="drink.drink_name" />
                   }
 
-                  <!-- Add to Basket Button -->
                   <button class="add-basket-icon-btn" (click)="addToBasket(drink)" title="Add to basket">
                     <span class="plus-icon">+</span>
                   </button>
                 </div>
 
-                <!-- Drink Info -->
                 <div class="drink-info">
                   <div class="drink-header">
                     <h3 class="drink-name">{{ drink.drink_name }}</h3>
@@ -88,7 +83,6 @@
 
       </div>
 
-      <!-- Basket Sidebar -->
       <div class="basket-sidebar">
         <div class="basket-container">
           <h3 class="basket-title">Your Order</h3>
@@ -119,7 +113,6 @@
             </div>
           }
 
-          <!-- Basket Summary -->
           <div class="basket-summary">
             <div class="summary-row">
               <span>Items ({{ getTotalItems() }})</span>

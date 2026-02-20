@@ -6,6 +6,9 @@ import drinkRoutes from './routes/drinks/drink.routes';
 import orderRoutes from './routes/orders/order.routes';
 import imageRoutes from "./routes/restaurant/image.routes";
 import restaurantRoutes from "./routes/restaurant/restaurant.routes";
+import sgMail from "@sendgrid/mail";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app: Application = express();
 

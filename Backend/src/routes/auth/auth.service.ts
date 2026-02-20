@@ -1,8 +1,15 @@
-import { pool } from '../../db';
+import {pool} from '../../db';
 import * as bcrypt from 'bcrypt';
-
 import {QueryResult} from "pg";
+import sgMail from '@sendgrid/mail';
 import * as restaurantService from '../restaurant/restaurant.service'
+import dotenv from "dotenv";
+import path from "path";
+import jwt from 'jsonwebtoken';
+
+dotenv.config();
+
+sgMail.setApiKey("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");
 
 /**
  * Login user
@@ -56,9 +63,7 @@ async function login(email: string, password: string) {
  * @param restaurantEmail
  * @param restaurantPhoneNumber
  */
-async function register(firstname: string, lastname: string, email: string, password: string,
-                        street: string, streetNumber: number,city: string, zipCode: number,
-                        restaurantName: string, restaurantEmail: string,restaurantPhoneNumber: string) {
+async function register(firstname: string, lastname: string, email: string, password: string, street: string, streetNumber: number, city: string, zipCode: number, restaurantName: string, restaurantEmail: string, restaurantPhoneNumber: string, imageUrl: string) {
 
     let userCheck = await getUser(email)
 
@@ -108,8 +113,8 @@ async function register(firstname: string, lastname: string, email: string, pass
         }
 
         const restaurantQuery = {
-            text:  'INSERT INTO order (restaurant_name, restaurant_email, phone_number, address_id, owner_email) VALUES ($1, $2, $3, $4, $5)',
-            values: [restaurantName, restaurantEmail, restaurantPhoneNumber,addressId, ownerEmail]
+            text:  'INSERT INTO restaurant (restaurant_name, restaurant_email, phone_number, image_link, address_id, owner_email) VALUES ($1, $2, $3, $4, $5, $6)',
+            values: [restaurantName, restaurantEmail, restaurantPhoneNumber,imageUrl,addressId, ownerEmail]
         };
 
         let restaurantResult = await pool.query(restaurantQuery);
@@ -257,5 +262,159 @@ async function getAllAddresses() {
     }
 }
 
+async function sendPasswordResetEmail(email: string) {
 
-export { login , register, getAllAddresses, getAllUsers, getAddress, getUser};
+    const token = await generateResetToken(email)
+
+    const url = `http://localhost:4200/newPassword?token=${token}`
+
+    console.log(email)
+
+    const msg = {
+        to: email,
+        from: 'johanneskr@edu.aau.at',
+        subject: 'Password Reset Link',
+        text: 'Click the link to reset your password',
+        html: `<a href="${url}" class="button">Reset Password</a>`,
+    }
+    try {
+        await sgMail.send(msg);
+        console.log('Email sent successfully');
+        return {
+            success: true,
+            message: 'Email sent successfully',
+        };
+    } catch (error) {
+        console.error('Error sending email:', error);
+        return {
+            success: false,
+            message: 'Error sending email: ' + error,
+        };
+    }
+}
+
+async function generateResetToken(email: string) {
+
+    let jwt_sescret = process.env["JWT_SECRET"];
+    if (!jwt_sescret) {
+        throw new Error('JWT_SECRET is not defined');
+    }
+
+    const payload = {
+        email: email,
+        type: 'password-reset',
+    };
+
+    return jwt.sign(payload,jwt_sescret , {expiresIn: '1h'});
+}
+
+function verifyResetToken(token: string) {
+
+    let jwt_sescret = process.env["JWT_SECRET"];
+
+
+    if (!jwt_sescret) {
+        throw new Error('JWT_SECRET is not defined');
+    }
+
+    try {
+        const decoded = jwt.verify(token, jwt_sescret) as any;
+
+        if (decoded.type !== 'password-reset') {
+            return {
+                success: false,
+                message: 'Invalid token type!',
+            };
+        }
+
+        return {
+            success: true,
+            email: decoded.email,
+        };
+
+    } catch (error) {
+        if (error instanceof jwt.TokenExpiredError) {
+            return {
+                success: false,
+                message: 'Tokens has expires!',
+            };
+        }
+        if (error instanceof jwt.JsonWebTokenError) {
+            return {
+                success: false,
+                message: 'Invalid token!',
+            };
+        }
+        return {
+            success: false,
+            message: 'Error: '+error,
+        };
+    }
+}
+
+async function resetPassword(token: string, newPassword: string) {
+    const jwt_secret = process.env['JWT_SECRET'];
+
+    if (!jwt_secret) {
+        throw new Error('JWT_SECRET is not defined');
+    }
+
+    try {
+        const decoded = jwt.verify(token, jwt_secret) as any;
+
+        if (decoded.type !== 'password-reset') {
+            return {
+                success: false,
+                message: 'Invalid token type!',
+            };
+        }
+
+        const email = decoded.email;
+
+        const hashedPassword = await bcrypt.hash(newPassword, 15);
+
+        const resetPasswordQuery = {
+            text: 'UPDATE "user" SET password = $1 WHERE email = $2',
+            values: [hashedPassword, email]
+        };
+
+        const result: QueryResult = await pool.query(resetPasswordQuery);
+
+        if (result.rowCount === 0) {
+            return {
+                success: false,
+                message: 'Failed to update password!',
+            };
+        }
+
+        console.log('Password updated successfully for:', email);
+
+        return {
+            success: true,
+            message: 'Password reset successful!',
+            email: email,
+        };
+
+    } catch (error) {
+        console.error('Password reset error:', error);
+
+        if (error instanceof jwt.TokenExpiredError) {
+            return {
+                success: false,
+                message: 'Token has expired!',
+            };
+        }
+        if (error instanceof jwt.JsonWebTokenError) {
+            return {
+                success: false,
+                message: 'Invalid token!',
+            };
+        }
+        return {
+            success: false,
+            message: 'Error: ' + error,
+        };
+    }
+}
+
+export { login , register, getAllAddresses, getAllUsers, getAddress, getUser, sendPasswordResetEmail, verifyResetToken,resetPassword};

@@ -6,6 +6,7 @@ import {UserRole} from '../../../models/user-role';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RegistrationData} from '../../../models/user-data';
 import {AuthenticationService} from '../../../services/auth/authentication.service';
+import {RestaurantService} from '../../../services/restaurant/restaurant.service';
 
 @Component({
   selector: 'app-register-process',
@@ -30,7 +31,10 @@ export class RegisterProcess {
   userRole = UserRole.restaurant
   isLinear = true;
   authService = inject(AuthenticationService);
+  restaurantService = inject(RestaurantService);
   passwordMismatchError = false;
+
+  selectedFile: File | null = null;
 
   basicInfoForm = new FormGroup({
     firstname: new FormControl('', Validators.required),
@@ -65,10 +69,23 @@ export class RegisterProcess {
    * Handle form submission
    */
   onSubmit(): void {
+
+      if (this.selectedFile) {
+        const formData = new FormData();
+        formData.append('image', this.selectedFile);
+        this.restaurantService.uploadImage(formData).subscribe({
+          next: (res) => this.register(res.url),
+        });
+      } else {
+        this.register(undefined);
+      }
+  }
+
+  register(imageUrl: string | undefined): void {
     if (this.basicInfoForm.valid && this.addressForm.valid
         && !((this.restaurantForm.valid || (this.userRole == UserRole.restaurant))
         && !(this.restaurantForm.valid && (this.userRole == UserRole.restaurant)))
-      ) {
+    ) {
       const basicInfoFormValue = this.basicInfoForm.value;
       const addressFormValue = this.addressForm.value;
       const restaurantFormValue = this.restaurantForm.value;
@@ -91,6 +108,7 @@ export class RegisterProcess {
         this.userRole === UserRole.restaurant ? restaurantFormValue.restaurantName! : undefined,
         this.userRole === UserRole.restaurant ? restaurantFormValue.restaurantEmail! : undefined,
         this.userRole === UserRole.restaurant ? restaurantFormValue.phoneNumber! : undefined,
+        this.userRole === UserRole.restaurant ? imageUrl           : undefined,
       );
 
       console.log(registrationData);
@@ -116,8 +134,18 @@ export class RegisterProcess {
       });
 
     } else {
-      console.log('Registration failed - form is invalid');
+          console.log('Registration failed - form is invalid');
     }
+  }
+
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    this.selectedFile = event.dataTransfer?.files?.[0] ?? null;
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.selectedFile = input.files?.[0] ?? null;
   }
 
   /**

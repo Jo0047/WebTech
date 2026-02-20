@@ -42,7 +42,8 @@ router.post("/register", async (req, res) => {
         +registrationData.zipCode,
         registrationData.restaurantName,
         registrationData.restaurantEmail,
-        registrationData.restaurantPhoneNumber
+        registrationData.restaurantPhoneNumber,
+        registrationData.imageUrl,
     );
 
     if (result.success) {
@@ -130,6 +131,61 @@ router.get("/addresses", async (req, res) => {
             message: result.message
         });
     }
+})
+
+router.post("/password-reset-request", async(req, res) => {
+    let email = req.body.email;
+
+    let result = await authService.sendPasswordResetEmail(email);
+
+    if (result.success) {
+        return res.status(200).json({
+            message: result.message
+        });
+    } else {
+        return res.status(400).json({
+            message: result.message
+        });
+    }
+
+})
+
+/**
+ * GET /api/auth/verify-reset-token/:token
+ */
+router.get('/verify-reset-token/:token', async (req, res) => {
+
+    const result = authService.verifyResetToken(req.params.token);
+
+    if (result.success) {
+        return res.status(200).json({
+            email : result.email
+        });
+    } else {
+        return res.status(400).json({
+            message: result.message
+        });
+    }
+
+});
+
+router.post('/password-reset', async (req, res) => {
+    let token = req.body.token;
+    let newPassword = req.body.newPassword;
+
+    const result = await authService.resetPassword(token, newPassword);
+
+    if (result.success) {
+        return res.status(200).json({
+            email: result.email
+        });
+    } else {
+        return res.status(400).json({
+            message: result.message
+        });
+    }
+
+
 })
 
 export default router;

@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS drink (
                                      alcoholic BOOLEAN DEFAULT FALSE,
                                      price DECIMAL(10, 2) NOT NULL,
                                      image_link TEXT,
-    deleted BOOLEN DEFAULT FALSE,
+                                     deleted BOOLEAN DEFAULT FALSE,
 
     restaurant_id INT NOT NULL,
     FOREIGN KEY (restaurant_id) REFERENCES restaurant(id)
@@ -115,9 +115,6 @@ CREATE TABLE IF NOT EXISTS voucher (
                                        FOREIGN KEY (restaurant_id) REFERENCES restaurant(id)
 
     );
-
-
-
 
 --------------------------------------JUNCTION TABLES-----------------------------------------
 

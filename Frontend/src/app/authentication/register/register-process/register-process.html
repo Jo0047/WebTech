@@ -181,13 +181,8 @@
 
               <div class="form-group">
                 <label>Restaurant Name</label>
-                <input matInput
-                       type="text"
-                       id="restaurant name"
-                       placeholder="Restaurant Name"
-                       formControlName="restaurantName"
-                       class="form-control"
-                       required>
+                <input matInput type="text" placeholder="Restaurant Name"
+                       formControlName="restaurantName" class="form-control" required>
                 @if (hasError(restaurantForm,'restaurantName', 'required')) {
                   <span class="error-message">Restaurant Name is required</span>
                 }
@@ -195,13 +190,8 @@
 
               <div class="form-group">
                 <label>Restaurant Email</label>
-                <input matInput
-                       type="email"
-                       id="restaurant name"
-                       placeholder="Restaurant Email"
-                       formControlName="restaurantEmail"
-                       class="form-control"
-                       required>
+                <input matInput type="email" placeholder="Restaurant Email"
+                       formControlName="restaurantEmail" class="form-control" required>
                 @if (hasError(restaurantForm,'restaurantEmail', 'required')) {
                   <span class="error-message">Restaurant Email is required</span>
                 }
@@ -209,16 +199,30 @@
 
               <div class="form-group">
                 <label>Restaurant Phone Number</label>
-                <input matInput
-                       type="text"
-                       id="phone number"
-                       placeholder="Phone Number"
-                       formControlName="phoneNumber"
-                       class="form-control"
-                       required>
+                <input matInput type="text" placeholder="Phone Number"
+                       formControlName="phoneNumber" class="form-control" required>
                 @if (hasError(restaurantForm,'phoneNumber', 'required')) {
-                  <span class="error-message">Restaurant phone number is required</span>
+                  <span class="error-message">Phone number is required</span>
                 }
+              </div>
+
+              <!-- ───── Drag & Drop Upload ───── -->
+              <div class="form-group">
+                <label>Restaurant Image</label>
+                <div class="drop-zone"
+                     (drop)="onDrop($event)"
+                     (dragover)="$event.preventDefault()"
+                     (click)="fileInput.click()">
+
+                  @if (selectedFile) {
+                    <p>📁 {{ selectedFile.name }}</p>
+                  } @else {
+                    <p>Drag & drop an image here or <span>click to browse</span></p>
+                  }
+
+                  <input #fileInput type="file" accept="image/*"
+                         style="display:none" (change)="onFileSelected($event)">
+                </div>
               </div>
 
               <div class="button-container">
@@ -229,19 +233,6 @@
           </mat-step>
         }
 
-        <!--
-        todo Vielleicht finalen Check-Data Screen
-        <mat-step class="custom-step">
-          <ng-template matStepLabel>Check Data</ng-template>
-          <div class="completion-content">
-            <p class="completion-message">You are now done.</p>
-            <div class="button-container">
-              <button mat-stroked-button matStepperPrevious class="btn-back">Back</button>
-              <button mat-raised-button (click)="stepper.reset()" class="btn-reset">Reset</button>
-            </div>
-          </div>
-        </mat-step>
-        -->
       </mat-stepper>
 
     </div>
