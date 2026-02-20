@@ -2,6 +2,8 @@ import * as restaurantService from ".//restaurant.service";
 import * as imageService from "./image.service";
 import fs from "node:fs";
 import router from "./image.routes";
+import path from "path";
+import {upload} from "./multer.config";
 
 router.get("/restaurants", async (req, res) => {
     const result = await restaurantService.getAllRestaurants();
@@ -47,45 +49,26 @@ router.get("/restaurantId", async (req, res) => {
 /**
  * Get Image by restaurantID and Filename
  */
-router.get("/:restaurantId/:filename", async (req, res) => {
-
-    const restaurantId = req.params.restaurantId;
-    const filename = req.params.filename;
-
-    try {
-
-        const filePath = imageService.getImagePath(parseInt(restaurantId), filename);
-
-        if (fs.existsSync(filePath)) {
-            return res.status(404).json({
-                message: 'Image not found'
-            });
-        }
-
-        return res.status(200).send(filePath);
-
-        /*
-        // Determine content type
-        const ext = path.extname(filename).toLowerCase();
-        const contentTypes: { [key: string]: string } = {
-            '.jpg': 'image/jpeg',
-            '.jpeg': 'image/jpeg',
-            '.png': 'image/png'
-        };
-
-        const contentType = contentTypes[ext] || 'image/jpeg';
-
-        res.setHeader('Content-Type', contentType);
-        res.setHeader('Cache-Control', 'public, max-age=31536000'); // Cache for 1 year
-
-        return res.sendFile(path.resolve(filePath));
-         */
-    } catch (error) {
-        console.error('Error serving image:', error);
-        return res.status(500).json({
-            message: 'Failed to serve image'
+router.post("/uploadImage", upload.single('image'), async (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({
+            message: 'No file uploaded'
         });
     }
+    const imageUrl = `http://localhost:3000/restaurant/image/${req.file.filename}`;
+    return res.status(200).json({
+        url: imageUrl
+    });
+
+});
+
+router.get("/defaultImage", async (req, res) => {
+    return res.status(200).sendFile(path.resolve("images/elementor-placeholder-image.png"));
+})
+
+// Serve any stored image by filename
+router.get("/image/:filename", async (req, res) => {
+    return res.status(200).sendFile(path.resolve(`images/${req.params.filename}`));
 });
 
 export default router;

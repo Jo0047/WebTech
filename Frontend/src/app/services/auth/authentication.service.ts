@@ -95,8 +95,8 @@ export class AuthenticationService {
     return this._currentUser?.isOwner || false;
   }
 
-  getEmail(): string | null {
-    return this._currentUser?.email || null;
+  getEmail(): string {
+    return <string>this._currentUser?.email;
   }
 
 }

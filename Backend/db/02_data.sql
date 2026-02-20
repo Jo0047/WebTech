@@ -14,9 +14,9 @@ INSERT INTO "user" (email, password, first_name, last_name, is_owner, address_id
 
 -- -------------------RESTAURANTS--------------------------------
 INSERT INTO restaurant (restaurant_name, restaurant_email, phone_number, image_link, cuisines, address_id, owner_email) VALUES
-                                                                                                                            ('Sushi Paradise', 'contact@sushiparadise.com', '+44 20 7946 0958', 'https://example.com/sushi.jpg', ARRAY['japanese', 'fusion']::cuisine[], 1, 'owner@eats.com'),
-                                                                                                                            ('Burger Queen', 'hello@burgerqueen.com', '+1 212 555 0198', 'https://example.com/burger.jpg', ARRAY['american', 'fusion']::cuisine[], 2, 'owner@eats.com'),
-                                                                                                                            ('Pasta Heaven', 'info@pastaheaven.com', '+33 1 44 55 66 77', 'https://example.com/pasta.jpg', ARRAY['italian', 'mediterranean']::cuisine[], 4, 'owner@eats.com');
+                                                                                                                            ('Sushi Paradise', 'contact@sushiparadise.com', '+44 20 7946 0958', null, ARRAY['japanese', 'fusion']::cuisine[], 1, 'owner@eats.com'),
+                                                                                                                            ('Burger Queen', 'hello@burgerqueen.com', '+1 212 555 0198', null, ARRAY['american', 'fusion']::cuisine[], 2, 'owner@eats.com'),
+                                                                                                                            ('Pasta Heaven', 'info@pastaheaven.com', '+33 1 44 55 66 77', null, ARRAY['italian', 'mediterranean']::cuisine[], 4, 'owner@eats.com');
 
 -- -------------------DRINKS--------------------------------
 INSERT INTO drink (drink_name, category, ingredients, alcoholic, price, image_link, restaurant_id) VALUES

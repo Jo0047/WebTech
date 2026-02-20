@@ -63,9 +63,7 @@ async function login(email: string, password: string) {
  * @param restaurantEmail
  * @param restaurantPhoneNumber
  */
-async function register(firstname: string, lastname: string, email: string, password: string,
-                        street: string, streetNumber: number,city: string, zipCode: number,
-                        restaurantName: string, restaurantEmail: string,restaurantPhoneNumber: string) {
+async function register(firstname: string, lastname: string, email: string, password: string, street: string, streetNumber: number, city: string, zipCode: number, restaurantName: string, restaurantEmail: string, restaurantPhoneNumber: string, imageUrl: string) {
 
     let userCheck = await getUser(email)
 
@@ -115,8 +113,8 @@ async function register(firstname: string, lastname: string, email: string, pass
         }
 
         const restaurantQuery = {
-            text:  'INSERT INTO order (restaurant_name, restaurant_email, phone_number, address_id, owner_email) VALUES ($1, $2, $3, $4, $5)',
-            values: [restaurantName, restaurantEmail, restaurantPhoneNumber,addressId, ownerEmail]
+            text:  'INSERT INTO restaurant (restaurant_name, restaurant_email, phone_number, image_link, address_id, owner_email) VALUES ($1, $2, $3, $4, $5, $6)',
+            values: [restaurantName, restaurantEmail, restaurantPhoneNumber,imageUrl,addressId, ownerEmail]
         };
 
         let restaurantResult = await pool.query(restaurantQuery);

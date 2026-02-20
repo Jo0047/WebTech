@@ -1,5 +1,6 @@
 import { Router } from "express";
 import * as orderService from "./order.service";
+import * as authService from "../auth/auth.service";
 
 const router = Router();
 
@@ -30,5 +31,21 @@ router.post("/advance", async (req, res) => {
     res.status(200).json(orderData);
 })
 
+router.post("/placeOrder", async (req, res) => {
+    const { user_email, items } = req.body;
+
+    let result = await orderService.placeOrder(user_email, items);
+
+    if (result.success) {
+        return res.status(200).json({
+            orderId: result.orderId
+        });
+    } else {
+        return res.status(400).json({
+            message: 'Error'
+        });
+    }
+
+});
 
 export default router;

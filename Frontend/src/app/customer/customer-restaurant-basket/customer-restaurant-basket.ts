@@ -27,7 +27,6 @@ export class CustomerRestaurantBasket {
     if (window.history.state.restaurantData) {
       this.restaurant = window.history.state.restaurantData;
     } else {
-      // No data available, navigate back to restaurant list
       this.router.navigate(['/customer']);
     }
 
@@ -46,7 +45,6 @@ export class CustomerRestaurantBasket {
     return Array(5).fill(false).map((_, index) => index < Math.round(ratingNum));
   }
 
-  // Basket Management Methods
   addToBasket(drink: Drink): void {
     const existingItem = this.basket.find(item => item.drink.id === drink.id);
 
@@ -116,8 +114,13 @@ export class CustomerRestaurantBasket {
   proceedToCheckout(): void {
     if (this.basket.length > 0) {
       console.log('Proceeding to checkout with:', this.basket);
-      // Navigate to checkout page or open checkout modal
-      // this.router.navigate(['/checkout'], { state: { basket: this.basket, restaurant: this.restaurant } });
+
+      this.router.navigate(['/customer/checkout'], {
+        state: {
+          basket: this.basket,
+          restaurant: this.restaurant
+        }
+      });
     }
   }
 

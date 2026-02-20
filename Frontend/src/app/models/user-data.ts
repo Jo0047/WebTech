@@ -10,6 +10,7 @@ export class RegistrationData {
   restaurantName?: string;
   restaurantEmail?: string;
   restaurantPhoneNumber?: string;
+  imageUrl?: string;
 
   constructor(
     firstname: string,
@@ -23,6 +24,7 @@ export class RegistrationData {
     restaurantName?: string,
     restaurantEmail?: string,
     restaurantPhoneNumber?: string,
+    imageUrl?: string,
   ) {
     this.firstname = firstname;
     this.lastname = lastname;
@@ -35,6 +37,7 @@ export class RegistrationData {
     this.restaurantName = restaurantName;
     this.restaurantEmail = restaurantEmail;
     this.restaurantPhoneNumber = restaurantPhoneNumber;
+    this.imageUrl = imageUrl;
   }
 
   /**
@@ -61,6 +64,10 @@ export class RegistrationData {
     }
     if (this.restaurantPhoneNumber) {
       json.restaurantPhoneNumber = this.restaurantPhoneNumber;
+    }
+
+    if (this.imageUrl) {
+      json.imageUrl = this.imageUrl;
     }
 
     return json;

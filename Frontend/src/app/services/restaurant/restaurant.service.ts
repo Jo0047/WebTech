@@ -4,6 +4,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {firstValueFrom, Observable} from 'rxjs';
 import {Restaurant} from '../../models/restaurant';
 import {Drink} from '../../models/drink';
+import {RegistrationData} from '../../models/user-data';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,10 @@ export class RestaurantService {
 
   getRestaurantsWithCuisineAndRating(): Observable<Restaurant[]> {
     return this.http.get<Restaurant[]>(`${this.restaurantUrl}/restaurantsWithCuisines`);
+  }
+
+  uploadImage(image: FormData):Observable<{ url: string }> {
+    return this.http.post<{ url: string }>(`${this.restaurantUrl}/uploadImage`, image);
   }
 
   async getRestaurantId(): Promise<number> {

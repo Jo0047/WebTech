@@ -42,7 +42,8 @@ router.post("/register", async (req, res) => {
         +registrationData.zipCode,
         registrationData.restaurantName,
         registrationData.restaurantEmail,
-        registrationData.restaurantPhoneNumber
+        registrationData.restaurantPhoneNumber,
+        registrationData.imageUrl,
     );
 
     if (result.success) {

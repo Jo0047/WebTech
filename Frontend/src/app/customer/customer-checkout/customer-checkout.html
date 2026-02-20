@@ -1,0 +1,105 @@
+<div class="checkout-container">
+  <div class="checkout-content">
+    <div class="order-details-section">
+      <div class="section-card">
+        <h2 class="section-title">Order Details</h2>
+
+      </div>
+
+      <div class="section-card">
+        <h2 class="section-title">Payment Options</h2>
+
+        <div class="detail-item">
+          <div class="detail-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+              <line x1="1" y1="10" x2="23" y2="10"></line>
+            </svg>
+          </div>
+          <div class="detail-content">
+            <div class="detail-label">Select payment method</div>
+            <div class="detail-value placeholder">Required</div>
+          </div>
+          <div class="detail-arrow">›</div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+              <line x1="7" y1="7" x2="7.01" y2="7"></line>
+            </svg>
+          </div>
+          <div class="detail-content">
+            <div class="detail-label">Add voucher</div>
+          </div>
+          <div class="detail-arrow">›</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="order-summary-section">
+      <div class="summary-card">
+        <h2 class="summary-title">Order Summary</h2>
+
+        @if(restaurant) {
+          <div class="restaurant-header">
+            <div class="restaurant-image">
+              @if(restaurant.image_link) {
+                <img [src]="restaurant.image_link" [alt]="restaurant.restaurant_name" />
+              } @else {
+                <div class="placeholder-image">{{ restaurant.restaurant_name.charAt(0) }}</div>
+              }
+            </div>
+            <div class="restaurant-info">
+              <h3 class="restaurant-name">{{ restaurant.restaurant_name }}</h3>
+            </div>
+          </div>
+        }
+
+        <div class="order-items">
+          @for(item of basket; track item.drink.id) {
+            <div class="order-item">
+              <div class="item-main">
+                <div class="item-quantity-badge">{{ item.quantity }}×</div>
+                <div class="item-details">
+                  <div class="item-name">{{ item.drink.drink_name }}</div>
+                  @if(item.drink.ingredients) {
+                    <div class="item-ingredients">{{ item.drink.ingredients }}</div>
+                  }
+                </div>
+              </div>
+              <div class="item-actions">
+                <div class="item-price">{{ formatPrice(item.drink.price * item.quantity) }}</div>
+              </div>
+            </div>
+          }
+        </div>
+
+        <div class="cost-breakdown">
+          <div class="cost-row">
+            <span class="cost-label">Subtotal</span>
+            <span class="cost-value">{{ formatPrice(getSubtotal()) }}</span>
+          </div>
+          <div class="cost-row">
+            <span class="cost-label">Voucher</span>
+          </div>
+        </div>
+
+        <div class="total-section">
+          <div class="total-row">
+            <span class="total-label">Total</span>
+            <span class="total-value">{{ formatPrice(getTotal()) }}</span>
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn-back" (click)="goBack()">Back to Menu</button>
+          <button class="btn-order" (click)="placeOrder()" [disabled]="basket.length === 0">
+            Place Order
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

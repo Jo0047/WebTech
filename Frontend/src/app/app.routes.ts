@@ -16,6 +16,7 @@ import {authGuard} from './services/auth/auth-guard';
 import {RestaurantNewProduct} from './restaurant/restaurant-new-product/restaurant-new-product';
 import {CustomerRestaurantBasket} from './customer/customer-restaurant-basket/customer-restaurant-basket';
 import {NewPassword} from './authentication/password-reset/new-password/new-password';
+import {CustomerCheckout} from './customer/customer-checkout/customer-checkout';
 
 export const routes: Routes = [
   { path: '', component: Main },
@@ -33,8 +34,9 @@ export const routes: Routes = [
       { path: '', redirectTo: 'restaurants', pathMatch: 'full' },
       { path: 'restaurants', component: CustomerRestaurantList },
       { path: 'dashboard', component: CustomerDashboard },
+      { path: 'profile', component: Profile },
+      { path: 'checkout', component: CustomerCheckout},
       { path: ':restaurantName', component: CustomerRestaurantBasket},
-      { path: 'profile', component: Profile }
     ],
     canActivate: [authGuard]
   },
