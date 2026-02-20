@@ -150,3 +150,29 @@
     grid-template-columns: 1fr; /* stack drink cards on mobile */
   }
 }
+
+/* Show Map button styling */
+.order-actions .show-map-btn {
+  background-color: #2ecc71; /* green accent */
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+/* Hover effect */
+.order-actions .show-map-btn:hover {
+  background-color: #27ae60;
+  transform: translateY(-2px);
+}
+
+/* Disabled state (optional) */
+.order-actions .show-map-btn:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+  color: #7f8c8d;
+}

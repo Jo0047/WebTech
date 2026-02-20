@@ -14,4 +14,8 @@ export class DrinkService {
   getDrinksByRestaurant(restaurantId: number | undefined): Observable<Drink[]> {
     return this.http.get<Drink[]>(`${this.apiUrl}/${restaurantId}`);
   }
+
+  deleteDrink(id: number) {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
 }

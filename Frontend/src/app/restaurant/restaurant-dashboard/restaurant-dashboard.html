@@ -1,1 +1,28 @@
-<p>restaurant-dashboard works!</p>
+<div class="dashboard-container">
+  <div class="dashboard-card">
+    <h3>Orders Per Day</h3>
+    @if (ordersPerDay.size > 0) {
+      <ul>
+        @for (entry of ordersPerDay.entries(); track entry[0]) {
+          <li>{{ entry[0] }}: {{ entry[1] }} orders</li>
+        }
+      </ul>
+    } @else {
+      <p>No orders found.</p>
+    }
+  </div>
+
+  <div class="dashboard-card">
+    <h3>Most Ordered Drink</h3>
+    @if (mostOrderedDrink) {
+      <p>{{ mostOrderedDrink.name }} ({{ mostOrderedDrink.quantity }} units)</p>
+    } @else {
+      <p>No drinks ordered yet.</p>
+    }
+  </div>
+</div>
+
+<div class="bottom-row">
+  <app-order-order-list></app-order-order-list>
+  <app-order-product-list></app-order-product-list>
+</div>

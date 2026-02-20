@@ -17,9 +17,22 @@
       </div>
 
       <div class="order-actions">
-        <button (click)="rejectOrder(order)">Reject</button>
-        <button (click)="advanceOrder(order)">Advance Order</button>
+        <button (click)="rejectOrder(order)"
+                [disabled]="order.order_status != OrderStatus.pending">
+          Reject
+        </button>
+        <button (click)="advanceOrder(order)"
+                [disabled]="order.order_status == OrderStatus.arrived || order.order_status == OrderStatus.rejected">
+
+        Advance Order</button>
+        <button (click)="showMap(order)" class="show-map-btn">
+          Show on Map</button>
       </div>
+
+      @if (activeOrderId === order.order_id) {
+        <div id="map-{{order.order_id}}"
+             style="height: 300px; margin-top:12px; border-radius:12px;"></div>
+      }
     </div>
   }@empty {
     <p>No orders found for this restaurant.</p>

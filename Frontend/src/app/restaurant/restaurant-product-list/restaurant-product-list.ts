@@ -27,20 +27,12 @@ export class RestaurantProductList implements OnInit {
   selectedCategory: string = '';
 
 
-  async ngOnInit() {
-    await this.loadDrinks();
-  }
-
-  async loadDrinks() {
-    let restaurantId = await this.restaurantService.getRestaurantId()
-
-    this.drinkService.getDrinksByRestaurant(restaurantId).subscribe(data => {
-      this.drinks = (data as any).drinks;
-      console.log(this.drinks);
-    });
-
-
-
+  ngOnInit() {
+      this.restaurantService.getRestaurantId()
+        .then(id => this.drinkService.getDrinksByRestaurant(id))
+        .then(obs => obs.subscribe(data => {
+          this.drinks = (data as any).drinks;
+        }));
   }
 
   get filteredProducts() {
@@ -50,5 +42,12 @@ export class RestaurantProductList implements OnInit {
     );
   }
 
-  protected readonly Category = Category;
+  deleteDrink(id: number) {
+    if (!confirm('Are you sure you want to delete this drink?')) return;
+
+    this.drinkService.deleteDrink(id).subscribe(() => {
+      this.drinks = this.drinks.filter(d => d.id !== id);
+    });
+  }
+
 }

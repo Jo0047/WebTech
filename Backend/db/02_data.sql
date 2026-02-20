@@ -16,20 +16,20 @@ INSERT INTO "user" (email, password, first_name, last_name, is_owner, address_id
 INSERT INTO restaurant (restaurant_name, restaurant_email, phone_number, image_link, cuisines, address_id, owner_email) VALUES
                                                                                                                             ('Sushi Paradise', 'contact@sushiparadise.com', '+44 20 7946 0958', null, ARRAY['japanese', 'fusion']::cuisine[], 1, 'owner@eats.com'),
                                                                                                                             ('Burger Queen', 'hello@burgerqueen.com', '+1 212 555 0198', null, ARRAY['american', 'fusion']::cuisine[], 2, 'owner@eats.com'),
-                                                                                                                            ('Pasta Heaven', 'info@pastaheaven.com', '+33 1 44 55 66 77', null, ARRAY['italian', 'mediterranean']::cuisine[], 4, 'owner@eats.com');
+                                                                                                                            ('Pasta Heaven', 'info@pastaheaven.com', '+33 1 44 55 66 77', 'http://localhost:3000/restaurant/image/Bar.jpg', ARRAY['italian', 'mediterranean']::cuisine[], 4, 'owner@eats.com');
 
 -- -------------------DRINKS--------------------------------
 INSERT INTO drink (drink_name, category, ingredients, alcoholic, price, image_link, restaurant_id) VALUES
-                                                                                                       ('Coca-Cola', 'soft drink', 'Carbonated water, sugar, caffeine', FALSE, 2.50, 'https://example.com/coke.jpg', 1),
-                                                                                                       ('Green Tea', 'tea', 'Green tea leaves, water', FALSE, 2.00, 'https://example.com/greentea.jpg', 1),
-                                                                                                       ('Sake', 'wine', 'Rice wine', TRUE, 6.50, 'https://example.com/sake.jpg', 1),
-                                                                                                       ('Plum Wine', 'wine', 'Plum wine', TRUE, 7.00, 'https://example.com/plumwine.jpg', 1),
-                                                                                                       ('Yuzu Soda', 'soft drink', 'Carbonated water, yuzu juice', FALSE, 3.00, 'https://example.com/yuzusoda.jpg', 1),
-                                                                                                       ('Matcha Latte', 'coffee', 'Matcha powder, milk', FALSE, 3.50, 'https://example.com/matchalatte.jpg', 1),
-                                                                                                       ('Shochu', 'cocktail', 'Distilled spirit', TRUE, 5.50, 'https://example.com/shochu.jpg', 1),
-                                                                                                       ('Margarita', 'cocktail', 'Tequila, triple sec, lime juice', TRUE, 8.00, 'https://example.com/margarita.jpg', 2),
-                                                                                                       ('Espresso', 'coffee', 'Coffee beans, water', FALSE, 3.00, 'https://example.com/espresso.jpg', 3),
-                                                                                                       ('Chardonnay', 'wine', 'Grapes', TRUE, 12.50, 'https://example.com/chardonnay.jpg', 3);
+                                                                                                       ('Coca-Cola', 'soft drink', 'Carbonated water, sugar, caffeine', FALSE, 2.50, null, 1),
+                                                                                                       ('Green Tea', 'tea', 'Green tea leaves, water', FALSE, 2.00, null, 1),
+                                                                                                       ('Sake', 'wine', 'Rice wine', TRUE, 6.50, null, 1),
+                                                                                                       ('Plum Wine', 'wine', 'Plum wine', TRUE, 7.00, null, 1),
+                                                                                                       ('Yuzu Soda', 'soft drink', 'Carbonated water, yuzu juice', FALSE, 3.00, null, 1),
+                                                                                                       ('Matcha Latte', 'coffee', 'Matcha powder, milk', FALSE, 3.50, null, 1),
+                                                                                                       ('Shochu', 'cocktail', 'Distilled spirit', TRUE, 5.50, null, 1),
+                                                                                                       ('Margarita', 'cocktail', 'Tequila, triple sec, lime juice', TRUE, 8.00, null, 2),
+                                                                                                       ('Espresso', 'coffee', 'Coffee beans, water', FALSE, 3.00, null, 3),
+                                                                                                       ('Chardonnay', 'wine', 'Grapes', TRUE, 12.50, null, 3);
 
 -- -------------------ORDERS--------------------------------
 INSERT INTO "order" (status) VALUES

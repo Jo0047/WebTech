@@ -2,6 +2,7 @@ import {Component, inject} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {RestaurantService} from '../../services/restaurant/restaurant.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-order-new-product',
@@ -14,8 +15,9 @@ import {RestaurantService} from '../../services/restaurant/restaurant.service';
 export class RestaurantNewProduct {
   private http = inject(HttpClient);
   restaurantService: RestaurantService = inject(RestaurantService);
-  apiUrl = 'http://localhost:3000/data/drink';
+  apiUrl = 'http://localhost:3000/drinks/drink';
   drinkForm: FormGroup;
+  private router = inject(Router);
 
 
   constructor(private fb: FormBuilder) {
@@ -40,6 +42,7 @@ export class RestaurantNewProduct {
     };
 
 
-    this.http.post(this.apiUrl, payload).subscribe()
+    this.http.post(this.apiUrl, payload).subscribe();
+    await this.router.navigate(['/restaurant/products']);
   }
 }

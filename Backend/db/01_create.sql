@@ -74,6 +74,8 @@ CREATE TABLE IF NOT EXISTS "order" (
                                        id SERIAL PRIMARY KEY,
                                        status order_status NOT NULL DEFAULT 'pending'
 );
+ALTER TABLE "order"
+    ADD COLUMN created_at TIMESTAMP NOT NULL DEFAULT NOW();
 
 
 CREATE TABLE IF NOT EXISTS drink (
@@ -85,6 +87,7 @@ CREATE TABLE IF NOT EXISTS drink (
                                      alcoholic BOOLEAN DEFAULT FALSE,
                                      price DECIMAL(10, 2) NOT NULL,
                                      image_link TEXT,
+                                     deleted BOOLEAN DEFAULT FALSE,
 
     restaurant_id INT NOT NULL,
     FOREIGN KEY (restaurant_id) REFERENCES restaurant(id)
