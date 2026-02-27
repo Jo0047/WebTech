@@ -11,10 +11,7 @@
 
         <div class="detail-item">
           <div class="detail-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
-              <line x1="1" y1="10" x2="23" y2="10"></line>
-            </svg>
+            <i class="fa-solid fa-credit-card"></i>
           </div>
           <div class="detail-content">
             <div class="detail-label">Select payment method</div>
@@ -23,17 +20,34 @@
           <div class="detail-arrow">›</div>
         </div>
 
-        <div class="detail-item">
+        <div class="detail-item voucher-item">
           <div class="detail-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
-              <line x1="7" y1="7" x2="7.01" y2="7"></line>
-            </svg>
+            <i class="fa-solid fa-tag"></i>
           </div>
           <div class="detail-content">
-            <div class="detail-label">Add voucher</div>
+            <div class="detail-label">Voucher code</div>
+            <div class="voucher-input-row">
+              <input
+                #voucherInput
+                type="text"
+                class="voucher-input"
+                placeholder="e.g. SUSHI10"
+              />
+              @if (!voucherApplied) {
+                <button
+                  class="voucher-apply-btn"
+                  (click)="applyVoucher(voucherInput.value)">
+                  Apply
+                </button>
+              }
+            </div>
+            @if (voucherError) {
+              <div class="voucher-feedback error">{{ voucherError }}</div>
+            }
+            @if (voucherApplied) {
+              <div class="voucher-feedback success">✓ Voucher applied</div>
+            }
           </div>
-          <div class="detail-arrow">›</div>
         </div>
       </div>
     </div>
@@ -81,8 +95,12 @@
             <span class="cost-label">Subtotal</span>
             <span class="cost-value">{{ formatPrice(getSubtotal()) }}</span>
           </div>
+
           <div class="cost-row">
             <span class="cost-label">Voucher</span>
+            <span class="cost-value discount">
+              @if (voucherApplied) { − {{ formatPrice(getSubtotal()*(voucherDiscount/100)) }} } @else { — }
+            </span>
           </div>
         </div>
 

@@ -48,4 +48,25 @@ router.post("/placeOrder", async (req, res) => {
 
 });
 
+router.get('/voucher', async (req, res) => {
+    const { restaurantId, voucher } = req.query;
+
+    if (!restaurantId || !voucher) {
+        return res.status(400).json({ message: 'Missing parameters.' });
+    }
+
+    const result = await orderService.checkVoucher(Number(restaurantId), String(voucher));
+
+    if (!result.discount==null) {
+        return res.status(404).json({
+            message: result.message
+        });
+    }
+
+    return res.status(200).json({
+        message: result.message,
+        discount: result.discount
+    });
+});
+
 export default router;

@@ -81,6 +81,6 @@ INSERT INTO review (content, rating, restaurant_id) VALUES
 
 -- -------------------VOUCHERS--------------------------------
 INSERT INTO voucher (text, discount, restaurant_id) VALUES
-                                                        ('10% off on your first order', 10, 1),
-                                                        ('Free drink with any burger', 0, 2),
-                                                        ('20% off weekend special', 20, 3);
+                                                        ('SUSHI10', 10, 1),
+                                                        ('DISCOUNT10', 10, 2),
+                                                        ('VOUCHER20', 20, 3);

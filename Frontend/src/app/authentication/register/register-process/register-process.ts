@@ -111,11 +111,9 @@ export class RegisterProcess {
         this.userRole === UserRole.restaurant ? imageUrl           : undefined,
       );
 
-      console.log(registrationData);
 
       this.authService.register(registrationData).subscribe({
         next: (response) => {
-          console.log('Success:', response);
           this.router.navigate(['/login'], {
             state: {
               registrationSuccess: true,
