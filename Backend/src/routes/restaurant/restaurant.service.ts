@@ -14,7 +14,6 @@ export async function getRestaurantAddress(id: number) {
     return result.rows[0]
 }
 
-
 /**
  * Select all Restaurants
  */

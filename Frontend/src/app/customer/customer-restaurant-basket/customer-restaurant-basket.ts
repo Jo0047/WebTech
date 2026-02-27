@@ -84,12 +84,7 @@ export class CustomerRestaurantBasket {
   }
 
   getTotal(): number {
-    return this.basket.reduce((total, item) => {
-      const price = typeof item.drink.price === 'string'
-        ? parseFloat(item.drink.price)
-        : item.drink.price;
-      return total + (price * item.quantity);
-    }, 0);
+    return this.basket.reduce((total, item) => total + +item.drink.price * item.quantity, 0);
   }
 
   formatPrice(price: number | string): string {
