@@ -89,7 +89,6 @@
 
           @if(basket.length === 0) {
             <div class="empty-basket">
-              <div class="empty-icon">🛒</div>
               <p>Your basket is empty</p>
               <p style="font-size: 12px; margin-top: 8px;">Add items from the menu to get started</p>
             </div>
@@ -116,7 +115,7 @@
           <div class="basket-summary">
             <div class="summary-row">
               <span>Items ({{ getTotalItems() }})</span>
-              <span>{{ formatPrice(getSubtotal()) }}</span>
+              <span>{{ formatPrice(getTotal()) }}</span>
             </div>
 
             <div class="summary-row total">

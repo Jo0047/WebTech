@@ -79,31 +79,17 @@ export class CustomerRestaurantBasket {
     }
   }
 
-  removeFromBasket(drinkId: number): void {
-    this.basket = this.basket.filter(item => item.drink.id !== drinkId);
-  }
-
-  getQuantityInBasket(drinkId: number): number {
-    const item = this.basket.find(item => item.drink.id === drinkId);
-    return item ? item.quantity : 0;
-  }
-
   getTotalItems(): number {
     return this.basket.reduce((total, item) => total + item.quantity, 0);
   }
 
-  getSubtotal(): number {
+  getTotal(): number {
     return this.basket.reduce((total, item) => {
       const price = typeof item.drink.price === 'string'
         ? parseFloat(item.drink.price)
         : item.drink.price;
       return total + (price * item.quantity);
     }, 0);
-  }
-
-  getTotal(): number {
-    // You can add delivery fee, taxes, etc. here
-    return this.getSubtotal();
   }
 
   formatPrice(price: number | string): string {

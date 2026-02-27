@@ -29,6 +29,12 @@ export class OrderService {
     return this.http.post(`${this.apiUrl}/placeOrder`, payload);
   }
 
+  checkVoucher(restaurantId: number, voucher: string): Observable<any> {
+    return this.http.get(
+      `${this.apiUrl}/voucher?restaurantId=${restaurantId}&voucher=${voucher}`
+    );
+  }
+
 
 
 

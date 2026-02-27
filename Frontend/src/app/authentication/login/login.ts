@@ -48,14 +48,8 @@ export class Login {
     if (this.loginForm.valid) {
       const formValue = this.loginForm.value;
 
-      console.log('Login attempt with:', {
-        email: formValue.email,
-        password: formValue.password,
-      });
-
       this.authService.handleLogin(formValue.email?.toString(), formValue.password?.toString()).subscribe({
         next: (response: AuthResponse) => {
-          console.log('Success:', response);
           this.router.navigate(['/mainmenu']);
         },
         error: (error) => {

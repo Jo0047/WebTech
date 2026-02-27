@@ -102,4 +102,25 @@ async function placeOrder(user_email: string, items: { drink_id: number; quantit
     };
 }
 
-export { getOrdersByRestaurant, rejectOrder, advanceOrder, placeOrder };
+async function checkVoucher(restaurantId: number, voucherText: string) {
+    const query = {
+        text: 'SELECT discount FROM voucher WHERE text = $1 AND restaurant_id = $2',
+        values: [voucherText, restaurantId]
+    };
+
+    const result: QueryResult = await pool.query(query);
+
+    if (result.rows.length === 0) {
+        return {
+            message: 'Invalid or expired voucher code.',
+            discount: null
+        };
+    }
+
+    return {
+        message: 'Voucher applied successfully.',
+        discount: result.rows[0].discount
+    };
+}
+
+export { getOrdersByRestaurant, rejectOrder, advanceOrder, placeOrder, checkVoucher };
